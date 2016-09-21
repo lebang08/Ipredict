@@ -33,32 +33,38 @@
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
+        <!-- 第一模块 查看范围 的Activity -->
+        <activity
+            android:name="com.woyuce.activity.RangeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+
         <!-- 第三模块 写作题库 的Activity -->
         <activity
             android:name="com.woyuce.activity.WrittingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!--<activity-->
-            <!--android:name="com.woyuce.activity.WitSubcategoryActivity"-->
-            <!--android:launchMode="standard"-->
-            <!--android:screenOrientation="portrait" >-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name="com.woyuce.activity.WitSearchActivity"-->
-            <!--android:launchMode="standard"-->
-            <!--android:screenOrientation="portrait" >-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name="com.woyuce.activity.WitContentActivity"-->
-            <!--android:launchMode="standard"-->
-            <!--android:screenOrientation="portrait" >-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name="com.woyuce.activity.WitAnswerActivity"-->
-            <!--android:launchMode="standard"-->
-            <!--android:screenOrientation="portrait" >-->
-        <!--</activity>-->
+        <activity
+            android:name="com.woyuce.activity.WitSubcategoryActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.woyuce.activity.WitSearchActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.woyuce.activity.WitContentActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+
+
+        <!--WebView专用的Activity -->
+        <activity
+            android:name="com.woyuce.activity.WebViewActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -61,7 +61,7 @@ public class BaseActivity extends Activity {
         progressdialog.setTitle("加载中，请稍候");
         progressdialog.setMessage("Loading...");
         progressdialog.setCanceledOnTouchOutside(false);
-        // progressdialog.setCancelable(false);
+//         progressdialog.setCancelable(false);
         progressdialog.show();
     }
 
@@ -98,19 +98,18 @@ public class BaseActivity extends Activity {
                     String encodedConsumerKey = URLEncoder.encode("defA8Dq2ambB", "UTF-8");
                     String encodedConsumerSecret = URLEncoder.encode("WM7Ei5mzrrHl42HHXuGkNR0bVJexq4P", "UTF-8");
                     String authString = encodedConsumerKey + ":" + encodedConsumerSecret;
-                    base64EncodedString = Base64.encodeToString(authString.getBytes("UTF-8"), Base64.NO_WRAP); // Changed
+                    base64EncodedString = Base64.encodeToString(authString.getBytes("UTF-8"), Base64.NO_WRAP);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Basic " + base64EncodedString);
-                // headers.put("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("grant_type", "client_credentials");
                 headers.put("scope", "");
                 return headers;

@@ -12,22 +12,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
-import com.woyuce.activity.Bean.UserInfo;
 
 public class MyApplication extends Application {
 
-    private static MyApplication mInstance = null;
-    private UserInfo info;
-
     private static RequestQueue mQueue;
-
-    public static MyApplication getInstance() {
-        return mInstance;
-    }
-
-    public UserInfo getInfo() {
-        return this.info;
-    }
 
     /**
      * 初始化全局
@@ -35,7 +23,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        mInstance = this;
         mQueue = Volley.newRequestQueue(getApplicationContext());
 
         // 创建默认的ImageLoader配置参数
@@ -67,9 +54,4 @@ public class MyApplication extends Application {
     public static RequestQueue getHttpQueue() {
         return mQueue;
     }
-
-    public void setInfo(UserInfo paramUserInfo) {
-        this.info = paramUserInfo;
-    }
-
 }

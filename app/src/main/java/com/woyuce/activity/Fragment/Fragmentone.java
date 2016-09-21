@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Application.MyApplication;
 import com.woyuce.activity.R;
+import com.woyuce.activity.RangeActivity;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
@@ -93,7 +94,6 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
             mTxtTimer.setText("设置考试时间");
         } else {
             // mTxtTimer.setText("距离考试时间" + localTimer + "天");
-            // TODO 计算时间差
             SimpleDateFormat mSimpleDate = new SimpleDateFormat("yyyy-MM-dd");
             // 将String转为Date格式,获得当前时间
             Date mDateBySet;
@@ -177,9 +177,9 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
 //            case R.id.img_speaking:
 //                startActivity(new Intent(getActivity(), SpeakingActivity.class));
 //                break;
-//            case R.id.img_range:
-//                startActivity(new Intent(getActivity(), RangeActivity.class));
-//                break;
+            case R.id.img_range:
+                startActivity(new Intent(getActivity(), RangeActivity.class));
+                break;
 //            case R.id.img_gongyi:
 //                startActivity(new Intent(getActivity(), GongyiActivity.class));
 //                break;
