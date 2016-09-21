@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WrittingActivity extends Activity implements OnClickListener, OnItemClickListener {
+public class WitActivity extends Activity implements OnClickListener, OnItemClickListener {
 
     private GridView gvCategory;
     private ImageView imgBack;
@@ -84,7 +84,7 @@ public class WrittingActivity extends Activity implements OnClickListener, OnIte
                     } else {
                         System.out.println("result ��= 0");
                     }
-                    WrittingAdapter adapter = new WrittingAdapter(WrittingActivity.this, witcategoryList);
+                    WrittingAdapter adapter = new WrittingAdapter(WitActivity.this, witcategoryList);
                     gvCategory.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

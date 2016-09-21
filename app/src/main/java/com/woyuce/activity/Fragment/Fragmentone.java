@@ -23,7 +23,7 @@ import com.woyuce.activity.FreeRangeActivity;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
-import com.woyuce.activity.WrittingActivity;
+import com.woyuce.activity.WitActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -188,7 +188,7 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
 //                startActivity(new Intent(getActivity(), WangluobanActivity2.class));
 //                break;
             case R.id.img_writting:
-                startActivity(new Intent(getActivity(), WrittingActivity.class));
+                startActivity(new Intent(getActivity(), WitActivity.class));
                 break;
 //            case R.id.img_waitting:
 //                startActivity(new Intent(getActivity(), WaittingActivity.class));

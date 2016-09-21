@@ -1,15 +1,15 @@
 package com.woyuce.activity.Bean;
 
-public class Range {
+public class FreeRange {
 
 	private String id;
 	private String title;
 
-	public Range() {
+	public FreeRange() {
 		super();
 	}
 
-	public Range(String id, String title) {
+	public FreeRange(String id, String title) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -33,7 +33,7 @@ public class Range {
 
 	@Override
 	public String toString() {
-		return "Range [id=" + id + ", title=" + title + "]";
+		return "FreeRange [id=" + id + ", title=" + title + "]";
 	}
 
 }

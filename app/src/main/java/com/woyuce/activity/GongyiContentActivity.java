@@ -48,7 +48,7 @@ public class GongyiContentActivity extends BaseActivity implements View.OnClickL
         Intent it_audio = getIntent();
         localAudioUrl = it_audio.getStringExtra("url"); // 先拿到AudioUrl,录音中直接拿此值进行Prepare
         localAudioTitle = it_audio.getStringExtra("title");
-        LogUtil.e("linx","what ? =" + localAudioUrl + "//" + localAudioTitle);
+        LogUtil.e("linx", "what ? =" + localAudioUrl + "//" + localAudioTitle);
 
         txtcontent = (TextView) findViewById(R.id.txt_mediaplay_content);
         txtTimeTotal = (TextView) findViewById(R.id.txt_mediaplay_totaltime);
