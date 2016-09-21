@@ -36,12 +36,26 @@
             android:windowSoftInputMode="adjustPan" />
         <!-- 第一模块 查看范围 的Activity -->
         <activity
-            android:name="com.woyuce.activity.RangeActivity"
+            android:name=".FreeRangeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
 
-        <!-- 第三模块 写作题库 的Activity -->
+        <!-- 第四模块网络班专属 的Activity -->
+        <activity
+            android:name="com.woyuce.activity.GongyiActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.woyuce.activity.GongyiLessonActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.woyuce.activity.GongyiContentActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+
+        <!-- 第五模块 写作题库 的Activity -->
         <activity
             android:name="com.woyuce.activity.WrittingActivity"
             android:launchMode="singleTop"

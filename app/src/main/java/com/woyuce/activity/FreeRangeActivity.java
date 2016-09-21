@@ -23,7 +23,6 @@ import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +33,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-public class RangeActivity extends BaseActivity implements OnItemClickListener, OnClickListener {
+public class FreeRangeActivity extends BaseActivity implements OnItemClickListener, OnClickListener {
 
 	private ImageView mBack, mGuide;
 	private Button mBtnClear;
@@ -72,7 +71,7 @@ public class RangeActivity extends BaseActivity implements OnItemClickListener, 
 		mListView.setOnItemClickListener(this);
 
 		// 第一次引导的动画
-		boolean b = PreferenceUtil.getSharePre(RangeActivity.this).contains("imgclearguide");
+		boolean b = PreferenceUtil.getSharePre(FreeRangeActivity.this).contains("imgclearguide");
 		if (b == true) {
 			mGuide.setVisibility(View.GONE);
 		}
@@ -95,7 +94,7 @@ public class RangeActivity extends BaseActivity implements OnItemClickListener, 
 			@Override
 			public Map<String, String> getHeaders() throws AuthFailureError {
 				HashMap<String, String> headers = new HashMap<String, String>();
-				localtoken = PreferenceUtil.getSharePre(RangeActivity.this).getString("localtoken", "");
+				localtoken = PreferenceUtil.getSharePre(FreeRangeActivity.this).getString("localtoken", "");
 				headers.put("Authorization", "Bearer " + localtoken);
 				return headers;
 			}
@@ -128,7 +127,7 @@ public class RangeActivity extends BaseActivity implements OnItemClickListener, 
 				LogUtil.e("code!=0 --DATA-BACK", "读取页面失败： " + jsonObject.getString("message"));
 			}
 			// 第二步，将数据放到适配器中
-			RangeAdapter adapter = new RangeAdapter(RangeActivity.this, rangeList);
+			RangeAdapter adapter = new RangeAdapter(FreeRangeActivity.this, rangeList);
 			mListView.setAdapter(adapter);
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -155,11 +154,11 @@ public class RangeActivity extends BaseActivity implements OnItemClickListener, 
 			case R.id.btn_range_clearcache:
 				ImageLoader.getInstance().clearDiskCache();
 				ImageLoader.getInstance().clearMemoryCache();
-				ToastUtil.showMessage(RangeActivity.this, "清除缓存,更新书籍成功");
+				ToastUtil.showMessage(FreeRangeActivity.this, "清除缓存,更新书籍成功");
 				break;
 			case R.id.img_range_guide:
 				mGuide.setVisibility(View.GONE);
-				PreferenceUtil.save(RangeActivity.this, "imgclearguide", "guided");
+				PreferenceUtil.save(FreeRangeActivity.this, "imgclearguide", "guided");
 				break;
 			default:
 				finish();

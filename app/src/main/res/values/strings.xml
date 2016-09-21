@@ -25,5 +25,8 @@
     <string name="registerPromp4">3.已注册的手机号无法再进行注册,请更换手机号码</string>
     <string name="aaaa">TODO</string>
     <string name="share">我在i预测超燃，一起来show吧</string>
+    <string name="gongyi_lesson">公益课堂</string>
+    <string name="gongyi_audio">我预测公开课音频回放</string>
+    <string name="gongyi_tecentlesson">我预测腾讯课堂</string>
 
 </resources>

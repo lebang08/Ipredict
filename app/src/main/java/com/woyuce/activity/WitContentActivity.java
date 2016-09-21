@@ -1,11 +1,13 @@
 package com.woyuce.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -19,24 +21,24 @@ import com.woyuce.activity.Application.MyApplication;
 import com.woyuce.activity.Bean.WitContent;
 import com.woyuce.activity.Utils.LogUtil;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import uk.co.senab.photoview.PhotoView;
 
 public class WitContentActivity extends BaseActivity implements OnClickListener {
 
-	private TextView txtContent, txtTitle;
-	private Button btnBack, btnToAnswer;
-	private ImageView mImgview;
-	private ImageView photoView;
+    private TextView txtContent, txtTitle;
+    private Button btnBack, btnToAnswer;
+    private ImageView mImgview;
+    private PhotoView photoView;
 
-	private String URL = "http://iphone.ipredicting.com/xzsubContent.aspx";
-	private String localsubCategoryid, localname, localsubid, localimgUrl, localanswerUrl;
+    private String URL = "http://iphone.ipredicting.com/xzsubContent.aspx";
+    private String localsubCategoryid, localname, localsubid, localimgUrl, localanswerUrl;
 
     @Override
     protected void onStop() {
@@ -62,7 +64,7 @@ public class WitContentActivity extends BaseActivity implements OnClickListener 
         mImgview = (ImageView) findViewById(R.id.arrow_back);
         txtTitle = (TextView) findViewById(R.id.txt_witcontent_title);
         txtContent = (TextView) findViewById(R.id.txt_witcontent_content);
-        photoView = (ImageView) findViewById(R.id.photoview_witcontent);
+        photoView = (PhotoView) findViewById(R.id.photoview_witcontent);
         btnToAnswer = (Button) findViewById(R.id.btn_witcontent_toAnswer);
         btnBack = (Button) findViewById(R.id.button_witcontent_back);
 

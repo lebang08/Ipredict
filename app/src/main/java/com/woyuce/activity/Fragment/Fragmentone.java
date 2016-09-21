@@ -17,8 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.GongyiActivity;
 import com.woyuce.activity.R;
-import com.woyuce.activity.RangeActivity;
+import com.woyuce.activity.FreeRangeActivity;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
@@ -178,11 +179,11 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
 //                startActivity(new Intent(getActivity(), SpeakingActivity.class));
 //                break;
             case R.id.img_range:
-                startActivity(new Intent(getActivity(), RangeActivity.class));
+                startActivity(new Intent(getActivity(), FreeRangeActivity.class));
                 break;
-//            case R.id.img_gongyi:
-//                startActivity(new Intent(getActivity(), GongyiActivity.class));
-//                break;
+            case R.id.img_gongyi:
+                startActivity(new Intent(getActivity(), GongyiActivity.class));
+                break;
 //            case R.id.img_wangluo:
 //                startActivity(new Intent(getActivity(), WangluobanActivity2.class));
 //                break;
