@@ -43,7 +43,7 @@ public class SpeakingAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.listitem_activity_speaking, null);
+            convertView = mInflater.inflate(R.layout.listitem_speaking, null);
             viewHolder.imgIcon = (ImageView) convertView.findViewById(R.id.img_speaking_icon);
             viewHolder.txtName = (TextView) convertView.findViewById(R.id.txt_speaking_username);
             viewHolder.txtContent = (TextView) convertView.findViewById(R.id.txt_speaking_content);

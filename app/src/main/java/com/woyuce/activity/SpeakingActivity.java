@@ -1,5 +1,6 @@
 package com.woyuce.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -68,14 +69,12 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
         btnShare = (Button) findViewById(R.id.button_speaking_share);
         btnBack = (Button) findViewById(R.id.button_speaking_back);
         llStatis = (LinearLayout) findViewById(R.id.ll_speaking_gaopintongji);
-//		swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_speaking);
         txtRefresh = (TextView) findViewById(R.id.txt_speaking_refreshtitle);
 
         btnShare.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         llStatis.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
-//		swipe.setOnRefreshListener(this);
     }
 
     private void getJson() {
@@ -109,14 +108,11 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
                     e.printStackTrace();
                 }
                 txtRefresh.setVisibility(View.GONE);
-//				swipe.setRefreshing(false);
-                // Log.e("DATA-BACK", "JSON接口返回的信息： " + response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 txtRefresh.setVisibility(View.GONE);
-//				swipe.setRefreshing(false);
             }
         });
         stringRequest.setTag("speaking");
@@ -126,24 +122,25 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.button_speaking_share:
-//                startActivity(new Intent(this, ShareActivity.class));
-//                overridePendingTransition(0, 0); // ****设置无跳转动画
-//                break;
-//            case R.id.ll_speaking_gaopintongji:
-//                startActivity(new Intent(this, StatisActivity.class));
-//                overridePendingTransition(0, 0); // ****设置无跳转动画
-//            case R.id.button_speaking_back:
-//                finish();
+            case R.id.button_speaking_share:
+                startActivity(new Intent(this, SpeakingShareActivity1.class));
+                overridePendingTransition(0, 0); // ****设置无跳转动画
+                break;
+            case R.id.ll_speaking_gaopintongji:
+                startActivity(new Intent(this, SpeakingStatisActivity.class));
+                overridePendingTransition(0, 0); // ****设置无跳转动画
+                break;
+            case R.id.button_speaking_back:
+                finish();
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        SpeakingBean localspeaking = speakingList.get(position);
-//        Intent it = new Intent(this, SpeakingDetailActivity.class);
-//        it.putExtra("localspeaking", localspeaking);
-//        startActivity(it);
+        SpeakingBean localspeaking = speakingList.get(position);
+        Intent it = new Intent(this, SpeakingDetailActivity.class);
+        it.putExtra("localspeaking", localspeaking);
+        startActivity(it);
     }
 
 }
