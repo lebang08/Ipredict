@@ -310,7 +310,6 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 //			// 启动分享GUI
 //			oks.show(getActivity());
 //		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //	}

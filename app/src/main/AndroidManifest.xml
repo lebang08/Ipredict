@@ -34,7 +34,76 @@
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan" />
-        <!-- 第一模块 查看范围 的Activity -->
+
+        <!-- 第一模块 口语高频 的Activity -->
+        <activity
+            android:name=".SpeakingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.SpeakingDetailActivity"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.ShareActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.RoomChooseActivity"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@style/dialogActivity" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.ShareActivity2"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.ShareActivity3"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.ShareActivity4"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.StatisActivity"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.CategoryActivity"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.SubContentActivity"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.SearchActivity"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.VoteActivity"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:theme="@style/dialogActivity" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.SubContentAnswerActivity"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+
+        <!-- 第二模块 免费范围/笔试预测 的Activity -->
         <activity
             android:name=".FreeRangeActivity"
             android:launchMode="singleTop"
@@ -58,8 +127,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
 
-
-        <!-- 第四模块网络班专属 的Activity -->
+        <!-- 第三模块公益课堂 的Activity -->
         <activity
             android:name=".GongyiActivity"
             android:launchMode="singleTop"
@@ -91,6 +159,25 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" />
 
+        <!-- 第四模块网络班专属 的Activity -->
+        <activity
+            android:name=".NetClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.Wangluobanlubo"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <!--<activity-->
+        <!--android:name="com.woyuce.activity.Wangluobanzhibo"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait" >-->
+        <!--</activity>-->
+        <activity
+            android:name="com.woyuce.activity.NetClassLessonActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!--WebView专用的Activity -->
         <activity

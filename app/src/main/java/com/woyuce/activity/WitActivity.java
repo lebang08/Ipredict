@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Adapter.WrittingAdapter;
+import com.woyuce.activity.Adapter.WittingAdapter;
 import com.woyuce.activity.Application.MyApplication;
 import com.woyuce.activity.Bean.WitCategory;
 
@@ -46,7 +46,7 @@ public class WitActivity extends Activity implements OnClickListener, OnItemClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_writting);
+        setContentView(R.layout.activity_witting);
 
         initView();
         getJson();
@@ -84,7 +84,7 @@ public class WitActivity extends Activity implements OnClickListener, OnItemClic
                     } else {
                         System.out.println("result ��= 0");
                     }
-                    WrittingAdapter adapter = new WrittingAdapter(WitActivity.this, witcategoryList);
+                    WittingAdapter adapter = new WittingAdapter(WitActivity.this, witcategoryList);
                     gvCategory.setAdapter(adapter);
                 } catch (JSONException e) {
                     e.printStackTrace();

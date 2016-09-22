@@ -13,12 +13,12 @@ import com.woyuce.activity.R;
 
 import java.util.List;
 
-public class WrittingAdapter extends BaseAdapter {
+public class WittingAdapter extends BaseAdapter {
 
     private List<WitCategory> mList;
     private LayoutInflater mInflater;
 
-    public WrittingAdapter(Context context, List<WitCategory> data) {
+    public WittingAdapter(Context context, List<WitCategory> data) {
         mList = data;
         mInflater = LayoutInflater.from(context);
     }
@@ -43,7 +43,7 @@ public class WrittingAdapter extends BaseAdapter {
         ViewHolder viewholder;
         if (convertView == null) {
             viewholder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.gvitem_writting, null);
+            convertView = mInflater.inflate(R.layout.gvitem_witting, null);
             viewholder.categoryname = (TextView) convertView.findViewById(R.id.txt_item_witcategoryname);
             viewholder.img = (ImageView) convertView.findViewById(R.id.img_writting);
             convertView.setTag(viewholder);

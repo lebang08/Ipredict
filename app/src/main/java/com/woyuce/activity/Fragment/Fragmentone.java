@@ -18,8 +18,10 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Application.MyApplication;
 import com.woyuce.activity.GongyiActivity;
+import com.woyuce.activity.NetClassActivity;
 import com.woyuce.activity.R;
 import com.woyuce.activity.FreeRangeActivity;
+import com.woyuce.activity.SpeakingActivity;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
@@ -175,18 +177,18 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
                         mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH))
                         .show();
                 break;
-//            case R.id.img_speaking:
-//                startActivity(new Intent(getActivity(), SpeakingActivity.class));
-//                break;
+            case R.id.img_speaking:
+                startActivity(new Intent(getActivity(), SpeakingActivity.class));
+                break;
             case R.id.img_range:
                 startActivity(new Intent(getActivity(), FreeRangeActivity.class));
                 break;
             case R.id.img_gongyi:
                 startActivity(new Intent(getActivity(), GongyiActivity.class));
                 break;
-//            case R.id.img_wangluo:
-//                startActivity(new Intent(getActivity(), WangluobanActivity2.class));
-//                break;
+            case R.id.img_wangluo:
+                startActivity(new Intent(getActivity(), NetClassActivity.class));
+                break;
             case R.id.img_writting:
                 startActivity(new Intent(getActivity(), WitActivity.class));
                 break;
