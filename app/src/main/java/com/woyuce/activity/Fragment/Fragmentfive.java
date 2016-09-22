@@ -1,200 +1,219 @@
 package com.woyuce.activity.Fragment;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Bean.SpeakingRoom;
+import com.woyuce.activity.LoginActivity;
 import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.LogUtil;
+import com.woyuce.activity.Utils.PreferenceUtil;
+import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.Utils.UpdateManager;
 
-public class Fragmentfive extends Fragment {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-//	private TextView txtName, txtMoney, txtAboutUs, txtUpdate, txtSuggestion, txtRoom, txtSubject;
-//	private ImageView imgIcon;
-//	// �����α�����
-//	private TextView mCourseTable;
-//
-//	private String localroomname;
-//	private String URL_ROOM = "http://iphone.ipredicting.com/kymyroom.aspx";
-//	private String URL_SUBJECT = "http://iphone.ipredicting.com/kymyshanesub.aspx";
-//	private List<Room> roomList = new ArrayList<Room>();
-//	private List<SubContent> subcontentList = new ArrayList<SubContent>();
-//	private List<String> myexamList = new ArrayList<>();
-	
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Fragmentfive extends Fragment implements View.OnClickListener {
+
+	private TextView txtName, txtMoney, txtAboutUs, txtUpdate, txtSuggestion, txtRoom, txtSubject;
+	private ImageView imgIcon;
+	// 暂做课表的入口
+	private TextView mCourseTable;
+
+	private String localroomname;
+	private String URL_ROOM = "http://iphone.ipredicting.com/kymyroom.aspx";
+	private String URL_SUBJECT = "http://iphone.ipredicting.com/kymyshanesub.aspx";
+	private List<SpeakingRoom> roomList = new ArrayList<>();
+	private List<String> subcontentList = new ArrayList<>();
+	private List<String> myexamList = new ArrayList<>();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.tab5, container, false);
 
-//		initView(view);
+		initView(view);
 		return view;
 	}
 
-//	@Override
-//	public void onResume() {
-//		super.onResume();
-//		txtRoom.setText("");
-//		txtSubject.setText("");
-//		initEvent();
-//	}
-//
-//	private void initView(View view) {
-//		imgIcon = (ImageView) view.findViewById(R.id.img_tab5_icon);
-//		txtName = (TextView) view.findViewById(R.id.txt_tab5_username);
-//		txtMoney = (TextView) view.findViewById(R.id.txt_tab5_localmoney);
-//		txtAboutUs = (TextView) view.findViewById(R.id.txt_to_aboutus);
-//		txtUpdate = (TextView) view.findViewById(R.id.txt_to_update);
-//		txtSuggestion = (TextView) view.findViewById(R.id.txt_to_suggestion);
-//		txtRoom = (TextView) view.findViewById(R.id.txt_tab5_localroom);
-//		txtSubject = (TextView) view.findViewById(R.id.txt_tab5_localsubject);
-//
-//		mCourseTable = (TextView) view.findViewById(R.id.txt_tab5_localmessage);
-//		mCourseTable.setOnClickListener(this);
-//
-//		imgIcon.setOnClickListener(this);
-//		txtAboutUs.setOnClickListener(this);
-//		txtUpdate.setOnClickListener(this);
-//		txtSuggestion.setOnClickListener(this);
-//		txtRoom.setOnClickListener(this);
-//		txtSubject.setOnClickListener(this);
-//	}
-//
-//	// fragment �������ڣ���ʱ
-//	private void initEvent() {
-//		if (share().getString("username", "").length() == 0) {
-//			txtRoom.setText("��½��ɼ�");
-//			txtSubject.setText("��½��ɼ�");
-//			myexamList.clear();
-//		} else {
-//			roomList.clear();
-//			subcontentList.clear();
-//			myexamList.clear();
-//			getRoomJson();
-//			getSubjectJson();
-//		}
-//		txtName.setText(share().getString("mUserName", "���ͷ���л��˺�"));
-//		txtMoney.setText(share().getString("money", "��¼��ɼ�"));
-//	}
-//
-//	// ��initEvent �����������ã�������
-//	private SharedPreferences share() {
-//		return PreferenceUtil.getSharePre(getActivity());
-//	}
-//
-//	//����
-//	private void getRoomJson() {
-//		StringRequest stringRequest = new StringRequest(Method.POST, URL_ROOM, new Response.Listener<String>() {
-//			@Override
-//			public void onResponse(String response) {
-//				JSONObject jsonObject;
-//				Room room;
-//				try {
-//					jsonObject = new JSONObject(response);
-//					int result = jsonObject.getInt("code");
-//					if (result == 0) {
-//						JSONArray data = jsonObject.getJSONArray("data");
-//						for (int i = 0; i < data.length(); i++) {
-//							jsonObject = data.getJSONObject(i);
-//							room = new Room();
-//							room.roomid = jsonObject.getString("id");
-//							room.roomname = jsonObject.getString("examroom");
-//							roomList.add(room);
-//							localroomname = room.roomname;
-//							txtRoom.setText(localroomname);
-//						}
-//					}
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}, null) {
-//			@Override
-//			protected Map<String, String> getParams() throws AuthFailureError {
-//				Map<String, String> hashMap = new HashMap<String, String>();
-//				hashMap.put("uname", PreferenceUtil.getSharePre(getActivity()).getString("username", ""));
-//				return hashMap;
-//			}
-//		};
-//		stringRequest.setTag("fragmentfive");
-//		MyApplication.getHttpQueue().add(stringRequest);
-//	}
-//
-//	/**
-//	 * ��ȡ�����б�
-//	 */
-//	private void getSubjectJson() {
-//		StringRequest stringRequest = new StringRequest(Method.POST, URL_SUBJECT, new Response.Listener<String>() {
-//			@Override
-//			public void onResponse(String response) {
-//				JSONObject jsonObject;
-//				SubContent subcontent;
-//				try {
-//					jsonObject = new JSONObject(response);
-//					int result = jsonObject.getInt("code");
-//					if (result == 0) {
-//						JSONArray data = jsonObject.getJSONArray("data");
-//						for (int i = 0; i < data.length(); i++) {
-//							jsonObject = data.getJSONObject(i);
-//							subcontent = new SubContent();
-//							subcontent.subname = jsonObject.getString("subname");
-//							subcontentList.add(subcontent);
-//							String localsubname = subcontent.subname;
-//							myexamList.add(localsubname);
-//						}
-//						List<String> sublist = new ArrayList<>();
-//						for (int i = 0; i < subcontentList.size(); i++) {
-//							sublist.add("��" + subcontentList.get(i).subname + "��");
-//						}
-//						txtSubject.setText(sublist.toString());
-//					}
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}, null) {
-//			@Override
-//			protected Map<String, String> getParams() throws AuthFailureError {
-//				Map<String, String> hashMap = new HashMap<String, String>();
-//				hashMap.put("uname", PreferenceUtil.getSharePre(getActivity()).getString("username", ""));
-//				return hashMap;
-//			}
-//		};
-//		stringRequest.setTag("fragmentfive");
-//		MyApplication.getHttpQueue().add(stringRequest);
-//	}
-//
-//	@Override
-//	public void onClick(View v) {
-//		switch (v.getId()) {
-//		case R.id.img_tab5_icon:
-//			startActivity(new Intent(getActivity(), LoginActivity.class));
-//			break;
-//		case R.id.txt_tab5_localsubject:
-//			Intent intent = new Intent(getActivity(),MyExamContent.class);
-//			intent.putStringArrayListExtra("myexamList", (ArrayList<String>) myexamList);
-//			startActivity(intent);
-//			break;
-//		case R.id.txt_to_aboutus:
-//			startActivity(new Intent(getActivity(), AboutUsActivity.class));
-//			break;
-//		case R.id.txt_to_update:
-//			String serverVersion = PreferenceUtil.getSharePre(getActivity()).getString("serverVersion", "");
-//			String localVersion = PreferenceUtil.getSharePre(getActivity()).getString("localVersion", "");
-//			LogUtil.e("serverVersion", "serverVersion = " + serverVersion + " localVersion" + localVersion);
-//			if (Float.parseFloat(serverVersion) > Float.parseFloat(localVersion)) {
-//				// �Զ�����
-//				new UpdateManager(getActivity()).checkUpdate();
+	@Override
+	public void onResume() {
+		super.onResume();
+		txtRoom.setText("");
+		txtSubject.setText("");
+		initEvent();
+	}
+
+	private void initView(View view) {
+		imgIcon = (ImageView) view.findViewById(R.id.img_tab5_icon);
+		txtName = (TextView) view.findViewById(R.id.txt_tab5_username);
+		txtMoney = (TextView) view.findViewById(R.id.txt_tab5_localmoney);
+		txtAboutUs = (TextView) view.findViewById(R.id.txt_to_aboutus);
+		txtUpdate = (TextView) view.findViewById(R.id.txt_to_update);
+		txtSuggestion = (TextView) view.findViewById(R.id.txt_to_suggestion);
+		txtRoom = (TextView) view.findViewById(R.id.txt_tab5_localroom);
+		txtSubject = (TextView) view.findViewById(R.id.txt_tab5_localsubject);
+
+		mCourseTable = (TextView) view.findViewById(R.id.txt_tab5_localmessage);
+		mCourseTable.setOnClickListener(this);
+
+		imgIcon.setOnClickListener(this);
+		txtAboutUs.setOnClickListener(this);
+		txtUpdate.setOnClickListener(this);
+		txtSuggestion.setOnClickListener(this);
+		txtRoom.setOnClickListener(this);
+		txtSubject.setOnClickListener(this);
+	}
+
+	// fragment 生命周期，打开时
+	private void initEvent() {
+		if (share().getString("username", "").length() == 0) {
+			txtRoom.setText("登陆后可见");
+			txtSubject.setText("登陆后可见");
+			myexamList.clear();
+		} else {
+			roomList.clear();
+			subcontentList.clear();
+			myexamList.clear();
+			getRoomJson();
+			getSubjectJson();
+		}
+		txtName.setText(share().getString("mUserName", "点击头像切换账号"));
+		txtMoney.setText(share().getString("money", "登录后可见"));
+	}
+
+	// 从initEvent 抽出，方便调用，代码简洁
+	private SharedPreferences share() {
+		return PreferenceUtil.getSharePre(getActivity());
+	}
+
+	//考场
+	private void getRoomJson() {
+		StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_ROOM, new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				JSONObject jsonObject;
+				SpeakingRoom room;
+				try {
+					jsonObject = new JSONObject(response);
+					int result = jsonObject.getInt("code");
+					if (result == 0) {
+						JSONArray data = jsonObject.getJSONArray("data");
+						for (int i = 0; i < data.length(); i++) {
+							jsonObject = data.getJSONObject(i);
+							room = new SpeakingRoom();
+							room.roomid = jsonObject.getString("id");
+							room.roomname = jsonObject.getString("examroom");
+							roomList.add(room);
+							localroomname = room.roomname;
+							txtRoom.setText(localroomname);
+						}
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, null) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> hashMap = new HashMap<String, String>();
+				hashMap.put("uname", PreferenceUtil.getSharePre(getActivity()).getString("username", ""));
+				return hashMap;
+			}
+		};
+		stringRequest.setTag("fragmentfive");
+		MyApplication.getHttpQueue().add(stringRequest);
+	}
+
+	/**
+	 * 获取考题列表
+	 */
+	private void getSubjectJson() {
+		StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SUBJECT, new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				JSONObject jsonObject;
+				try {
+					jsonObject = new JSONObject(response);
+					int result = jsonObject.getInt("code");
+					if (result == 0) {
+						JSONArray data = jsonObject.getJSONArray("data");
+						String local_subname ;
+						for (int i = 0; i < data.length(); i++) {
+							jsonObject = data.getJSONObject(i);
+							local_subname = jsonObject.getString("subname");
+							subcontentList.add(local_subname);
+							myexamList.add(local_subname);
+						}
+						List<String> sublist = new ArrayList<>();
+						for (int i = 0; i < subcontentList.size(); i++) {
+							sublist.add("《" + subcontentList.get(i) + "》");
+						}
+						txtSubject.setText(sublist.toString());
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, null) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> hashMap = new HashMap<String, String>();
+				hashMap.put("uname", PreferenceUtil.getSharePre(getActivity()).getString("username", ""));
+				return hashMap;
+			}
+		};
+		stringRequest.setTag("fragmentfive");
+		MyApplication.getHttpQueue().add(stringRequest);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.img_tab5_icon:
+				startActivity(new Intent(getActivity(), LoginActivity.class));
+				break;
+//			case R.id.txt_tab5_localsubject:
+//				Intent intent = new Intent(getActivity(),MyExamContent.class);
+//				intent.putStringArrayListExtra("myexamList", (ArrayList<String>) myexamList);
+//				startActivity(intent);
 //				break;
-//			} else {
-//				ToastUtil.showMessage(getActivity(), "��ǰ�Ѿ������°汾:v" + localVersion);
+//			case R.id.txt_to_aboutus:
+//				startActivity(new Intent(getActivity(), AboutUsActivity.class));
 //				break;
-//			}
-//		case R.id.txt_to_suggestion:
-//			startActivity(new Intent(getActivity(), SuggestionActivity.class));
-//			break;
-//		case R.id.txt_tab5_localmessage:
-//			// startActivity(new Intent(getActivity(), Schedule.class));
-//			break;
-//		}
-//	}
+			case R.id.txt_to_update:
+				String serverVersion = PreferenceUtil.getSharePre(getActivity()).getString("serverVersion", "");
+				String localVersion = PreferenceUtil.getSharePre(getActivity()).getString("localVersion", "");
+				LogUtil.e("serverVersion", "serverVersion = " + serverVersion + " localVersion" + localVersion);
+				if (Float.parseFloat(serverVersion) > Float.parseFloat(localVersion)) {
+					// 自动更新
+					new UpdateManager(getActivity()).checkUpdate();
+					break;
+				} else {
+					ToastUtil.showMessage(getActivity(), "当前已经是最新版本:v" + localVersion);
+					break;
+				}
+//			case R.id.txt_to_suggestion:
+//				startActivity(new Intent(getActivity(), SuggestionActivity.class));
+//				break;
+		}
+	}
 }

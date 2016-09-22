@@ -77,6 +77,9 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         } else if (local_code.equals("apply")) {
             title.setText("集训营申请");
             mLinearlayout.setBackgroundColor(Color.parseColor("#f7941d"));
+        } else if (local_code.equals("examfinish")) {
+            title.setText("考后笔试答案");
+            mLinearlayout.setBackgroundColor(Color.parseColor("#408f40"));
         }
     }
 

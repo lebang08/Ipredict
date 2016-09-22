@@ -29,6 +29,7 @@ import com.woyuce.activity.Fragment.Fragmentone;
 import com.woyuce.activity.Fragment.Fragmentthree;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.Utils.UpdateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +81,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // 申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
         } else {
             // 自动检测更新
-//            new UpdateManager(this).checkUpdate();
+            new UpdateManager(this).checkUpdate();
         }
     }
 
@@ -115,7 +115,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 ToastUtil.showMessage(MainActivity.this, "现在您拥有了权限");
                 // 自动检测更新
-//                new UpdateManager(this).checkUpdate();
+                new UpdateManager(this).checkUpdate();
             } else {
                 ToastUtil.showMessage(MainActivity.this, "拒绝授权会导致无法更新和缓存图片");
                 reforrequest();
@@ -168,8 +168,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
             }
         };
         mViewPager.setAdapter(mAdapter);
-        // 设置保留4个界面的缓存
-        // mViewPager.setOffscreenPageLimit(4);
     }
 
     private void initEvent() {

@@ -17,14 +17,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.FreeRangeActivity;
 import com.woyuce.activity.GongyiActivity;
 import com.woyuce.activity.NetClassActivity;
 import com.woyuce.activity.R;
-import com.woyuce.activity.FreeRangeActivity;
 import com.woyuce.activity.SpeakingActivity;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.WebActivity;
 import com.woyuce.activity.WitActivity;
 
 import org.json.JSONException;
@@ -43,8 +44,8 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
 
     // 计时器所需
     private FrameLayout mFrame;
-    private TextView mTxtTimer,mTxtTimerTitle;
-    private String localTimer , localtoken ,localuserid;
+    private TextView mTxtTimer, mTxtTimerTitle;
+    private String localTimer, localtoken, localuserid;
 
     private String URL = "http://api.iyuce.com/v1/exam/setexamtime";
 
@@ -114,10 +115,10 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
                 if (mDistantofTime == 0) {
                     mTxtTimerTitle.setText("祝您今天考试顺利");
                     mTxtTimer.setText("加油!");
-                } else if(mDistantofTime > 0){
+                } else if (mDistantofTime > 0) {
                     mTxtTimerTitle.setText("距离考试时间还有");
                     mTxtTimer.setText(mDistantofTime + "天");
-                }else if(mDistantofTime < 0){
+                } else if (mDistantofTime < 0) {
                     mTxtTimerTitle.setText("距离考试时间还有");
                     mTxtTimer.setText("已结束");
                 }
@@ -129,6 +130,7 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
 
     /**
      * 将设定的时间上传
+     *
      * @param mTime
      */
     private void getJson(final String mTime) {
@@ -139,9 +141,9 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
                 try {
                     obj = new JSONObject(response);
                     String code = obj.getString("code");
-                    if(code.equals("0")){
+                    if (code.equals("0")) {
                         LogUtil.e("settime,success");
-                    }else{
+                    } else {
                         LogUtil.e("settime,false");
                     }
                 } catch (JSONException e) {
@@ -192,9 +194,12 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
             case R.id.img_writting:
                 startActivity(new Intent(getActivity(), WitActivity.class));
                 break;
-//            case R.id.img_waitting:
-//                startActivity(new Intent(getActivity(), WaittingActivity.class));
-//                break;
+            case R.id.img_waitting:
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("URL", "http://sj.iyuce.com/");
+                intent.putExtra("CODE", "examfinish");
+                startActivity(intent);
+                break;
         }
     }
 
