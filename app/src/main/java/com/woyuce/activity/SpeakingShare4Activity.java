@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/9/22.
  */
-public class SpeakingShareActivity4 extends Activity implements View.OnClickListener {
+public class SpeakingShare4Activity extends Activity implements View.OnClickListener {
 
     private Button btnBack;
     private LinearLayout llBack;
@@ -76,15 +76,15 @@ public class SpeakingShareActivity4 extends Activity implements View.OnClickList
             @SuppressWarnings("deprecation")
             @Override
             public void onResponse(String response) {
-                new AlertDialog.Builder(SpeakingShareActivity4.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                new AlertDialog.Builder(SpeakingShare4Activity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
                         .setTitle("分享结果")
                         .setCancelable(false)
                         .setPositiveButton("分享成功 !", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent it_speaking = new Intent(SpeakingShareActivity4.this, SpeakingActivity.class);
+                                Intent it_speaking = new Intent(SpeakingShare4Activity.this, SpeakingActivity.class);
                                 startActivity(it_speaking);
-                                SpeakingShareActivity4.this.finish();
+                                SpeakingShare4Activity.this.finish();
                                 if (subnameList.size() == 0) {
 //                                    showShare("我们不卖答案，我们是试卷的搬运工", "我在" + localRoom + "考到了:" + localsubname);
                                 } else {
@@ -98,11 +98,11 @@ public class SpeakingShareActivity4 extends Activity implements View.OnClickList
             @Override
             public void onErrorResponse(VolleyError error) {
                 LogUtil.e("Wrong-BACK", "联接错误原因： " + error.getMessage());
-                new AlertDialog.Builder(SpeakingShareActivity4.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).setTitle("分享结果")
+                new AlertDialog.Builder(SpeakingShare4Activity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).setTitle("分享结果")
                         .setCancelable(false).setPositiveButton("分享失败，请重试 !", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SpeakingShareActivity4.this.finish();
+                        SpeakingShare4Activity.this.finish();
                     }
                 }).show();
             }
@@ -179,7 +179,6 @@ public class SpeakingShareActivity4 extends Activity implements View.OnClickList
 //            // 启动分享GUI
 //            oks.show(ShareActivity4.this);
 //        } catch (UnsupportedEncodingException e) {
-//            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
 //    }

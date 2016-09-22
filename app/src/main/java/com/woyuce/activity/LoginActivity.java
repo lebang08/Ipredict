@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     @Override
     protected void onStop() {
         super.onStop();
-//        MyApplication.getHttpQueue().cancelAll("login");
+        MyApplication.getHttpQueue().cancelAll("login");
     }
 
     @Override
@@ -123,14 +123,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         }, null) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + localtoken);
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
                 map.put("user_id", userid);
                 map.put("exam_time", mTime);
                 return map;
@@ -194,7 +194,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                                 // 取消加载对话框
                                 progressdialogcancel();
                                 // 上传注册时设定的考试时间
-//                                uploadTime(timer_register, userId);
+                                uploadTime(timer_register, userId);
                                 // 启动主页面
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                 finish();
@@ -205,7 +205,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        // Log.e("DATA-BACK", "JSON接口返回的信息： " + response);
                     }
                 }, new ErrorListener() {
                     @Override
@@ -217,7 +216,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
-                        HashMap<String, String> headers = new HashMap<String, String>();
+                        HashMap<String, String> headers = new HashMap<>();
                         localtoken = PreferenceUtil.getSharePre(LoginActivity.this).getString("localtoken", "");
                         headers.put("Authorization", "Bearer " + localtoken);
                         return headers;
@@ -225,7 +224,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> map = new HashMap<String, String>();
+                        HashMap<String, String> map = new HashMap<>();
                         map.put("username", strUserName);
                         map.put("password", strPassword);
                         return map;
@@ -240,13 +239,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 // PreferenceUtil.clear(this);
                 finish();
                 break;
-//            case R.id.btn_register:
-//                startActivity(new Intent(this, RegisterActivity.class));
-//                finish();
-//                break;
-//            case R.id.btn_apply:
-//                startActivity(new Intent(this, ApplyActivity.class));
-//                break;
+            case R.id.btn_register:
+                startActivity(new Intent(this, LoginRegisterActivity.class));
+                finish();
+                break;
+            case R.id.btn_apply:
+                Intent intent = new Intent(this, WebActivity.class);
+                intent.putExtra("URL", "http://www.iyuce.com/m/appfbbsq");
+                intent.putExtra("CODE", "apply");
+                startActivity(intent);
+                break;
         }
     }
 }

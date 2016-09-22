@@ -14,7 +14,7 @@ import com.woyuce.activity.Utils.LogUtil;
 /**
  * Created by Administrator on 2016/9/22.
  */
-public class SpeakingShareActivity2 extends Activity implements View.OnClickListener {
+public class SpeakingShare2Activity extends Activity implements View.OnClickListener {
 
     private Button btnBack, btnNext;
     private LinearLayout llBack;
@@ -70,7 +70,7 @@ public class SpeakingShareActivity2 extends Activity implements View.OnClickList
                 break;
             case R.id.button_share2_next: // **** 点击"下一步"按钮， 进入下一个"分享"界面
                 String localMessage = edtMessage.getText().toString();
-                Intent it_share3 = new Intent(this, SpeakingShareActivity3.class);
+                Intent it_share3 = new Intent(this, SpeakingShare3Activity.class);
                 it_share3.putExtra("localMessage", localMessage);
                 it_share3.putExtra("localTime", localTime);
                 it_share3.putExtra("localRoomID", localRoomID);

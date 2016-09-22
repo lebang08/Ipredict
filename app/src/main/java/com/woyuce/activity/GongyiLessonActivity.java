@@ -15,7 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.GongyiLessonAdapter;
 import com.woyuce.activity.Application.MyApplication;
-import com.woyuce.activity.Bean.Audio;
+import com.woyuce.activity.Bean.GongyiAudio;
 import com.woyuce.activity.Utils.LogUtil;
 
 import org.json.JSONArray;
@@ -34,7 +34,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
     private TextView txtback;
     private Button btnListening, btnSpeaking, btnReading, btnWritting;
 
-    private List<Audio> audioList = new ArrayList<Audio>();
+    private List<GongyiAudio> audioList = new ArrayList<GongyiAudio>();
     private String URL_LIST = "http://php.ipredicting.com/service/audiolistingroup.php";
     private String URL_DETAIL = "http://php.ipredicting.com/service/audiodetail.php?id=";
 
@@ -79,12 +79,12 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
             public void onResponse(String response) {
                 JSONObject obj;
                 JSONArray data;
-                Audio audio;
+                GongyiAudio audio;
                 try {
 //                    String parseString = new String(response.getBytes("ISO-8859-1"), "utf-8");
                     data = new JSONArray(response);
                     for (int i = 0; i < data.length(); i++) {
-                        audio = new Audio();
+                        audio = new GongyiAudio();
                         obj = data.getJSONObject(i);
                         audio.id = obj.getString("id");
                         audio.title = obj.getString("title");
@@ -138,7 +138,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Audio audio = (Audio) audioList.get(position);
+        GongyiAudio audio = (GongyiAudio) audioList.get(position);
         String localid = audio.id;
         getDetailJson(URL_DETAIL + localid); // 执行Volley 拿Audio的 url
     }

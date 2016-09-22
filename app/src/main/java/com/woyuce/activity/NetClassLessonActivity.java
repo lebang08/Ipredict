@@ -122,7 +122,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
                     } else {
                         // Log.e("Code Error", "code spnTimewrong" + response);
                     }
-					/* gridview设置adapter */
+                    /* gridview设置adapter */
                     wanglessonAdapter = new NetClassLessonAdapter(NetClassLessonActivity.this, wanglessonList);
                     mGridview.setAdapter(wanglessonAdapter);
                 } catch (JSONException e) {
@@ -209,22 +209,23 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //对话中再做对话
-                                    new AlertDialog.Builder(NetClassLessonActivity.this,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                                    new AlertDialog.Builder(NetClassLessonActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
                                             .setNeutralButton("购买直播课程", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    //TODO 网络班直播
-//                                                    Intent intent = new Intent(NetClassLessonActivity.this, Wangluobanzhibo.class);
-//                                                    startActivity(intent);
+                                                    Intent intent = new Intent(NetClassLessonActivity.this, WebActivity.class);
+                                                    intent.putExtra("URL", "https://iyuce.ke.qq.com/");
+                                                    intent.putExtra("CODE", "zhibo");
+                                                    startActivity(intent);
                                                 }
                                             })
                                             .setPositiveButton("购买录播课程", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    //TODO 网络班录播
-//                                                    Intent intent = new Intent(NetClassLessonActivity.this, Wangluobanlubo.class);
-//                                                    intent.putExtra("URL_STORE", "http://store.iyuce.com/goods-1");
-//                                                    startActivity(intent);
+                                                    Intent intent = new Intent(NetClassLessonActivity.this, WebActivity.class);
+                                                    intent.putExtra("URL", "http://store.iyuce.com/goods-1");
+                                                    intent.putExtra("CODE", "lubo");
+                                                    startActivity(intent);
                                                 }
                                             })
                                             .show();

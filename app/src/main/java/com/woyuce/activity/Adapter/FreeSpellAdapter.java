@@ -3,7 +3,7 @@ package com.woyuce.activity.Adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.woyuce.activity.Bean.SpellBean;
+import com.woyuce.activity.Bean.FreeSpellBean;
 import com.woyuce.activity.R;
 
 import android.content.Context;
@@ -19,13 +19,13 @@ import android.widget.TextView;
 
 public class FreeSpellAdapter extends BaseAdapter {
 
-	private List<SpellBean> mDatalist;
+	private List<FreeSpellBean> mDatalist;
 	private LayoutInflater mLayoutnflate;
 	private boolean flag = false;
 
 	private List<String> answerList = new ArrayList<>();
 
-	public FreeSpellAdapter(Context context, List<SpellBean> list, boolean flag, List<String> answerList) {
+	public FreeSpellAdapter(Context context, List<FreeSpellBean> list, boolean flag, List<String> answerList) {
 		this.mDatalist = list;
 		mLayoutnflate = LayoutInflater.from(context);
 		this.answerList = answerList;
@@ -63,7 +63,7 @@ public class FreeSpellAdapter extends BaseAdapter {
 		}
 
 		// EditText����Tag
-		final SpellBean bean = mDatalist.get(position);
+		final FreeSpellBean bean = mDatalist.get(position);
 		viewhold.mEdtspell.setTag(bean);
 		
 //		//ȡ��������ȡ���㣬���⽹�㸴��
@@ -77,7 +77,7 @@ public class FreeSpellAdapter extends BaseAdapter {
 		// Edit���ݼ���
 		viewhold.mEdtspell.addTextChangedListener(new TextWatcher() {
 			public void afterTextChanged(Editable editable) {
-				SpellBean bean = (SpellBean) viewhold.mEdtspell.getTag();
+				FreeSpellBean bean = (FreeSpellBean) viewhold.mEdtspell.getTag();
 				bean.spell = editable.toString();
 			}
 
@@ -120,7 +120,7 @@ public class FreeSpellAdapter extends BaseAdapter {
 		public EditText mEdtspell;
 	}
 
-	public ArrayList<SpellBean> returnSpellList(){
-		return (ArrayList<SpellBean>) mDatalist;
+	public ArrayList<FreeSpellBean> returnSpellList(){
+		return (ArrayList<FreeSpellBean>) mDatalist;
 	}
 }

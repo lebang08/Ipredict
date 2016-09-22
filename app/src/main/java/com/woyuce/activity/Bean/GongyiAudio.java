@@ -1,6 +1,6 @@
 package com.woyuce.activity.Bean;
 
-public class Audio {
+public class GongyiAudio {
 
 
     public String id;

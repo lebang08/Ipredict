@@ -123,7 +123,7 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_speaking_share:
-                startActivity(new Intent(this, SpeakingShareActivity1.class));
+                startActivity(new Intent(this, SpeakingShare1Activity.class));
                 overridePendingTransition(0, 0); // ****设置无跳转动画
                 break;
             case R.id.ll_speaking_gaopintongji:

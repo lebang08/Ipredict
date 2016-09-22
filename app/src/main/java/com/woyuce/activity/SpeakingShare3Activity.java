@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/22.
  */
-public class SpeakingShareActivity3 extends BaseActivity implements View.OnClickListener {
+public class SpeakingShare3Activity extends BaseActivity implements View.OnClickListener {
 
     private Button btnBack, btnNext;
     private LinearLayout llBack ,btnPartOne, btnPartTwo;
@@ -127,7 +127,7 @@ public class SpeakingShareActivity3 extends BaseActivity implements View.OnClick
                 localsubname = fragmentparttwo.returnSubname2();
 
                 if (subidList.size() == 0 && subid2 == null) {
-                    ToastUtil.showMessage(SpeakingShareActivity3.this, "请选择要分享的题目,亲");
+                    ToastUtil.showMessage(SpeakingShare3Activity.this, "请选择要分享的题目,亲");
                     return;                         //这个return太妙
                 } else if (subidList.size() == 0 && subid2 != null) {
                     subidList.add(subid2);
@@ -136,7 +136,7 @@ public class SpeakingShareActivity3 extends BaseActivity implements View.OnClick
                 else if (subidList.size() !=0 && subid2 != null) {
                     subidList.add(subid2);
                 }
-                Intent it_share4 = new Intent(this, SpeakingShareActivity4.class);
+                Intent it_share4 = new Intent(this, SpeakingShare4Activity.class);
                 it_share4.putExtra("localMessage", localMessage);
                 it_share4.putExtra("localTime", localTime);
                 it_share4.putExtra("localRoomID", localRoomID);

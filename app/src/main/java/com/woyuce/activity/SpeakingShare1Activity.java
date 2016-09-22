@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/22.
  */
-public class SpeakingShareActivity1 extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class SpeakingShare1Activity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private LinearLayout llBack;
     private Button btnNext, btnBack, btnRoomChoose;
@@ -162,9 +162,9 @@ public class SpeakingShareActivity1 extends BaseActivity implements View.OnClick
                 break;
             case R.id.button_share_next: // *** 点击"下一步"按钮,启动下一个"分享"界面
                 if (localRoom == null || localRoom == "") {
-                    ToastUtil.showMessage(SpeakingShareActivity1.this, "请选择考场");
+                    ToastUtil.showMessage(SpeakingShare1Activity.this, "请选择考场");
                 } else {
-                    Intent it_share2 = new Intent(this, SpeakingShareActivity2.class);
+                    Intent it_share2 = new Intent(this, SpeakingShare2Activity.class);
                     it_share2.putExtra("localRoom", localRoom);
                     it_share2.putExtra("localRoomID", localRoomID);
                     it_share2.putExtra("localTime", localTime);

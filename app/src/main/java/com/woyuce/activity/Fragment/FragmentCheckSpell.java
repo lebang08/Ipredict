@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.FreeSpellAdapter;
 import com.woyuce.activity.Application.MyApplication;
-import com.woyuce.activity.Bean.SpellBean;
+import com.woyuce.activity.Bean.FreeSpellBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -40,7 +40,7 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 	private Button mFinish, mCancel;
 
 	private ListView mListview;
-	private List<SpellBean> spellbeanList = new ArrayList<>();
+	private List<FreeSpellBean> spellbeanList = new ArrayList<>();
 	private FreeSpellAdapter mAdapters;
 
 	private List<String> answerList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_checkspell, null);
+		View view = inflater.inflate(R.layout.fragment_freecheckspell, null);
 		initView(view);
 		requestJson();
 		return view;
@@ -117,10 +117,10 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 					int result = obj.getInt("code");
 					if (result == 0) {
 						arr = obj.getJSONArray("data");
-						SpellBean spellbean;
+						FreeSpellBean spellbean;
 						for (int i = 0; i < arr.length(); i++) {
 							obj = arr.getJSONObject(i);
-							spellbean = new SpellBean();
+							spellbean = new FreeSpellBean();
 							spellbean.answer = obj.getString("answer");
 							spellbean.num = obj.getString("num");
 							spellbean.spell = " ";
@@ -227,7 +227,7 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 				if (FLAG == false) {
 					FLAG = true;
 					// 判断得分
-					ArrayList<SpellBean> spellList = mAdapters.returnSpellList();
+					ArrayList<FreeSpellBean> spellList = mAdapters.returnSpellList();
 					int mCount = 0;
 					for (int i = 0; i < answerList.size(); i++) {
 						if (spellList.get(i).spell.toLowerCase().trim().toString()

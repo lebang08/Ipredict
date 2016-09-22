@@ -475,14 +475,18 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
                 .setPositiveButton("报名录播", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //TODO  进入WebView直播、录播
-//                        startActivity(new Intent(FreePageActivity.this, Wangluobanlubo.class));
+                        Intent intent = new Intent(FreePageActivity.this, WebActivity.class);
+                        intent.putExtra("URL", "http://store.iyuce.com/goods-1");
+                        intent.putExtra("CODE", "lubo");
+                        startActivity(intent);
                     }
                 }).setNegativeButton("报名直播", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO  进入WebView直播、录播
-//                startActivity(new Intent(FreePageActivity.this, Wangluobanzhibo.class));
+                Intent intent = new Intent(FreePageActivity.this, WebActivity.class);
+                intent.putExtra("URL", "https://iyuce.ke.qq.com/");
+                intent.putExtra("CODE", "zhibo");
+                startActivity(intent);
             }
         }).setNeutralButton("再想想", null).show();
     }

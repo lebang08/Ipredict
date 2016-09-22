@@ -34,18 +34,18 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/9/22.
  */
-public class SpeakingVoteActivity  extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class SpeakingVoteActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private TextView txtTitle;
     private Button btnCancel, btnVote;
     private Spinner spnArea, spnCity, spnRoom;
 
-    private String localsubID, localsubName ,localUrl;
+    private String localsubID, localsubName, localUrl;
     private String URL_AREA = "http://iphone.ipredicting.com/kyAreaApi.aspx";
     private String URL_CITY = "http://iphone.ipredicting.com/kyCityApi.aspx";
     private String URL_ROOM = "http://iphone.ipredicting.com/kyRoomApi.aspx";
     private String URL_VOTE = "http://iphone.ipredicting.com/kysubVote.aspx";
-    private String localAreaId, localCityId, localRoomId ,localRoomName;
+    private String localAreaId, localCityId, localRoomId, localRoomName;
 
     private List<SpeakingArea> areaList = new ArrayList<>();
     private List<SpeakingCity> cityList = new ArrayList<>();
@@ -122,7 +122,8 @@ public class SpeakingVoteActivity  extends BaseActivity implements View.OnClickL
                     } else {
                         LogUtil.e("code!=0 Data-BACK", "读取页面失败： " + jsonObject.getString("message"));
                     }
-                    setAreaData(); // 数据加载完成后再放入 ******************************
+                    // 数据加载完成后再放入
+                    setAreaData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -153,7 +154,8 @@ public class SpeakingVoteActivity  extends BaseActivity implements View.OnClickL
                     } else {
                         LogUtil.e("code!=0 Data-BACK", "读取页面失败： " + jsonObject.getString("message"));
                     }
-                    setCityData(); // 数据加载完成后再放入 ******************************
+                    // 数据加载完成后再放入
+                    setCityData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -161,7 +163,7 @@ public class SpeakingVoteActivity  extends BaseActivity implements View.OnClickL
         }, errorListener()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> hashMap = new HashMap<String, String>();
+                Map<String, String> hashMap = new HashMap<>();
                 if (localAreaId == null) {
                     hashMap.put("areaid", "45");
                 }
@@ -230,7 +232,6 @@ public class SpeakingVoteActivity  extends BaseActivity implements View.OnClickL
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Log.e("DATA-BACK", "JSON接口返回的信息： " + response);
             }
         }, errorListener()) {
             @Override
@@ -311,7 +312,6 @@ public class SpeakingVoteActivity  extends BaseActivity implements View.OnClickL
 //            // 启动分享GUI
 //            oks.show(SpeakingVoteActivity.this);
 //        } catch (UnsupportedEncodingException e) {
-//            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
 //    }

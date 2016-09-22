@@ -240,7 +240,7 @@ public class SpeakingChooseRoomActivity extends Activity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_choose_sure:
-                Intent intent = new Intent(this, SpeakingShareActivity1.class);
+                Intent intent = new Intent(this, SpeakingShare1Activity.class);
                 intent.putExtra("localRoomID", localRoomID); // 设置返回数据
                 intent.putExtra("localRoom", localRoomName); // 设置返回数据
                 setResult(1, intent);

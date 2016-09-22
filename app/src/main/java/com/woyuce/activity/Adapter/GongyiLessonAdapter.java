@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.woyuce.activity.Bean.Audio;
+import com.woyuce.activity.Bean.GongyiAudio;
 import com.woyuce.activity.R;
 
 import java.util.List;
 
 public class GongyiLessonAdapter extends BaseAdapter {
 
-    private List<Audio> mList;
+    private List<GongyiAudio> mList;
     private LayoutInflater mInflater;
 
-    public GongyiLessonAdapter(Context context, List<Audio> data) {
+    public GongyiLessonAdapter(Context context, List<GongyiAudio> data) {
         mList = data;
         mInflater = LayoutInflater.from(context);
     }
