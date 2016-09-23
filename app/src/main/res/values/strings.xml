@@ -31,5 +31,6 @@
     <string name="company_phone">客服电话： 0592-5895791</string>
     <string name="company_web">我预测网站：www.iyuce.com</string>
     <string name="share_exam">分享考题</string>
+    <string name="search_prompt">大家都在搜索</string>
 
 </resources>

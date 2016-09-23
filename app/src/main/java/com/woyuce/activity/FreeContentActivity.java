@@ -141,7 +141,7 @@ public class FreeContentActivity extends Activity implements View.OnClickListene
      */
     private void getImage(String imgurl) {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-//                .showImageOnLoading(R.anim.loading)
+                .showImageOnLoading(R.mipmap.img_error)
                 .showImageOnFail(R.mipmap.img_error).cacheInMemory(true).cacheOnDisk(false)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         ImageLoader.getInstance().displayImage(imgurl, mContent, options);

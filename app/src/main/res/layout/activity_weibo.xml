@@ -2,15 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/btn_fragmenttab3_topulish"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#33ba9c"
         android:gravity="center"
+        android:onClick="toPulish"
         android:text="这个工具栏要封装，做成自定义View" />
 
     <LinearLayout
@@ -28,7 +27,7 @@
     </LinearLayout>
 
     <ViewFlipper
-        android:id="@+id/vf_fragmenttab3_weibo"
+        android:id="@+id/vf_activity_weibo"
         android:layout_width="match_parent"
         android:layout_height="144dp" />
 
@@ -70,11 +69,9 @@
         android:text="精选动态" />
 
     <GridView
-        android:id="@+id/gv_fragmenttab3_weibo"
+        android:id="@+id/gv_activity_weibo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
-        android:numColumns="2"
-        android:verticalSpacing="32dp" />
+        android:numColumns="2" />
 
 </LinearLayout>

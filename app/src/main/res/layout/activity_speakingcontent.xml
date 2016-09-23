@@ -8,7 +8,7 @@
         android:id="@+id/txt_subcontent_title"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#3399ff"
+        android:background="#2299cc"
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="16sp" />
