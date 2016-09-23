@@ -8,8 +8,8 @@ android {
         applicationId "com.woyuce.activity"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 23
-        versionName "2.3"
+        versionCode 24
+        versionName "2.4"
     }
     buildTypes {
         release {
@@ -23,9 +23,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
-    dependencies {
-        compile 'com.mcxiaoke.volley:library:1.0.19'
-    }
+    compile 'com.android.support:design:24.2.0'
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile files('libs/uk-co-senab-photoview-source.jar')
+    compile files('libs/volley.jar')
 }

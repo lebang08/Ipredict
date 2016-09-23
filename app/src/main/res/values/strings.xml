@@ -28,5 +28,7 @@
     <string name="gongyi_lesson">公益课堂</string>
     <string name="gongyi_audio">我预测公开课音频回放</string>
     <string name="gongyi_tecentlesson">我预测腾讯课堂</string>
+    <string name="company_phone">客服电话： 0592-5895791</string>
+    <string name="company_web">我预测网站：www.iyuce.com</string>
 
 </resources>

@@ -22,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
     private TextView txtback;
     private Button btnListening, btnSpeaking, btnReading, btnWritting;
 
-    private List<GongyiAudio> audioList = new ArrayList<GongyiAudio>();
+    private List<GongyiAudio> audioList = new ArrayList<>();
     private String URL_LIST = "http://php.ipredicting.com/service/audiolistingroup.php";
     private String URL_DETAIL = "http://php.ipredicting.com/service/audiodetail.php?id=";
 
@@ -80,9 +81,10 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
                 JSONObject obj;
                 JSONArray data;
                 GongyiAudio audio;
+                LogUtil.e("response audiolist= " + response);
                 try {
-//                    String parseString = new String(response.getBytes("ISO-8859-1"), "utf-8");
-                    data = new JSONArray(response);
+                    String parseString = new String(response.getBytes("ISO-8859-1"), "utf-8");
+                    data = new JSONArray(parseString);
                     for (int i = 0; i < data.length(); i++) {
                         audio = new GongyiAudio();
                         obj = data.getJSONObject(i);
@@ -90,7 +92,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
                         audio.title = obj.getString("title");
                         audioList.add(audio);
                     }
-                } catch (JSONException e) {
+                } catch (JSONException | UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 adapter = new GongyiLessonAdapter(GongyiLessonActivity.this, audioList);
@@ -109,11 +111,11 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
             public void onResponse(String response) {
                 JSONObject obj;
                 try {
-//                    String parseString = new String(response.getBytes("ISO-8859-1"), "utf-8");
-                    obj = new JSONObject(response);
+                    String parseString = new String(response.getBytes("ISO-8859-1"), "utf-8");
+                    obj = new JSONObject(parseString);
                     localAudioUrl = obj.getString("url");
                     localAudioTitle = obj.getString("title");
-                } catch (JSONException e) {
+                } catch (JSONException | UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 Intent it = new Intent(GongyiLessonActivity.this, GongyiContentActivity.class);

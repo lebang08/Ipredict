@@ -152,7 +152,7 @@ public class NetClassActivity extends BaseActivity
                             examdate = examtime.getString(i);
                             dateList.add(examdate);
                         }
-						/* 遍历取网络班类型 */
+                        /* 遍历取网络班类型 */
                         for (int i = 0; i < arr.length(); i++) {
                             obj = arr.getJSONObject(i);
                             classnameList.add(obj.getString("wcg_name"));
@@ -161,7 +161,7 @@ public class NetClassActivity extends BaseActivity
                     } else {
                         // Log.e("Code Error", "code spnTimewrong" + response);
                     }
-					/*数据加载完后放入 */
+                    //数据加载完后放入
                     setSpnDate();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -253,15 +253,20 @@ public class NetClassActivity extends BaseActivity
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent(this, WebActivity.class);
         switch (v.getId()) {
             case R.id.arrow_back:
                 finish();
                 break;
             case R.id.btn_wangluoban_zhibo:
-//                startActivity(new Intent(NetClassActivity.this, Wangluobanzhibo.class));
+                intent.putExtra("URL", "https://iyuce.ke.qq.com/");
+                intent.putExtra("CODE", "zhibo");
+                startActivity(intent);
                 break;
             case R.id.btn_wangluoban_lubo:
-//                startActivity(new Intent(NetClassActivity.this, Wangluobanlubo.class));
+                intent.putExtra("URL", "http://store.iyuce.com/goods-1");
+                intent.putExtra("CODE", "lubo");
+                startActivity(intent);
                 break;
         }
     }

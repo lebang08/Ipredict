@@ -163,9 +163,20 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" />
 
-        <!--WebView专用的Activity -->
+        <!--WebView专用Activity -->
         <activity
             android:name=".WebActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+
+        <!--意见反馈Activity -->
+        <activity
+            android:name=".SuggestionActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <!--关于我们Activity -->
+        <activity
+            android:name=".AboutUsActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
 

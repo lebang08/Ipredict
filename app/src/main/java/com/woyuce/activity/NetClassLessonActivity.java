@@ -1,8 +1,11 @@
 package com.woyuce.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -97,7 +100,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
         }
     }
 
-    /* 获取spn的数据 */
+    /** 获取spn的数据 */
     private void getExamUnit() {
         StringRequest strinrequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -122,7 +125,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
                     } else {
                         // Log.e("Code Error", "code spnTimewrong" + response);
                     }
-                    /* gridview设置adapter */
+                    //gridview设置adapter
                     wanglessonAdapter = new NetClassLessonAdapter(NetClassLessonActivity.this, wanglessonList);
                     mGridview.setAdapter(wanglessonAdapter);
                 } catch (JSONException e) {
@@ -233,14 +236,14 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
                             }).setNegativeButton("联系客服", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-//                                    boolean isqqone = isApkInstalled(NetClassLessonActivity.this,"com.tencent.mobileqq");
-//                                    if (isqqone == false) {
-//                                        ToastUtil.showMessage(NetClassLessonActivity.this,
-//                                                "手机必须安装腾讯QQ才能联系客服哦");
-//                                    } else {
-//                                        String url = "mqqwpa://im/chat?chat_type=wpa&uin=3174839753";
-//                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-//                                    }
+                                    boolean isqq = isApkInstalled(NetClassLessonActivity.this, "com.tencent.mobileqq");
+                                    if (!isqq) {
+                                        ToastUtil.showMessage(NetClassLessonActivity.this,
+                                                "手机必须安装腾讯QQ才能联系客服哦");
+                                    } else {
+                                        String url = "mqqwpa://im/chat?chat_type=wpa&uin=3174839753";
+                                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                                    }
                                 }
                             }).show();
                         }
@@ -254,14 +257,14 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
         }, null) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + localtoken);
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
                 map.put("user_id", PreferenceUtil.getSharePre(NetClassLessonActivity.this).getString("userId", ""));
                 map.put("gid", localgid);
                 return map;
@@ -330,14 +333,14 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
         MyApplication.getHttpQueue().add(checkcoderequest);
     }
 
-//    public static final boolean isApkInstalled(Context context, String packageName) {
-//        try {
-//            context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_UNINSTALLED_PACKAGES);
-//            return true;
-//        } catch (PackageManager.NameNotFoundException e) {
-//            return false;
-//        }
-//    }
+    public static boolean isApkInstalled(Context context, String packageName) {
+        try {
+            context.getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
 
     // 该方法以后才需要判断权限
     @Override
