@@ -63,7 +63,7 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
         subnameList = intent.getStringArrayListExtra("subnameList");
         LogUtil.e("subnameList === " + subnameList);
 
-        llBack = (LinearLayout) findViewById(R.id.ll_activity_share4);
+        llBack = (LinearLayout) findViewById(R.id.ll_speaking_stastis);
         btnBack = (Button) findViewById(R.id.button_share4_back);
 
         llBack.setOnClickListener(this);
@@ -185,5 +185,6 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

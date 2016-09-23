@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.woyuce.activity.Fragment.FragmentPartOne;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class SpeakingShare3Activity extends BaseActivity implements View.OnClickListener {
 
+    private ImageView mImgBack;
     private Button btnBack, btnNext;
     private LinearLayout llBack ,btnPartOne, btnPartTwo;
 
@@ -50,12 +52,14 @@ public class SpeakingShare3Activity extends BaseActivity implements View.OnClick
         localRoomID = intent.getStringExtra("localRoomID");
         localRoom = intent.getStringExtra("localRoom");
 
-        llBack = (LinearLayout) findViewById(R.id.ll_activity_share3);
+        mImgBack = (ImageView) findViewById(R.id.img_back);
+        llBack = (LinearLayout) findViewById(R.id.ll_speaking_stastis);
         btnBack = (Button) findViewById(R.id.button_share3_back);
         btnNext = (Button) findViewById(R.id.button_share3_next);
         btnPartOne = (LinearLayout) findViewById(R.id.btn_share3_part1);
         btnPartTwo = (LinearLayout) findViewById(R.id.btn_share3_part2);
 
+        mImgBack.setOnClickListener(this);
         llBack.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btnNext.setOnClickListener(this);
@@ -74,12 +78,15 @@ public class SpeakingShare3Activity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_activity_share3: // **** 点击" 高频统计" 启动 Activity-统计，
+            case R.id.ll_speaking_stastis: // **** 点击" 高频统计" 启动 Activity-统计，
                 Intent it_statis = new Intent(this, SpeakingStatisActivity.class);
                 startActivity(it_statis);
                 overridePendingTransition(0, 0);
                 break;
-            case R.id.button_share3_back: // **** 点击"返回"按钮, 返回上一个"分享"界面
+            case R.id.img_back:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.button_share3_back:
                 finish();
                 overridePendingTransition(0, 0);
                 break;

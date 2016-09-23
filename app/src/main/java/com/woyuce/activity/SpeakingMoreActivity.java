@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,9 +39,13 @@ import java.util.Map;
  */
 public class SpeakingMoreActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    //顶部导航条
+    private ImageView mImgBack;
+    private TextView mTxtToStastis, mTxtToShare;
     private LinearLayout llBack;
+
     private GridView gridView;
-    private Button btnBack, btnPart1, btnPart2;
+    private Button btnPart1, btnPart2;
     private ImageView mGuidemap;
 
     private String URL = "http://iphone.ipredicting.com/kysubCategoryApi.aspx";
@@ -64,8 +69,16 @@ public class SpeakingMoreActivity extends Activity implements AdapterView.OnItem
     }
 
     private void initView() {
-        llBack = (LinearLayout) findViewById(R.id.ll_category_back);
-        btnBack = (Button) findViewById(R.id.button_category_back);
+        //顶部导航条
+        mImgBack = (ImageView) findViewById(R.id.img_back);
+        llBack = (LinearLayout) findViewById(R.id.ll_speaking_share);
+        mTxtToStastis = (TextView) findViewById(R.id.txt_speaking_stastis);
+        mTxtToShare = (TextView) findViewById(R.id.txt_speaking_share);
+        mTxtToStastis.setTextColor(Color.parseColor("#2299cc"));
+        mTxtToStastis.setBackgroundResource(R.drawable.buttonstyle_bluestroke);
+        mTxtToShare.setTextColor(Color.parseColor("#ffffff"));
+        mTxtToShare.setBackgroundResource(R.drawable.buttonstyle_whitestroke);
+
         btnPart1 = (Button) findViewById(R.id.btn_category_part1);
         btnPart2 = (Button) findViewById(R.id.btn_category_part2);
         gridView = (GridView) findViewById(R.id.gridview_category);
@@ -74,7 +87,7 @@ public class SpeakingMoreActivity extends Activity implements AdapterView.OnItem
         llBack.setOnClickListener(this);
         btnPart2.setOnClickListener(this);
         btnPart1.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
+        mImgBack.setOnClickListener(this);
         gridView.setOnItemClickListener(this);
     }
 
@@ -139,16 +152,21 @@ public class SpeakingMoreActivity extends Activity implements AdapterView.OnItem
         startActivity(it_subContent);
     }
 
+    public void back(View view) {
+        finish();
+        overridePendingTransition(0, 0);
+    }
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_category_back:
+            case R.id.ll_speaking_share:
                 Intent it_speaking = new Intent(this, SpeakingActivity.class);
                 startActivity(it_speaking);
-                overridePendingTransition(0, 0); // ****设置无跳转动画
+                overridePendingTransition(0, 0);
                 break;
-            case R.id.button_category_back:
-                finish();
+            case R.id.img_back:
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.btn_category_part1:
                 categoryList.clear();

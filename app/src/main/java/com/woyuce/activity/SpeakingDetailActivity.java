@@ -15,7 +15,6 @@ public class SpeakingDetailActivity extends Activity implements View.OnClickList
     private TextView txtBack, txtName, txtTime, txtRoom, txtContent;
     private SpeakingBean localspeaking;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

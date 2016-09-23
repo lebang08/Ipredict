@@ -2,10 +2,11 @@ package com.woyuce.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,9 +35,12 @@ import java.util.Map;
  */
 public class SpeakingSearchActivity extends Activity implements AdapterView.OnItemClickListener, View.OnClickListener {
 
+    //顶部导航条
+    private ImageView mImgBack;
     private LinearLayout llback;
+    private TextView mTxtToStastis, mTxtToShare;
+
     private ListView lvSearch;
-    private Button btnBack;
     private TextView txtNull;
 
     private String localsearch;
@@ -59,15 +63,24 @@ public class SpeakingSearchActivity extends Activity implements AdapterView.OnIt
     }
 
     private void initView() {
+        //顶部导航条
+        mImgBack = (ImageView) findViewById(R.id.img_back);
+        llback = (LinearLayout) findViewById(R.id.ll_speaking_share);
+        mTxtToStastis = (TextView) findViewById(R.id.txt_speaking_stastis);
+        mTxtToShare = (TextView) findViewById(R.id.txt_speaking_share);
+        mTxtToStastis.setTextColor(Color.parseColor("#2299cc"));
+        mTxtToStastis.setBackgroundResource(R.drawable.buttonstyle_bluestroke);
+        mTxtToShare.setTextColor(Color.parseColor("#ffffff"));
+        mTxtToShare.setBackgroundResource(R.drawable.buttonstyle_whitestroke);
+
+        //读取数据
         Intent it_search = getIntent();
         localsearch = it_search.getStringExtra("localsearch");
 
         txtNull = (TextView) findViewById(R.id.txt_search_null);
-        btnBack = (Button) findViewById(R.id.button_search_back);
         lvSearch = (ListView) findViewById(R.id.listview_search);
-        llback = (LinearLayout) findViewById(R.id.ll_search_back);
 
-        btnBack.setOnClickListener(this);
+        mImgBack.setOnClickListener(this);
         llback.setOnClickListener(this);
         lvSearch.setOnItemClickListener(this);
     }
@@ -103,8 +116,6 @@ public class SpeakingSearchActivity extends Activity implements AdapterView.OnIt
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Log.e("DATA-BACK", "JSON接口返回的信息： " + response);
-                // 这是返回的完整JSON信息，未解析，如果要JSON数据，可以从这里拿
             }
         }, new Response.ErrorListener() {
             @Override
@@ -132,16 +143,21 @@ public class SpeakingSearchActivity extends Activity implements AdapterView.OnIt
         startActivity(it_subContent);
     }
 
+    public void back(View view) {
+        finish();
+        overridePendingTransition(0, 0);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_search_back:
+            case R.id.ll_speaking_share:
                 Intent it_speaking = new Intent(this, SpeakingActivity.class);
                 startActivity(it_speaking);
-                overridePendingTransition(0, 0); // ****设置无跳转动画
+                overridePendingTransition(0, 0);
                 break;
-            case R.id.button_search_back:
-                finish();
+            case R.id.img_back:
+                startActivity(new Intent(this, MainActivity.class));
                 break;
         }
     }

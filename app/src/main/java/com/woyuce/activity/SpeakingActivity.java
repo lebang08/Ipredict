@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,8 +32,10 @@ import java.util.List;
  */
 public class SpeakingActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-    private Button btnShare, btnBack;
     private LinearLayout llStatis;
+    private ImageView mImgBack;
+
+    private Button btnShare;
     private ListView mListView;
     private TextView txtRefresh;
 
@@ -65,15 +68,15 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initView() {
+        mImgBack = (ImageView) findViewById(R.id.img_back);
+        llStatis = (LinearLayout) findViewById(R.id.ll_speaking_stastis);
         mListView = (ListView) findViewById(R.id.listview_speaking_vote);
         btnShare = (Button) findViewById(R.id.button_speaking_share);
-        btnBack = (Button) findViewById(R.id.button_speaking_back);
-        llStatis = (LinearLayout) findViewById(R.id.ll_speaking_gaopintongji);
         txtRefresh = (TextView) findViewById(R.id.txt_speaking_refreshtitle);
 
-        btnShare.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
         llStatis.setOnClickListener(this);
+        btnShare.setOnClickListener(this);
+        mImgBack.setOnClickListener(this);
         mListView.setOnItemClickListener(this);
     }
 
@@ -124,13 +127,13 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.button_speaking_share:
                 startActivity(new Intent(this, SpeakingShare1Activity.class));
-                overridePendingTransition(0, 0); // ****设置无跳转动画
+                overridePendingTransition(0, 0);
                 break;
-            case R.id.ll_speaking_gaopintongji:
+            case R.id.ll_speaking_stastis:
                 startActivity(new Intent(this, SpeakingStatisActivity.class));
-                overridePendingTransition(0, 0); // ****设置无跳转动画
+                overridePendingTransition(0, 0);
                 break;
-            case R.id.button_speaking_back:
+            case R.id.img_back:
                 finish();
         }
     }

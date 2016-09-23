@@ -2,12 +2,14 @@ package com.woyuce.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -36,10 +38,15 @@ import java.util.Map;
  * Created by Administrator on 2016/9/22.
  */
 public class SpeakingStatisActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
+
+    //顶部导航条
     private LinearLayout llBack;
+    private TextView mTxtToStastis, mTxtToShare;
+    private ImageView mImgBack;
+
     private ListView listViewVote;
     private Spinner spnPart, spnDate, spnCity;
-    private Button btnMore, btnBack;
+    private Button btnMore;
     private TextView txtSearch;
     private AutoCompleteTextView autoTxt;
 
@@ -75,19 +82,26 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
     }
 
     private void initView() {
+        mImgBack = (ImageView) findViewById(R.id.img_back);
+        llBack = (LinearLayout) findViewById(R.id.ll_speaking_share);
+        mTxtToStastis = (TextView) findViewById(R.id.txt_speaking_stastis);
+        mTxtToShare = (TextView) findViewById(R.id.txt_speaking_share);
+        mTxtToStastis.setTextColor(Color.parseColor("#2299cc"));
+        mTxtToStastis.setBackgroundResource(R.drawable.buttonstyle_bluestroke);
+        mTxtToShare.setTextColor(Color.parseColor("#ffffff"));
+        mTxtToShare.setBackgroundResource(R.drawable.buttonstyle_whitestroke);
+
         autoTxt = (AutoCompleteTextView) findViewById(R.id.autotxt_statis);
-        llBack = (LinearLayout) findViewById(R.id.ll_statis_back);
         btnMore = (Button) findViewById(R.id.btn_statis_more);
-        btnBack = (Button) findViewById(R.id.button_statis_back);
         listViewVote = (ListView) findViewById(R.id.listview_statis_vote);
         txtSearch = (TextView) findViewById(R.id.txt_statis_search);
         spnPart = (Spinner) this.findViewById(R.id.spinner_statis_part);
         spnDate = (Spinner) this.findViewById(R.id.spinner_statis_date);
         spnCity = (Spinner) this.findViewById(R.id.spinner_statis_city);
 
+        mImgBack.setOnClickListener(this);
         llBack.setOnClickListener(this);
         btnMore.setOnClickListener(this);
-        btnBack.setOnClickListener(this);
         txtSearch.setOnClickListener(this);
         listViewVote.setOnItemClickListener(this);
         spnPart.setOnItemSelectedListener(this);
@@ -201,14 +215,14 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
         votenoList.clear();
         switch (parent.getId()) {
             case R.id.spinner_statis_part:
-			/*判断是否为第一次自动加载，若为第一次，则不加载，并设定localpartid==2，默认为先读取该值*/
+            /*判断是否为第一次自动加载，若为第一次，则不加载，并设定localpartid==2，默认为先读取该值*/
                 if (isPartFirst == true) {
                     isPartFirst = false;
                     localpartid = 1;
                     break;
                 }
 //			isAllCity = false;
-			/*错位赋值*/
+            /*错位赋值*/
                 if (position == 0) {
                     localpartid = 1;
                 } else if (position == 1) {
@@ -230,7 +244,7 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
                 MyApplication.getHttpQueue().add(strinRequest);
                 break;
             case R.id.spinner_statis_date:
-			/*判断是否为第一次自动加载，若为第一次，则不加载*/
+            /*判断是否为第一次自动加载，若为第一次，则不加载*/
                 if (isDateFirst == true) {
                     isDateFirst = false;
                     localdateid = 0;
@@ -294,23 +308,24 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_statis_back:
-                startActivity(new Intent(this,SpeakingActivity.class));;
-                overridePendingTransition(0, 0); // ****设置无跳转动画
+            case R.id.ll_speaking_share:
+                startActivity(new Intent(this, SpeakingActivity.class));
+                overridePendingTransition(0, 0);
                 break;
             case R.id.btn_statis_more:
                 Intent it_more = new Intent(this, SpeakingMoreActivity.class);
                 startActivity(it_more);
+                overridePendingTransition(0, 0);
                 break;
-            case R.id.button_statis_back:
-                finish();
-                overridePendingTransition(0, 0); // ****设置无跳转动画
+            case R.id.img_back:
+                startActivity(new Intent(this, MainActivity.class));
                 break;
             case R.id.txt_statis_search:
                 String localsearch = autoTxt.getText().toString();
                 Intent it_search = new Intent(SpeakingStatisActivity.this, SpeakingSearchActivity.class);
                 it_search.putExtra("localsearch", localsearch);
                 startActivity(it_search);
+                overridePendingTransition(0, 0);
                 break;
         }
     }

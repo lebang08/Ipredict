@@ -177,7 +177,7 @@
                 android:id="@+id/txt_to_clearcache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:drawableLeft="@mipmap/my_message"
                 android:gravity="center_vertical"
                 android:padding="8dp"
                 android:text="     图片更新"

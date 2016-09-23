@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ import java.util.List;
 public class SpeakingShare1Activity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private LinearLayout llBack;
+    private ImageView mImgBack;
+
     private Button btnNext, btnBack, btnRoomChoose;
     private TextView userName;
     private Spinner spnExamTime;
@@ -59,13 +62,15 @@ public class SpeakingShare1Activity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
-        llBack = (LinearLayout) findViewById(R.id.ll_activity_share);
+        mImgBack = (ImageView) findViewById(R.id.img_back);
+        llBack = (LinearLayout) findViewById(R.id.ll_speaking_stastis);
         btnNext = (Button) findViewById(R.id.button_share_next);
         btnBack = (Button) findViewById(R.id.button_share_back);
         btnRoomChoose = (Button) findViewById(R.id.btn_share_RoomChoose);
         userName = (TextView) findViewById(R.id.txt_share_userName);
         spnExamTime = (Spinner) findViewById(R.id.spn_share_examTime);
 
+        mImgBack.setOnClickListener(this);
         llBack.setOnClickListener(this);
         btnNext.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -146,13 +151,16 @@ public class SpeakingShare1Activity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_activity_share: // **** 点击"高频统计" , 启动 Activity-统计，
+            case R.id.ll_speaking_stastis:
                 // 但界面看起来无跳转变化
                 Intent it_statis = new Intent(this, SpeakingStatisActivity.class);
                 startActivity(it_statis);
                 overridePendingTransition(0, 0);
                 break;
-            case R.id.button_share_back: // **** 点击"返回"按钮, 返回 上一个"分享"界面
+            case R.id.img_back:
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.button_share_back:
                 finish();
                 overridePendingTransition(0, 0);
                 break;
