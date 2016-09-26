@@ -3,7 +3,6 @@ package com.woyuce.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,7 +25,6 @@ import com.woyuce.activity.Fragment.Fragmentfive;
 import com.woyuce.activity.Fragment.Fragmentfour;
 import com.woyuce.activity.Fragment.Fragmentone;
 import com.woyuce.activity.Fragment.Fragmentthree;
-import com.woyuce.activity.Services.UpdateService;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
 import com.woyuce.activity.Utils.UpdateManager;
@@ -73,6 +71,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
         // 6.0系统权限动态申请
         doPerssionRequest();
     }
+
 
     /**
      * 请求权限

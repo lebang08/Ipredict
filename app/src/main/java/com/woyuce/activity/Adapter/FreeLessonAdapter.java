@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.woyuce.activity.Bean.FreeLesson;
 import com.woyuce.activity.R;
 
@@ -56,8 +57,12 @@ public class FreeLessonAdapter extends BaseAdapter {
 		String url = mList.get(position).image;
 		viewHolder.imgPath.setTag(url);
 
-		DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.mipmap.img_error)
-				.showImageOnFail(R.mipmap.img_error).cacheInMemory(true).cacheOnDisk(true)
+		DisplayImageOptions options = new DisplayImageOptions.Builder().
+				showImageOnLoading(R.mipmap.img_error)
+				.showImageOnFail(R.mipmap.img_error)
+				.displayer(new RoundedBitmapDisplayer(100))
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();
 		ImageLoader.getInstance().displayImage(url, viewHolder.imgPath, options);
 

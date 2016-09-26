@@ -27,7 +27,10 @@ public class UpdateService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUtil.e("onStartCommand");
-        new UpdateManager(this).checkUpdate();
+
+        //TODO 自动检测升级
+        new UpdateManager(UpdateService.this).checkUpdate();
+
         return super.onStartCommand(intent, flags, startId);
     }
 }

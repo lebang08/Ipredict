@@ -9,13 +9,18 @@
         android:layout_height="48dp"
         android:background="#33ba9c"
         android:gravity="center"
-        android:onClick="toPulish"
+        android:onClick="doPulish"
         android:text="发表" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:hint="说点什么呢" />
+
+    <ImageView
+        android:id="@+id/img_weibopulish"
+        android:layout_width="match_parent"
+        android:layout_height="160dp" />
 
     <TextView
         android:layout_width="match_parent"

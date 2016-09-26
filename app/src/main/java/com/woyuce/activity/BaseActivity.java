@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.umeng.analytics.MobclickAgent;
 import com.woyuce.activity.Application.MyApplication;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -30,17 +31,17 @@ import java.util.Map;
  */
 public class BaseActivity extends Activity {
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        MobclickAgent.onResume(this);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        MobclickAgent.onPause(this);
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     public ProgressDialog progressdialog;
 

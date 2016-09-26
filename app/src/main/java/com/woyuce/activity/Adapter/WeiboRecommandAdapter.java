@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.woyuce.activity.Bean.WeiboBean;
 import com.woyuce.activity.R;
 
@@ -57,10 +58,14 @@ public class WeiboRecommandAdapter extends BaseAdapter {
 //        String url = mList.get(position).pulish_image;
 //        viewHolder.imgPath.setTag(url);
 
-//        DisplayImageOptions options = new DisplayImageOptions.Builder().showImageOnLoading(R.mipmap.img_error)
-//                .showImageOnFail(R.mipmap.img_error).cacheInMemory(true).cacheOnDisk(true)
-//                .bitmapConfig(Bitmap.Config.RGB_565).build();
-//        ImageLoader.getInstance().displayImage(url, viewHolder.imgPath, options);
+        DisplayImageOptions options = new DisplayImageOptions.Builder().
+                showImageOnLoading(R.mipmap.img_error)
+                .showImageOnFail(R.mipmap.img_error)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .displayer(new RoundedBitmapDisplayer(300))
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoader.getInstance().displayImage("http://www.iyuce.com/images/2016/sy_bsyc.png", viewHolder.imgPath, options);
 
         return convertView;
     }
