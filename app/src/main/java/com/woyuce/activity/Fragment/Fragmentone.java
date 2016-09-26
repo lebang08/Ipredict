@@ -197,7 +197,8 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
             case R.id.img_waitting:
                 Intent intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("URL", "http://sj.iyuce.com/");
-                intent.putExtra("CODE", "examfinish");
+                intent.putExtra("TITLE", "考后笔试答案");
+                intent.putExtra("COLOR", "#408f40");
                 startActivity(intent);
                 break;
         }

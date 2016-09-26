@@ -1,13 +1,12 @@
 package com.woyuce.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +26,7 @@ import com.woyuce.activity.Fragment.Fragmentfive;
 import com.woyuce.activity.Fragment.Fragmentfour;
 import com.woyuce.activity.Fragment.Fragmentone;
 import com.woyuce.activity.Fragment.Fragmentthree;
+import com.woyuce.activity.Services.UpdateService;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
 import com.woyuce.activity.Utils.UpdateManager;
@@ -71,13 +71,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
         setSelect(0);
 
         // 6.0系统权限动态申请
-        reforrequest();
+        doPerssionRequest();
     }
 
     /**
      * 请求权限
      */
-    private void reforrequest() {
+    private void doPerssionRequest() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             // 申请WRITE_EXTERNAL_STORAGE权限
@@ -96,29 +96,17 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
      * @param permissions
      * @param grantResults
      */
-    @SuppressLint("NewApi")
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        doNext(requestCode, grantResults);
-    }
-
-    /**
-     * 知道权限状态后操作
-     *
-     * @param requestCode
-     * @param grantResults
-     */
-    private void doNext(int requestCode, int[] grantResults) {
         if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 ToastUtil.showMessage(MainActivity.this, "现在您拥有了权限");
                 // 自动检测更新
                 new UpdateManager(this).checkUpdate();
             } else {
-                ToastUtil.showMessage(MainActivity.this, "拒绝授权会导致无法更新和缓存图片");
-                reforrequest();
+                ToastUtil.showMessage(MainActivity.this, "拒绝存储授权会导致无法更新、缓存题库图片");
+                doPerssionRequest();
             }
         }
     }

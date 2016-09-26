@@ -69,6 +69,7 @@ public class BaseActivity extends Activity {
         progressdialog.cancel();
     }
 
+    //先获取token，token用于此后每一次接口请求的参数
     public void getBaseToken() {
         StringRequest tokenrequest = new StringRequest(Request.Method.POST, "http://api.iyuce.com/api/token",
                 new Response.Listener<String>() {

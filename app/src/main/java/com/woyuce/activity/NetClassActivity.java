@@ -47,9 +47,9 @@ public class NetClassActivity extends BaseActivity
 
     private ArrayAdapter<String> adapterdate, adapterclass;
     private String localdate, localclass;
-    private List<String> dateList = new ArrayList<String>();
-    private List<String> classnameList = new ArrayList<String>();
-    private List<String> classidList = new ArrayList<String>();
+    private List<String> dateList = new ArrayList<>();
+    private List<String> classnameList = new ArrayList<>();
+    private List<String> classidList = new ArrayList<>();
 
     private List<NetBean> wcgList = new ArrayList<>();
     private static final String URL_TIME = "http://api.iyuce.com/v1/exam/notifydropdownlist";
@@ -113,14 +113,14 @@ public class NetClassActivity extends BaseActivity
         }, null) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + localtoken);
                 return headers;
             }
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, String> map = new HashMap<>();
                 map.put("exam_time", localdate);
                 map.put("class_type", localclass);
                 return map;
@@ -187,12 +187,12 @@ public class NetClassActivity extends BaseActivity
      * 数据加载完后放入 ,spnner初始化
      */
     private void setSpnDate() {
-        adapterdate = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dateList);
+        adapterdate = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dateList);
         adapterdate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spntime.setAdapter(adapterdate);
         spntime.setOnItemSelectedListener(this);
 
-        adapterclass = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, classnameList);
+        adapterclass = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, classnameList);
         adapterclass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnclass.setAdapter(adapterclass);
         spnclass.setOnItemSelectedListener(this);
@@ -260,12 +260,14 @@ public class NetClassActivity extends BaseActivity
                 break;
             case R.id.btn_wangluoban_zhibo:
                 intent.putExtra("URL", "https://iyuce.ke.qq.com/");
-                intent.putExtra("CODE", "zhibo");
+                intent.putExtra("TITLE", "网络班直播报名");
+                intent.putExtra("COLOR", "#1e87e2");
                 startActivity(intent);
                 break;
             case R.id.btn_wangluoban_lubo:
                 intent.putExtra("URL", "http://store.iyuce.com/goods-1");
-                intent.putExtra("CODE", "lubo");
+                intent.putExtra("TITLE", "网络班录播报名");
+                intent.putExtra("COLOR", "#e7604a");
                 startActivity(intent);
                 break;
         }

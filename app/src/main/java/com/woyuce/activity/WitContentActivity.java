@@ -147,10 +147,12 @@ public class WitContentActivity extends BaseActivity implements OnClickListener 
                 finish();
                 break;
             case R.id.btn_witcontent_toAnswer:
-                Intent it_witanswer = new Intent(this, WebActivity.class);
-                it_witanswer.putExtra("URL", localanswerUrl);
-                it_witanswer.putExtra("CODE", "witcontent");
-                startActivity(it_witanswer);
+                Intent intent = new Intent(this, WebActivity.class);
+                intent.putExtra("URL", localanswerUrl);
+                intent.putExtra("CODE", "witcontent");
+                intent.putExtra("TITLE", "写作答案");
+                intent.putExtra("COLOR", "#9f6eaf");
+                startActivity(intent);
                 break;
         }
     }

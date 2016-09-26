@@ -154,84 +154,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                     ToastUtil.showMessage(LoginActivity.this, "账号密码不能为空，试试体验登陆吧");
                     return;
                 }
-
-                progressdialogshow(this);
-                StringRequest stringRequest = new StringRequest(Method.POST, LOGIN_URL, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        LogUtil.e("response + time = " + response);
-                        JSONObject jsonObject;
-                        try {
-                            jsonObject = new JSONObject(response);
-                            int result = jsonObject.getInt("code");
-                            if (result == 0) {
-                                ToastUtil.showMessage(LoginActivity.this, "登陆成功");
-                                jsonObject = jsonObject.getJSONObject("data");
-                                // 拿出所有返回数据
-                                String userId = jsonObject.getString("userid");
-                                String mUserName = jsonObject.getString("username");
-                                String Permission = jsonObject.getString("permission");
-                                String money = jsonObject.getString("tradepoints");
-                                String update = jsonObject.getString("login_time");
-                                String localtimer = jsonObject.getString("exam_time");
-                                // 如果为默认初试时间，则设为""
-                                if (localtimer.equals("0001-01-01")) {
-                                    localtimer = "";
-                                    // 如果注册时本地时间不为null,则将该时间赋给mtimer，并保存
-                                    if (!TextUtils.isEmpty(timer_register)) {
-                                        localtimer = timer_register;
-                                    }
-                                }
-                                // 将所有数据保存到sharepreferences数据库中
-                                PreferenceUtil.save(LoginActivity.this, "userId", userId);
-                                PreferenceUtil.save(LoginActivity.this, "mUserName", mUserName);
-                                PreferenceUtil.save(LoginActivity.this, "Permission", Permission);
-                                PreferenceUtil.save(LoginActivity.this, "money", money);
-                                PreferenceUtil.save(LoginActivity.this, "update", update);
-                                PreferenceUtil.save(LoginActivity.this, "mtimer", localtimer);
-                                // 拿到JSON中的token 打印出来
-                                LogUtil.e("所有数据 " + userId + "->" + mUserName + "->" + Permission + "->" + money + "->");
-                                // 取消加载对话框
-                                progressdialogcancel();
-                                // 上传注册时设定的考试时间
-                                uploadTime(timer_register, userId);
-                                // 启动主页面
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                finish();
-                            } else {
-                                progressdialogcancel();
-                                ToastUtil.showMessage(LoginActivity.this, "账号密码错误");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        progressdialogcancel();
-                        LogUtil.e("Wrong-Back", "连接错误原因： " + error.getMessage());
-                        ToastUtil.showMessage(LoginActivity.this, "登录失败，请重试");
-                    }
-                }) {
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        HashMap<String, String> headers = new HashMap<>();
-                        localtoken = PreferenceUtil.getSharePre(LoginActivity.this).getString("localtoken", "");
-                        headers.put("Authorization", "Bearer " + localtoken);
-                        return headers;
-                    }
-
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        HashMap<String, String> map = new HashMap<>();
-                        map.put("username", strUserName);
-                        map.put("password", strPassword);
-                        return map;
-                    }
-                };
-                stringRequest.setTag("login");
-                MyApplication.getHttpQueue().add(stringRequest);
+                //请求网络
+                doRequest();
                 break;
             case R.id.btn_loginAtOnce:
                 startActivity(new Intent(this, MainActivity.class));
@@ -246,9 +170,93 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             case R.id.btn_apply:
                 Intent intent = new Intent(this, WebActivity.class);
                 intent.putExtra("URL", "http://www.iyuce.com/m/appfbbsq");
-                intent.putExtra("CODE", "apply");
+                intent.putExtra("TITLE", "集训营申请");
+                intent.putExtra("COLOR", "#f7941d");
                 startActivity(intent);
                 break;
         }
+    }
+
+    /**
+     * 请求网络
+     */
+    private void doRequest() {
+        progressdialogshow(this);
+        StringRequest stringRequest = new StringRequest(Method.POST, LOGIN_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                LogUtil.e("response + time = " + response);
+                JSONObject jsonObject;
+                try {
+                    jsonObject = new JSONObject(response);
+                    int result = jsonObject.getInt("code");
+                    if (result == 0) {
+                        ToastUtil.showMessage(LoginActivity.this, "登陆成功");
+                        jsonObject = jsonObject.getJSONObject("data");
+                        // 拿出所有返回数据
+                        String userId = jsonObject.getString("userid");
+                        String mUserName = jsonObject.getString("username");
+                        String Permission = jsonObject.getString("permission");
+                        String money = jsonObject.getString("tradepoints");
+                        String update = jsonObject.getString("login_time");
+                        String localtimer = jsonObject.getString("exam_time");
+                        // 如果为默认初试时间，则设为""
+                        if (localtimer.equals("0001-01-01")) {
+                            localtimer = "";
+                            // 如果注册时本地时间不为null,则将该时间赋给mtimer，并保存
+                            if (!TextUtils.isEmpty(timer_register)) {
+                                localtimer = timer_register;
+                            }
+                        }
+                        // 将所有数据保存到sharepreferences数据库中
+                        PreferenceUtil.save(LoginActivity.this, "userId", userId);
+                        PreferenceUtil.save(LoginActivity.this, "mUserName", mUserName);
+                        PreferenceUtil.save(LoginActivity.this, "Permission", Permission);
+                        PreferenceUtil.save(LoginActivity.this, "money", money);
+                        PreferenceUtil.save(LoginActivity.this, "update", update);
+                        PreferenceUtil.save(LoginActivity.this, "mtimer", localtimer);
+                        // 拿到JSON中的token 打印出来
+                        LogUtil.e("所有数据 " + userId + "->" + mUserName + "->" + Permission + "->" + money + "->");
+                        // 取消加载对话框
+                        progressdialogcancel();
+                        // 上传注册时设定的考试时间
+                        uploadTime(timer_register, userId);
+                        // 启动主页面
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    } else {
+                        progressdialogcancel();
+                        ToastUtil.showMessage(LoginActivity.this, "账号密码错误");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressdialogcancel();
+                LogUtil.e("Wrong-Back", "连接错误原因： " + error.getMessage());
+                ToastUtil.showMessage(LoginActivity.this, "登录失败，请重试");
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                localtoken = PreferenceUtil.getSharePre(LoginActivity.this).getString("localtoken", "");
+                headers.put("Authorization", "Bearer " + localtoken);
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("username", strUserName);
+                map.put("password", strPassword);
+                return map;
+            }
+        };
+        stringRequest.setTag("login");
+        MyApplication.getHttpQueue().add(stringRequest);
     }
 }

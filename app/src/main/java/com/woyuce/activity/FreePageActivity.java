@@ -477,7 +477,8 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(FreePageActivity.this, WebActivity.class);
                         intent.putExtra("URL", "http://store.iyuce.com/goods-1");
-                        intent.putExtra("CODE", "lubo");
+                        intent.putExtra("TITLE", "网络班录播报名");
+                        intent.putExtra("COLOR", "#e7604a");
                         startActivity(intent);
                     }
                 }).setNegativeButton("报名直播", new DialogInterface.OnClickListener() {
@@ -485,7 +486,8 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(FreePageActivity.this, WebActivity.class);
                 intent.putExtra("URL", "https://iyuce.ke.qq.com/");
-                intent.putExtra("CODE", "zhibo");
+                intent.putExtra("TITLE", "网络班直播报名");
+                intent.putExtra("COLOR", "#1e87e2");
                 startActivity(intent);
             }
         }).setNeutralButton("再想想", null).show();

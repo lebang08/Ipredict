@@ -20,13 +20,12 @@ import android.widget.TextView;
  */
 public class WebActivity extends BaseActivity implements View.OnClickListener {
 
-    private TextView title;
+    private TextView mTitle;
     private WebView web;
     private ImageView imgClose, imgBack;
     private LinearLayout mLinearlayout;
 
-    private String local_URL = null;
-    private String local_code = null;
+    private String local_URL, local_title, local_color;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -51,9 +50,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private void initView() {
         local_URL = getIntent().getStringExtra("URL");
-        local_code = getIntent().getStringExtra("CODE");
+        local_title = getIntent().getStringExtra("TITLE");
+        local_color = getIntent().getStringExtra("COLOR");
 
-        title = (TextView) findViewById(R.id.web_title);
+        mTitle = (TextView) findViewById(R.id.web_title);
         web = (WebView) findViewById(R.id.web);
         imgClose = (ImageView) findViewById(R.id.img_close);
         imgBack = (ImageView) findViewById(R.id.img_back);
@@ -62,25 +62,16 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         imgClose.setOnClickListener(this);
         imgBack.setOnClickListener(this);
 
-        //根据传入的参数选择不同的样式
-        if (local_code.equals("zhibo")) {
-            title.setText("网络班直播报名");
-            mLinearlayout.setBackgroundColor(Color.parseColor("#1e87e2"));
-        } else if (local_code.equals("lubo")) {
-            //什么都不做,因为xml文件就是录播的样式
-        } else if (local_code.equals("gongyi")) {
-            title.setText("我预测腾讯课堂");
-            mLinearlayout.setBackgroundColor(Color.parseColor("#366090"));
-        } else if (local_code.equals("witcontent")) {
-            title.setText("写作答案");
-            mLinearlayout.setBackgroundColor(Color.parseColor("#9f6eaf"));
-        } else if (local_code.equals("apply")) {
-            title.setText("集训营申请");
-            mLinearlayout.setBackgroundColor(Color.parseColor("#f7941d"));
-        } else if (local_code.equals("examfinish")) {
-            title.setText("考后笔试答案");
-            mLinearlayout.setBackgroundColor(Color.parseColor("#408f40"));
-        }
+        //根据参数描绘不同的标题头
+        drawTitleBar(local_title, local_color);
+    }
+
+    /**
+     * 根据参数描绘不同的标题头
+     */
+    private void drawTitleBar(String title, String color) {
+        mTitle.setText(title);
+        mLinearlayout.setBackgroundColor(Color.parseColor(color));
     }
 
 //    /**
