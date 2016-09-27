@@ -1,6 +1,5 @@
 package com.woyuce.activity.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
@@ -12,24 +11,24 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.woyuce.activity.Bean.WeiboBean;
 import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.LogUtil;
 
 import java.util.List;
 
-
 /**
- * 微博精选的Adapter
+ * Created by Administrator on 2016/9/27.
  */
-public class WeiboRecommandAdapter extends BaseAdapter {
+public class WeiboPulishAdapter extends BaseAdapter {
 
-    private List<WeiboBean> mList;
+    private List<String> mList;
     private LayoutInflater mInflater;
 
-    public WeiboRecommandAdapter(Context context, List<WeiboBean> data) {
-        mList = data;
+    public WeiboPulishAdapter(Context context, List<String> mList) {
+        this.mList = mList;
         mInflater = LayoutInflater.from(context);
     }
+
 
     @Override
     public int getCount() {
@@ -46,35 +45,30 @@ public class WeiboRecommandAdapter extends BaseAdapter {
         return position;
     }
 
-    @SuppressLint("InflateParams")
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        ViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.gvitem_weiborecommand, null);
-            viewHolder.imgPath = (ImageView) convertView.findViewById(R.id.img_item_lesson);
+            convertView = mInflater.inflate(R.layout.gvitem_weibophotowawll, null);
+            viewHolder.mImg = (ImageView) convertView.findViewById(R.id.img_item_weibophotowall);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true).cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.ARGB_8888)
+                .displayer(new RoundedBitmapDisplayer(5))
+                .build();
 
-//        String url = mList.get(position).pulish_image;
-//        viewHolder.imgPath.setTag(url);
-
-        DisplayImageOptions options = new DisplayImageOptions.Builder().
-                showImageOnLoading(R.mipmap.img_error)
-                .showImageOnFail(R.mipmap.img_error)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .displayer(new RoundedBitmapDisplayer(300))
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
-        ImageLoader.getInstance().displayImage("http://www.iyuce.com/images/2016/sy_bsyc.png", viewHolder.imgPath, options);
-
+        LogUtil.e("mList.get(position) = " + mList.get(position));
+        ImageLoader.getInstance().displayImage(mList.get(position), viewHolder.mImg, options);
         return convertView;
     }
 
     class ViewHolder {
-        public ImageView imgPath;
+        public ImageView mImg;
     }
 }

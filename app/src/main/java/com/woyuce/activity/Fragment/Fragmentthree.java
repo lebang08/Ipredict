@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -15,7 +14,7 @@ import android.widget.ViewFlipper;
 import com.woyuce.activity.Adapter.WeiboRecommandAdapter;
 import com.woyuce.activity.Bean.WeiboBean;
 import com.woyuce.activity.R;
-import com.woyuce.activity.WeiboPulishActivity;
+import com.woyuce.activity.WeiboPhotoWallActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ public class Fragmentthree extends Fragment {
         mBtnToPulish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), WeiboPulishActivity.class));
+                startActivity(new Intent(getActivity(), WeiboPhotoWallActivity.class));
             }
         });
 
@@ -61,8 +60,8 @@ public class Fragmentthree extends Fragment {
 
         //GridView填充数据
         mGridView = (GridView) view.findViewById(R.id.gv_fragmenttab3_weibo);
-        WeiboBean weibo ;
-        for (int i = 0 ; i< 8 ; i++){
+        WeiboBean weibo;
+        for (int i = 0; i < 8; i++) {
             weibo = new WeiboBean();
             weibo.comment = "评论数" + i;
             weibo.like = "赞" + i;

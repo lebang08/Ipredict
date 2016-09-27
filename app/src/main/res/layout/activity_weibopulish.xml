@@ -17,10 +17,21 @@
         android:layout_height="120dp"
         android:hint="说点什么呢" />
 
-    <ImageView
-        android:id="@+id/img_weibopulish"
+    <GridView
+        android:id="@+id/gridview_activity_weibopulish"
         android:layout_width="match_parent"
-        android:layout_height="160dp" />
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:horizontalSpacing="30dp"
+        android:numColumns="3"
+        android:verticalSpacing="30dp" />
+
+    <!--<ImageView-->
+    <!--android:id="@+id/img_weibopulish"-->
+    <!--android:layout_width="160dp"-->
+    <!--android:layout_height="160dp"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:scaleType="center" />-->
 
     <TextView
         android:layout_width="match_parent"

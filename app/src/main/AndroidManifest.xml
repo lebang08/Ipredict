@@ -172,9 +172,16 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".WeiboPulishActivity"
-            android:launchMode="standard"
+            android:name=".WeiboPhotoWallActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".WeiboPulishActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+
 
         <!-- Tab5-->
         <!--意见反馈Activity -->
