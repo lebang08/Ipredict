@@ -2,6 +2,7 @@ package com.woyuce.activity.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,15 @@ import java.util.List;
  */
 public class WeiboPulishAdapter extends BaseAdapter {
 
-    private List<String> mList;
+    private List<Uri> mList;
     private LayoutInflater mInflater;
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .cacheInMemory(true).cacheOnDisk(true)
+            .bitmapConfig(Bitmap.Config.ARGB_8888)
+            .displayer(new RoundedBitmapDisplayer(5))
+            .build();
 
-    public WeiboPulishAdapter(Context context, List<String> mList) {
+    public WeiboPulishAdapter(Context context, List<Uri> mList) {
         this.mList = mList;
         mInflater = LayoutInflater.from(context);
     }
@@ -48,7 +54,7 @@ public class WeiboPulishAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder ;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.gvitem_weibophotowawll, null);
@@ -57,14 +63,8 @@ public class WeiboPulishAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.ARGB_8888)
-                .displayer(new RoundedBitmapDisplayer(5))
-                .build();
 
-        LogUtil.e("mList.get(position) = " + mList.get(position));
-        ImageLoader.getInstance().displayImage(mList.get(position), viewHolder.mImg, options);
+        ImageLoader.getInstance().displayImage(String.valueOf(mList.get(position)), viewHolder.mImg, options);
         return convertView;
     }
 

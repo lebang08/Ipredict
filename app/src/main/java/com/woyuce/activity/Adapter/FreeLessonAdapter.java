@@ -57,8 +57,8 @@ public class FreeLessonAdapter extends BaseAdapter {
 		String url = mList.get(position).image;
 		viewHolder.imgPath.setTag(url);
 
-		DisplayImageOptions options = new DisplayImageOptions.Builder().
-				showImageOnLoading(R.mipmap.img_error)
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+				.showImageOnLoading(R.mipmap.img_error)
 				.showImageOnFail(R.mipmap.img_error)
 				.displayer(new RoundedBitmapDisplayer(100))
 				.cacheInMemory(true)

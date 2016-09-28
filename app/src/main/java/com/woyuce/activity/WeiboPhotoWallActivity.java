@@ -1,29 +1,27 @@
 package com.woyuce.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.woyuce.activity.Adapter.WeiboPhotoWallAdapter;
-import com.woyuce.activity.Utils.LogUtil;
+import com.woyuce.activity.Utils.ImageUtils;
 import com.woyuce.activity.Utils.ToastUtil;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import uk.co.senab.photoview.PhotoView;
 
@@ -38,8 +36,7 @@ public class WeiboPhotoWallActivity extends Activity implements AdapterView.OnIt
     private WeiboPhotoWallAdapter mAdapter;
     private List<String> mList = new ArrayList<>();
 
-    private static final int CODE_CAPTURE_IMG = 0x01;
-    private String fileName;
+    private Uri local_image_Uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,56 +54,63 @@ public class WeiboPhotoWallActivity extends Activity implements AdapterView.OnIt
         mGridView = (GridView) findViewById(R.id.gridview_activity_weibophotowall);
         mGridView.setOnItemClickListener(this);
 
-        for (int i = 0; i < 90; i++) {
-            mList.add("a");
-        }
+        getImages(this);
         mAdapter = new WeiboPhotoWallAdapter(this, mList);
         mGridView.setAdapter(mAdapter);
+    }
+
+    /**
+     * 获取本地相册List
+     *
+     * @param context
+     * @return
+     */
+    public List<String> getImages(Context context) {
+        ContentResolver contentResolver = context.getContentResolver();
+        Uri uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA,};
+        String sortOrder = MediaStore.Images.Media.DATE_ADDED + " desc";
+        Cursor cursor = contentResolver.query(uri, projection, null, null, sortOrder);
+        int iId = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+        int iPath = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            String id = cursor.getString(iId);
+            String path = cursor.getString(iPath);
+//            ImageModel imageModel = new ImageModel(id,path);
+            mList.add(path);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return mList;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode != RESULT_OK)
+//            return;
         switch (requestCode) {
-            case CODE_CAPTURE_IMG:
-                if (resultCode == Activity.RESULT_OK) {
-                    String sdStatus = Environment.getExternalStorageState();
-                    // 检测sd是否可用
-                    if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-                        LogUtil.i("TestFile", "SD card is not avaiable/writeable right now.");
-                        return;
-                    }
-                    String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                    Toast.makeText(this, name, Toast.LENGTH_LONG).show();
-                    Bundle bundle = data.getExtras();
-                    Bitmap bitmap = (Bitmap) bundle.get("data");// 获取相机返回的数据，并转换为Bitmap图片格式
-
-                    FileOutputStream b = null;
-                    //???????????????????????????????为什么不能直接保存在系统相册位置呢？？？？？？？？？？？？
-                    File file = new File("/sdcard/lebang/");
-                    file.mkdirs();// 创建文件夹
-                    fileName = "/sdcard/myImage/" + name;
-
-                    //TODO 输入流写入图片
-                    try {
-                        b = new FileOutputStream(fileName);
-                        // 把数据写入文件
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, b);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } finally {
-                        try {
-                            b.flush();
-                            b.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    //将PhotoView设为可见
-                    mImg.setVisibility(View.VISIBLE);
-                    // 将图片显示在PhotoView里
-                    mImg.setImageBitmap(bitmap);
-                }
+            case ImageUtils.REQUEST_CODE_FROM_CAMERA:
+                local_image_Uri = ImageUtils.ImageUriFromCamera;
+                //将PhotoView设为可见
+                mImg.setVisibility(View.VISIBLE);
+                // 将图片显示在PhotoView里
+//                mImg.setImageURI(local_image_Uri);
+                DisplayImageOptions options = new DisplayImageOptions.Builder()
+                        .cacheInMemory(true).cacheOnDisk(true)
+                        .showImageOnLoading(R.mipmap.img_error)
+                        .showImageOnFail(R.mipmap.img_error)
+                        .bitmapConfig(Bitmap.Config.ARGB_8888)
+                        .displayer(new RoundedBitmapDisplayer(5))
+                        .build();
+                ImageLoader.getInstance().displayImage(String.valueOf(local_image_Uri), mImg, options);
+                break;
+            case ImageUtils.REQUEST_CODE_FROM_ALBUM:
+                local_image_Uri = data.getData();
+                mImg.setVisibility(View.VISIBLE);
+                // 将图片显示在PhotoView里
+                mImg.setImageURI(local_image_Uri);
                 break;
         }
     }
@@ -115,26 +119,21 @@ public class WeiboPhotoWallActivity extends Activity implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-//                ToastUtil.showMessage(this, "去拍照");
+                //ToastUtil.showMessage(this, "去拍照获取图片");
                 //TODO 调用相机也是需要6.0权限的
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                // create a file to save the image
-                // fileUri = getExternalFilesDir("lebang_test").getAbsolutePath();
-
-                // 此处这句intent的值设置关系到后面的onActivityResult中会进入那个分支，即关系到data是否为null，如果此处指定，则后来的data为null
-                // set the image file name
-                // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                startActivityForResult(intent, CODE_CAPTURE_IMG);
+                ImageUtils.pickImagefromCamera(this);
                 break;
             default:
+                //ToastUtil.showMessage(this, "去相册获取图片");
                 ToastUtil.showMessage(this, "点右上角选中该图片，点其他部位，跳转看详细图");
+                ImageUtils.pickImagefromAlbum(this);
                 break;
         }
     }
 
     public void toNext(View view) {
         Intent intent = new Intent(this, WeiboPulishActivity.class);
-        intent.putExtra("fileName", fileName);
+        intent.setData(local_image_Uri);
         startActivity(intent);
         mImg.setVisibility(View.INVISIBLE);
     }

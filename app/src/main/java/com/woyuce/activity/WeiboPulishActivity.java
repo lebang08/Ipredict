@@ -2,6 +2,7 @@ package com.woyuce.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
@@ -20,10 +21,10 @@ import java.util.List;
 public class WeiboPulishActivity extends Activity {
 
     private GridView mGridViewShowPhoto;
-    private List<String> mList = new ArrayList<>();
+    private List<Uri> mList = new ArrayList<>();
     private WeiboPulishAdapter mAdapter;
 
-    private String local_fileName;
+    private Uri local_img_Uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,16 @@ public class WeiboPulishActivity extends Activity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         //GridView中添加数据源
-        local_fileName = getIntent().getStringExtra("fileName");
-        mList.add("file://" + local_fileName);
+        local_img_Uri = getIntent().getData();
+        mList.add(local_img_Uri);
         mAdapter = new WeiboPulishAdapter(this, mList);
         mGridViewShowPhoto.setAdapter(mAdapter);
 
