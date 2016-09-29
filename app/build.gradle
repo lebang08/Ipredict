@@ -24,8 +24,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
-    compile files('libs/universal-image-loader-1.9.5.jar')
     compile files('libs/uk-co-senab-photoview-source.jar')
     compile files('libs/volley.jar')
+    compile files('libs/uil.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
 }
