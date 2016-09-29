@@ -13,6 +13,7 @@ import android.widget.ViewFlipper;
 
 import com.woyuce.activity.Adapter.WeiboRecommandAdapter;
 import com.woyuce.activity.Bean.WeiboBean;
+import com.woyuce.activity.DynamicPost;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Activity.WeiboPhotoWallActivity;
 
@@ -43,7 +44,7 @@ public class Fragmentthree extends Fragment {
         mBtnToPulish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), WeiboPhotoWallActivity.class));
+                startActivity(new Intent(getActivity(), DynamicPost.class));
             }
         });
 
