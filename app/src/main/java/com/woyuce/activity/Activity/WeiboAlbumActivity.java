@@ -1,4 +1,4 @@
-package com.woyuce.activity;
+package com.woyuce.activity.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +27,10 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.woyuce.activity.Application.AppContext;
-import com.woyuce.activity.common.ExtraKey;
-import com.woyuce.activity.common.ImageUtils;
-import com.woyuce.activity.common.LocalImageHelper;
-import com.woyuce.activity.common.StringUtils;
+import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.ImageUtils;
+import com.woyuce.activity.Utils.LocalImageHelper;
+import com.woyuce.activity.Utils.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,10 +42,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by linjizong on 15/6/12.
- * 本地相册
+ * @author LeBang
+ * @Decription:本地相册
+ * @date 2016-9-30
  */
-public class LocalAlbum extends BaseActivity {
+public class WeiboAlbumActivity extends WeiboBaseActivity {
     ListView listView;
     ImageView progress;
     LocalImageHelper helper;
@@ -55,7 +56,7 @@ public class LocalAlbum extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.local_album);
+        setContentView(R.layout.activity_weiboalbum);
         listView = (ListView) findViewById(R.id.local_album_list);
         camera = findViewById(R.id.loacal_album_camera);
         camera.setOnClickListener(onClickListener);
@@ -93,8 +94,8 @@ public class LocalAlbum extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(LocalAlbum.this, LocalAlbumDetail.class);
-                intent.putExtra(ExtraKey.LOCAL_FOLDER_NAME, folderNames.get(i));
+                Intent intent = new Intent(WeiboAlbumActivity.this, WeiboAlbumDetailActivity.class);
+                intent.putExtra("local_folder_name", folderNames.get(i));
                 intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
                 startActivity(intent);
             }
@@ -108,8 +109,8 @@ public class LocalAlbum extends BaseActivity {
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if(LocalImageHelper.getInstance().getCurrentSize()+LocalImageHelper.getInstance().getCheckedItems().size()>=9){
-                Toast.makeText(LocalAlbum.this,"最多选择9张图片",Toast.LENGTH_SHORT).show();
+            if (LocalImageHelper.getInstance().getCurrentSize() + LocalImageHelper.getInstance().getCheckedItems().size() >= 9) {
+                Toast.makeText(WeiboAlbumActivity.this, "最多选择9张图片", Toast.LENGTH_SHORT).show();
                 return;
             }
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -141,7 +142,7 @@ public class LocalAlbum extends BaseActivity {
                         localFile.setOrientation(getBitmapDegree(cameraPath));
                         LocalImageHelper.getInstance().getCheckedItems().add(localFile);
                         LocalImageHelper.getInstance().setResultOk(true);
-                        new  Thread(new Runnable() {
+                        new Thread(new Runnable() {
                             @Override
                             public void run() {
 
@@ -154,7 +155,7 @@ public class LocalAlbum extends BaseActivity {
                             public void run() {
                                 finish();
                             }
-                        },1000);
+                        }, 1000);
                     } else {
                         Toast.makeText(this, "图片获取失败", Toast.LENGTH_SHORT).show();
                     }
@@ -214,9 +215,9 @@ public class LocalAlbum extends BaseActivity {
             options = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(false)
-                    .showImageForEmptyUri(R.drawable.dangkr_no_picture_small)
-                    .showImageOnFail(R.drawable.dangkr_no_picture_small)
-                    .showImageOnLoading(R.drawable.dangkr_no_picture_small)
+                    .showImageForEmptyUri(R.mipmap.img_error)
+                    .showImageOnFail(R.mipmap.img_error)
+                    .showImageOnLoading(R.mipmap.img_error)
                     .bitmapConfig(Bitmap.Config.RGB_565)
                     .setImageSize(new ImageSize(((AppContext) context.getApplicationContext()).getQuarterWidth(), 0))
                     .displayer(new SimpleBitmapDisplayer()).build();
@@ -257,7 +258,7 @@ public class LocalAlbum extends BaseActivity {
             ViewHolder viewHolder;
             if (convertView == null || convertView.getTag() == null) {
                 viewHolder = new ViewHolder();
-                convertView = LayoutInflater.from(context).inflate(R.layout.item_albumfoler, null);
+                convertView = LayoutInflater.from(context).inflate(R.layout.listitem_weiboalbumfoler, null);
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
                 viewHolder.textView = (TextView) convertView.findViewById(R.id.textview);
                 convertView.setTag(viewHolder);

@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/header_bar_photo_browse"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/album_header_bar_height"
-        android:background="@color/common_title_bg" >
+        android:background="@color/common_title_bg">
 
         <ImageView
             android:id="@+id/header_bar_photo_back"
@@ -18,16 +18,16 @@
             android:paddingLeft="@dimen/title_view_left_back_padding_left"
             android:paddingRight="5.0dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/icon_back2" />
+            android:src="@mipmap/arrow_white_back2" />
 
         <TextView
             android:id="@+id/header_bar_photo_count"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:paddingLeft="20dip"
-            android:paddingRight="@dimen/padding_10"
             android:layout_toRightOf="@id/header_bar_photo_back"
             android:gravity="center"
+            android:paddingLeft="20dip"
+            android:paddingRight="@dimen/padding_10"
             android:singleLine="true"
             android:textColor="@color/primary_title_text_color"
             android:textSize="22.0sp" />
@@ -37,25 +37,25 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:paddingRight="@dimen/padding_15"
             android:paddingLeft="5.0dip"
+            android:paddingRight="@dimen/padding_15"
             android:scaleType="fitCenter"
-            android:src="@drawable/post_pager_delete"
+            android:src="@mipmap/icon_delete"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/header_save"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:minWidth="50dip"
-            android:gravity="center"
-            android:background="@drawable/album_finish"
-            android:textColor="#ffffff"
             android:layout_marginRight="@dimen/padding_10"
+            android:background="@drawable/album_finish"
+            android:gravity="center"
+            android:minWidth="50dip"
             android:text="保存"
-            android:visibility="gone"
-            android:layout_height="30dip" />
+            android:textColor="#ffffff"
+            android:visibility="gone" />
     </RelativeLayout>
 
 </LinearLayout>

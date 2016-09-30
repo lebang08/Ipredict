@@ -1,7 +1,9 @@
 package com.woyuce.activity.Utils;
 
 /**
- * Toast工具类
+ * @author LeBang
+ * @Description:Toast工具类
+ * @date 2016-9-30
  */
 
 import android.content.Context;

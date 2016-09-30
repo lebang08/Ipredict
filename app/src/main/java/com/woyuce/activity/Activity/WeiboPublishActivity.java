@@ -1,4 +1,4 @@
-package com.woyuce.activity;
+package com.woyuce.activity.Activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,23 +26,23 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.ImageUtils;
+import com.woyuce.activity.Utils.LocalImageHelper;
+import com.woyuce.activity.Utils.StringUtils;
 import com.woyuce.activity.View.AlbumViewPager;
 import com.woyuce.activity.View.FilterImageView;
 import com.woyuce.activity.View.MatrixImageView;
-import com.woyuce.activity.common.ImageUtils;
-import com.woyuce.activity.common.LocalImageHelper;
-import com.woyuce.activity.common.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * @author linjizong
+ * @author LeBang
  * @Description:发布动态界面
- * @date 2015-5-14
+ * @date 2016-9-30
  */
-public class DynamicPost extends BaseActivity implements OnClickListener, MatrixImageView.OnSingleTapListener {
+public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickListener, MatrixImageView.OnSingleTapListener {
 
     private ImageView mBack;//返回键
     private View mSend;//发送
@@ -71,15 +71,15 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.post_dynamic);
+        setContentView(R.layout.activity_weibopublish);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         //设置ImageLoader参数
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisk(false)
-                .showImageForEmptyUri(R.drawable.dangkr_no_picture_small)
-                .showImageOnFail(R.drawable.dangkr_no_picture_small)
-                .showImageOnLoading(R.drawable.dangkr_no_picture_small)
+                .showImageForEmptyUri(R.mipmap.img_error)
+                .showImageOnFail(R.mipmap.img_error)
+                .showImageOnLoading(R.mipmap.img_error)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .displayer(new SimpleBitmapDisplayer()).build();
         initViews();
@@ -124,7 +124,7 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 
             }
 
@@ -222,7 +222,7 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
                 }
                 break;
             case R.id.post_add_pic:
-                Intent intent = new Intent(DynamicPost.this, LocalAlbum.class);
+                Intent intent = new Intent(WeiboPublishActivity.this, WeiboAlbumActivity.class);
                 startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCROP);
                 break;
             default:

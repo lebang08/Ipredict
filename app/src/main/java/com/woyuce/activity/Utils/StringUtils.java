@@ -1,4 +1,4 @@
-package com.woyuce.activity.common;
+package com.woyuce.activity.Utils;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -14,11 +14,9 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 /**
- * 字符串操作工具包
- * 
  * @author liux (http://my.oschina.net/liux)
- * @version 1.0
- * @created 2012-3-21
+ * @Description:字符串操作工具包
+ * @date 2016-9-30
  */
 public class StringUtils {
 	private final static Pattern emailer = Pattern

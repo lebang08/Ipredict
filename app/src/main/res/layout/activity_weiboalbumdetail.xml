@@ -20,7 +20,7 @@
             android:paddingLeft="@dimen/title_view_left_back_padding_left"
             android:paddingRight="@dimen/title_view_left_back_padding_right"
             android:scaleType="fitCenter"
-            android:src="@drawable/back" />
+            android:src="@mipmap/arrow_white_back2" />
 
         <TextView
             android:id="@+id/album_title"
@@ -91,7 +91,7 @@
                 android:paddingLeft="@dimen/title_view_left_back_padding_left"
                 android:paddingRight="5.0dip"
                 android:scaleType="fitCenter"
-                android:src="@drawable/icon_back2" />
+                android:src="@mipmap/arrow_white_back2" />
 
             <TextView
                 android:id="@+id/header_bar_photo_count"
@@ -126,7 +126,7 @@
                 android:layout_toLeftOf="@id/header_finish"
                 android:layout_marginRight="@dimen/padding_20"
                 android:layout_centerVertical="true"
-                android:background="@drawable/picture_setting_album_checkbox"
+                android:background="@drawable/weiboalbum_setting_checkbox"
                 android:button="@null"
                 android:checked="false"
                 android:focusable="false" />

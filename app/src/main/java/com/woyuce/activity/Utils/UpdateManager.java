@@ -32,6 +32,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * @author LeBang
+ * @Description:APP检测自动升级
+ * @date 2016-9-30
+ */
 public class UpdateManager {
 
     private ProgressBar pb;

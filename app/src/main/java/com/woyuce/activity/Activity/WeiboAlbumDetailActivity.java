@@ -1,4 +1,4 @@
-package com.woyuce.activity;
+package com.woyuce.activity.Activity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,20 +28,20 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.woyuce.activity.Application.AppContext;
+import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.ActivityManager;
+import com.woyuce.activity.Utils.LocalImageHelper;
 import com.woyuce.activity.View.AlbumViewPager;
 import com.woyuce.activity.View.MatrixImageView;
-import com.woyuce.activity.common.ExtraKey;
-import com.woyuce.activity.common.LocalImageHelper;
 
 import java.util.List;
 
-
 /**
- * @author linjizong
- * @Description:欢迎页测试
- * @date 2015-4-11
+ * @author LeBang
+ * @Description:本地相册详情页
+ * @date 2016-9-30
  */
-public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.OnSingleTapListener, View.OnClickListener
+public class WeiboAlbumDetailActivity extends WeiboBaseActivity implements MatrixImageView.OnSingleTapListener, View.OnClickListener
         , CompoundButton.OnCheckedChangeListener {
 
     GridView gridView;
@@ -63,7 +63,7 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.local_album_detail);
+        setContentView(R.layout.activity_weiboalbumdetail);
         if (!LocalImageHelper.getInstance().isInited()) {
             finish();
             return;
@@ -87,7 +87,7 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
         headerFinish.setOnClickListener(this);
         findViewById(R.id.album_back).setOnClickListener(this);
 
-        folder = getIntent().getExtras().getString(ExtraKey.LOCAL_FOLDER_NAME);
+        folder = getIntent().getExtras().getString("local_folder_name");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -100,7 +100,7 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
                     public void run() {
                         if (folders != null) {
                             currentFolder = folders;
-                            MyAdapter adapter = new MyAdapter(LocalAlbumDetail.this, folders);
+                            MyAdapter adapter = new MyAdapter(WeiboAlbumDetailActivity.this, folders);
                             title.setText(folder);
                             gridView.setAdapter(adapter);
                             //设置当前选中数量
@@ -210,7 +210,7 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
                 break;
             case R.id.album_finish:
             case R.id.header_finish:
-                AppManager.getAppManager().finishActivity(LocalAlbum.class);
+                ActivityManager.getAppManager().finishActivity(WeiboAlbumActivity.class);
                 LocalImageHelper.getInstance().setResultOk(true);
                 finish();
                 break;
@@ -270,9 +270,9 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
             options = new DisplayImageOptions.Builder()
                     .cacheInMemory(true)
                     .cacheOnDisk(false)
-                    .showImageForEmptyUri(R.drawable.dangkr_no_picture_small)
-                    .showImageOnFail(R.drawable.dangkr_no_picture_small)
-                    .showImageOnLoading(R.drawable.dangkr_no_picture_small)
+                    .showImageForEmptyUri(R.mipmap.img_error)
+                    .showImageOnFail(R.mipmap.img_error)
+                    .showImageOnLoading(R.mipmap.img_error)
                     .bitmapConfig(Bitmap.Config.RGB_565)
                     .setImageSize(new ImageSize(((AppContext) context.getApplicationContext()).getQuarterWidth(), 0))
                     .displayer(new SimpleBitmapDisplayer()).build();
@@ -300,10 +300,10 @@ public class LocalAlbumDetail extends BaseActivity implements MatrixImageView.On
             if (convertView == null || convertView.getTag() == null) {
                 viewHolder = new ViewHolder();
                 LayoutInflater inflater = getLayoutInflater();
-                convertView = inflater.inflate(R.layout.simple_list_item, null);
+                convertView = inflater.inflate(R.layout.gvitem_weiboalbumcheck, null);
                 viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
                 viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
-                viewHolder.checkBox.setOnCheckedChangeListener(LocalAlbumDetail.this);
+                viewHolder.checkBox.setOnCheckedChangeListener(WeiboAlbumDetailActivity.this);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();

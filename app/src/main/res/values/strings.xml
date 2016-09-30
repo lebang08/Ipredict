@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">我预测</string>
-    <string name="action_settings">设置</string>
     <string name="aiyoupuintroduce"> \t\t我预测，你高分！\n\n\t\t厦门爱优普教育咨询有限公司是经国家工商行政管理部门依法批准的专业化教育咨询公司。 \n\n\t\t我们是专注于英语技巧培养提升的教育机构，旨在为广大考生提供丰富、准确的信息。  </string>
     <string name="welcome">Welcome To Ipredicting</string>
     <string name="username">Username:</string>

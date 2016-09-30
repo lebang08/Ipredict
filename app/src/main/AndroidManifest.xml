@@ -169,33 +169,33 @@
             android:screenOrientation="portrait" />
 
         <!-- Tab3-->
-        <activity
-            android:name=".Activity.WeiboActivity"
-            android:launchMode="standard"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".Activity.WeiboActivity"-->
+            <!--android:launchMode="standard"-->
+            <!--android:screenOrientation="portrait" />-->
+
+        <!--<activity-->
+            <!--android:name=".Activity.WeiboPhotoWallActivity"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="portrait" />-->
+
+        <!--<activity-->
+            <!--android:name=".Activity.WeiboPulishActivity2"-->
+            <!--android:launchMode="singleTop"-->
+            <!--android:screenOrientation="portrait" />-->
 
         <activity
-            android:name=".Activity.WeiboPhotoWallActivity"
+            android:name=".Activity.WeiboPublishActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".Activity.WeiboPulishActivity"
+            android:name=".Activity.WeiboAlbumActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".DynamicPost"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".LocalAlbum"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".LocalAlbumDetail"
+            android:name=".Activity.WeiboAlbumDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 

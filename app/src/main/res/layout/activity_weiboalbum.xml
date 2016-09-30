@@ -20,7 +20,7 @@
             android:paddingLeft="@dimen/title_view_left_back_padding_left"
             android:paddingRight="@dimen/title_view_left_back_padding_right"
             android:scaleType="fitCenter"
-            android:src="@drawable/back" />
+            android:src="@mipmap/arrow_white_back2" />
 
         <TextView
             android:id="@+id/album_title"
@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingRight="@dimen/padding_15"
-            android:src="@drawable/btn_posts_camera_l" />
+            android:src="@mipmap/icon_camera" />
     </RelativeLayout>
 
     <View style="@style/dividing_line_style" />
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="center"
-            android:src="@drawable/progress_icon"
+            android:src="@mipmap/icon_progress"
             android:visibility="visible" />
 
         <TextView
