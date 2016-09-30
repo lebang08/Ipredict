@@ -16,10 +16,10 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
 import com.woyuce.activity.Activity.FreeRangeActivity;
 import com.woyuce.activity.Activity.GongyiActivity;
 import com.woyuce.activity.Activity.NetClassActivity;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Activity.SpeakingActivity;
 import com.woyuce.activity.Utils.LogUtil;
@@ -167,7 +167,7 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
             }
         };
         strinRequest.setTag("post");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override

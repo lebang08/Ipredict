@@ -116,14 +116,12 @@ public class AlbumViewPager extends ViewPager implements MatrixImageView.OnMovin
 
 	@Override
 	public void startDrag() {
-		// TODO Auto-generated method stub
 		mChildIsBeingDragged=true;
 	}
 
 
 	@Override
 	public void stopDrag() {
-		// TODO Auto-generated method stub
 		mChildIsBeingDragged=false;
 	}
 

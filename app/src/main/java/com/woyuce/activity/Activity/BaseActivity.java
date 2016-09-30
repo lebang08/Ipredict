@@ -14,7 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.umeng.analytics.MobclickAgent;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
@@ -118,6 +118,6 @@ public class BaseActivity extends Activity {
             }
         };
         tokenrequest.setTag("base");
-        MyApplication.getHttpQueue().add(tokenrequest);
+        AppContext.getHttpQueue().add(tokenrequest);
     }
 }

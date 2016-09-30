@@ -16,7 +16,7 @@ import com.android.volley.Request.Method;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.WittingAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.WitCategory;
 import com.woyuce.activity.R;
 
@@ -41,7 +41,7 @@ public class WitActivity extends Activity implements OnClickListener, OnItemClic
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("writting");
+        AppContext.getHttpQueue().cancelAll("writting");
     }
 
     @Override
@@ -93,7 +93,7 @@ public class WitActivity extends Activity implements OnClickListener, OnItemClic
             }
         }, null);
         strinRequest.setTag("writting");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override

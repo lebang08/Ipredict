@@ -16,7 +16,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.WitSearchAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.WitSearch;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -47,7 +47,7 @@ public class WitSearchActivity extends Activity implements OnClickListener, OnIt
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("witsearch");
+        AppContext.getHttpQueue().cancelAll("witsearch");
     }
 
     @Override
@@ -124,7 +124,7 @@ public class WitSearchActivity extends Activity implements OnClickListener, OnIt
             }
         };
         strinrequest.setTag("witsearch");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     @Override

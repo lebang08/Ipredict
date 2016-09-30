@@ -16,7 +16,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.SpeakingPart2Adapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingPart;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -63,7 +63,7 @@ public class FragmentPartTwo extends Fragment implements OnItemClickListener{
     }
 
     private void getJson() {
-        MyApplication.getHttpQueue().cancelAll("post");
+        AppContext.getHttpQueue().cancelAll("post");
         StringRequest stringRequest = new StringRequest(Method.POST,URL_PART2, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -102,7 +102,7 @@ public class FragmentPartTwo extends Fragment implements OnItemClickListener{
             }
         });
         stringRequest.setTag("fragmentparttwo");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 
     @Override

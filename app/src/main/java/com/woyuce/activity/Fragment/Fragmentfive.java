@@ -15,7 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Activity.AboutUsActivity;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingRoom;
 import com.woyuce.activity.Activity.LoginActivity;
 import com.woyuce.activity.R;
@@ -142,7 +142,7 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
             }
         };
         stringRequest.setTag("fragmentfive");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 
     /**
@@ -184,7 +184,7 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
             }
         };
         stringRequest.setTag("fragmentfive");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 
     @Override

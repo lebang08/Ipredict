@@ -21,7 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.SpeakingMoreAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingMore;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -56,7 +56,7 @@ public class SpeakingMoreActivity extends Activity implements AdapterView.OnItem
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("category");
+        AppContext.getHttpQueue().cancelAll("category");
     }
 
     @Override
@@ -141,7 +141,7 @@ public class SpeakingMoreActivity extends Activity implements AdapterView.OnItem
             }
         };
         strinRequest.setTag("category");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override

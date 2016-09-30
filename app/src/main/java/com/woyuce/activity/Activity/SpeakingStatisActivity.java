@@ -21,7 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.SpeakingVoteCountAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingVoteCount;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -70,7 +70,7 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("statis");
+        AppContext.getHttpQueue().cancelAll("statis");
     }
 
     @Override
@@ -161,7 +161,7 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
             }
         }, voteErrorListener());
         strinRequest.setTag("statis");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     /**
@@ -242,7 +242,7 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
                     }
                 };
                 strinRequest.setTag("statis");
-                MyApplication.getHttpQueue().add(strinRequest);
+                AppContext.getHttpQueue().add(strinRequest);
                 break;
             case R.id.spinner_statis_date:
             /*判断是否为第一次自动加载，若为第一次，则不加载*/
@@ -266,7 +266,7 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
                     }
                 };
                 strinRequest1.setTag("statis");
-                MyApplication.getHttpQueue().add(strinRequest1);
+                AppContext.getHttpQueue().add(strinRequest1);
                 break;
             case R.id.spinner_statis_city:
                 localcityid = Integer.parseInt(cityidList.get(position));
@@ -288,7 +288,7 @@ public class SpeakingStatisActivity extends Activity implements View.OnClickList
                     }
                 };
                 strinRequest2.setTag("statis");
-                MyApplication.getHttpQueue().add(strinRequest2);
+                AppContext.getHttpQueue().add(strinRequest2);
                 break;
         }
     }

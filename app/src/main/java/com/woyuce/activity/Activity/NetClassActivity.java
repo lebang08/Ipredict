@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.NetClassCourseAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.NetBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -61,7 +61,7 @@ public class NetClassActivity extends BaseActivity
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("wangluoban");
+        AppContext.getHttpQueue().cancelAll("wangluoban");
     }
 
     @Override
@@ -128,7 +128,7 @@ public class NetClassActivity extends BaseActivity
             }
         };
         strinRequest.setTag("wangluoban");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     /* 获取spn的数据 */
@@ -181,7 +181,7 @@ public class NetClassActivity extends BaseActivity
             }
         };
         strinrequest.setTag("wangluoban");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     /**
@@ -249,7 +249,7 @@ public class NetClassActivity extends BaseActivity
             }
         };
         strinrequest.setTag("wangluoban");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     @Override

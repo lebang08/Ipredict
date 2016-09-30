@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.WitSubcategoryAdapter;
 import com.woyuce.activity.Adapter.WitspnAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.WitCategory;
 import com.woyuce.activity.Bean.WitSubcategory;
 import com.woyuce.activity.R;
@@ -60,7 +60,7 @@ public class WitSubcategoryActivity extends Activity
 	@Override
 	protected void onStop() {
 		super.onStop();
-		MyApplication.getHttpQueue().cancelAll("witsubcategory");
+		AppContext.getHttpQueue().cancelAll("witsubcategory");
 	}
 	
 	@Override
@@ -134,7 +134,7 @@ public class WitSubcategoryActivity extends Activity
 			}
 		}, null);
 		strinrequest.setTag("witsubcategory");
-		MyApplication.getHttpQueue().add(strinrequest);
+		AppContext.getHttpQueue().add(strinrequest);
 	}
 
 	private void getJson() {
@@ -175,7 +175,7 @@ public class WitSubcategoryActivity extends Activity
 			}
 		};
 		strinrequest.setTag("witsubcategory");
-		MyApplication.getHttpQueue().add(strinrequest);
+		AppContext.getHttpQueue().add(strinrequest);
 	}
 
 	@Override

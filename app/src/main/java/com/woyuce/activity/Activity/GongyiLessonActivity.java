@@ -14,7 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.GongyiLessonAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.GongyiAudio;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -46,7 +46,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("audiolesson");
+        AppContext.getHttpQueue().cancelAll("audiolesson");
     }
 
     @Override
@@ -102,7 +102,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
             }
         }, errorback());
         strinrequest.setTag("audiolesson");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     // 抽出的方法，通过Item事件选择,拿到ID后，传入参数，执行该方法，成功则进入下一个Activity，并附带AudioUrl
@@ -127,7 +127,7 @@ public class GongyiLessonActivity extends BaseActivity implements AdapterView.On
             }
         }, errorback());
         strinrequest.setTag("audiolesson");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     private Response.ErrorListener errorback() { // 抽出错误回调

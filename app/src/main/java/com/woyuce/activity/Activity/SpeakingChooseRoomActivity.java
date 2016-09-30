@@ -16,7 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.SpeakingAreaAdapter;
 import com.woyuce.activity.Adapter.SpeakingCityAdapter;
 import com.woyuce.activity.Adapter.SpeakingRoomAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingArea;
 import com.woyuce.activity.Bean.SpeakingCity;
 import com.woyuce.activity.Bean.SpeakingRoom;
@@ -53,7 +53,7 @@ public class SpeakingChooseRoomActivity extends Activity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("roomchoose");
+        AppContext.getHttpQueue().cancelAll("roomchoose");
     }
 
     @Override
@@ -104,7 +104,7 @@ public class SpeakingChooseRoomActivity extends Activity implements View.OnClick
             }
         }, errorBack());
         strinRequest.setTag("roomchoose");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void getCityList() {
@@ -142,7 +142,7 @@ public class SpeakingChooseRoomActivity extends Activity implements View.OnClick
             }
         };
         strinRequest.setTag("roomchoose");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void getRoomList() {
@@ -180,7 +180,7 @@ public class SpeakingChooseRoomActivity extends Activity implements View.OnClick
             }
         };
         strinRequest.setTag("roomchoose");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private Response.ErrorListener errorBack() { // 抽出链接错误的callBack

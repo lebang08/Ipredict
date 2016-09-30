@@ -19,7 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.FreeRangeAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.FreeRange;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -48,7 +48,7 @@ public class FreeRangeActivity extends BaseActivity implements OnItemClickListen
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("range");
+        AppContext.getHttpQueue().cancelAll("range");
     }
 
     @Override
@@ -102,7 +102,7 @@ public class FreeRangeActivity extends BaseActivity implements OnItemClickListen
             }
         };
         rangeRequest.setTag("range");
-        MyApplication.getHttpQueue().add(rangeRequest);
+        AppContext.getHttpQueue().add(rangeRequest);
     }
 
     /**

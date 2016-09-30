@@ -16,7 +16,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.FreeSpellAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.FreeSpellBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -154,7 +154,7 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 			}
 		};
 		toanswerRequest.setTag("post");
-		MyApplication.getHttpQueue().add(toanswerRequest);
+		AppContext.getHttpQueue().add(toanswerRequest);
 	}
 
 	/**
@@ -212,7 +212,7 @@ public class FragmentCheckSpell extends Fragment implements OnClickListener {
 			}
 		};
 		toTagRequest.setTag("post");
-		MyApplication.getHttpQueue().add(toTagRequest);
+		AppContext.getHttpQueue().add(toTagRequest);
 	}
 
 	@Override

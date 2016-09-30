@@ -20,7 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.FreeListPageAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Fragment.FragmentCheckSpell;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -73,7 +73,7 @@ public class FreeContentActivity extends Activity implements View.OnClickListene
 
     @Override
     protected void onDestroy() {
-        MyApplication.getHttpQueue().cancelAll("content");
+        AppContext.getHttpQueue().cancelAll("content");
         super.onDestroy();
     }
 
@@ -214,7 +214,7 @@ public class FreeContentActivity extends Activity implements View.OnClickListene
             }
         };
         toanswerRequest.setTag("content");
-        MyApplication.getHttpQueue().add(toanswerRequest);
+        AppContext.getHttpQueue().add(toanswerRequest);
     }
 
     @Override

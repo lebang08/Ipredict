@@ -15,7 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -49,7 +49,7 @@ public class SpeakingShare1Activity extends BaseActivity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("share");
+        AppContext.getHttpQueue().cancelAll("share");
     }
 
     @Override
@@ -118,7 +118,7 @@ public class SpeakingShare1Activity extends BaseActivity implements View.OnClick
             }
         });
         strinRequest.setTag("share");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void setTimeData() {

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 
@@ -33,7 +33,7 @@ public class GongyiContentActivity extends BaseActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         mp.release();
-        MyApplication.getHttpQueue().cancelAll("post");
+        AppContext.getHttpQueue().cancelAll("post");
     }
 
     @Override

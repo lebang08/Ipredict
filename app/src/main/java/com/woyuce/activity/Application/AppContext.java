@@ -1,10 +1,12 @@
-package com.woyuce.activity;
+package com.woyuce.activity.Application;
 
 import android.app.Application;
 import android.content.Context;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -30,17 +32,22 @@ public class AppContext extends Application   {
     private static AppContext appContext = null;
     private Display display;
 
-
+    private static RequestQueue mQueue;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = this;
+        mQueue = Volley.newRequestQueue(getApplicationContext());
         init();
     }
 
     public static AppContext getInstance() {
         return appContext;
+    }
+
+    public static RequestQueue getHttpQueue() {
+        return mQueue;
     }
 
     /**

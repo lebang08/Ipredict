@@ -16,7 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.SpeakingAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -47,7 +47,7 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("speaking");
+        AppContext.getHttpQueue().cancelAll("speaking");
     }
 
     @Override
@@ -120,7 +120,7 @@ public class SpeakingActivity extends BaseActivity implements View.OnClickListen
             }
         });
         stringRequest.setTag("speaking");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 
     @Override

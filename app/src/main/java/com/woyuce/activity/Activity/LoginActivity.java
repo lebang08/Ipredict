@@ -15,7 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -64,7 +64,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("login");
+        AppContext.getHttpQueue().cancelAll("login");
     }
 
     @Override
@@ -138,7 +138,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             }
         };
         strinRequest.setTag("login");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override
@@ -258,6 +258,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             }
         };
         stringRequest.setTag("login");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 }

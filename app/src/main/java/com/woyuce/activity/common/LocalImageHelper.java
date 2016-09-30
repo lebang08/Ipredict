@@ -3,7 +3,7 @@ package com.woyuce.activity.common;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
-import com.woyuce.activity.AppContext;
+import com.woyuce.activity.Application.AppContext;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

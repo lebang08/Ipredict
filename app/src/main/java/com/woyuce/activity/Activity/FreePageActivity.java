@@ -23,7 +23,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.FreePageAdapter;
 import com.woyuce.activity.Adapter.FreeSectionAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.FreePage;
 import com.woyuce.activity.Bean.FreeSection;
 import com.woyuce.activity.R;
@@ -78,7 +78,7 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("page");
+        AppContext.getHttpQueue().cancelAll("page");
     }
 
     @Override
@@ -213,7 +213,7 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
 
         };
         strinRequest.setTag("page");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     // 加载书页
@@ -335,7 +335,7 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
 
         };
         strinRequest.setTag("page");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override
@@ -559,7 +559,7 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
             }
         };
         strinrequest.setTag("page");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     /**
@@ -601,6 +601,6 @@ public class FreePageActivity extends BaseActivity implements View.OnClickListen
             }
         };
         requestCanceltag.setTag("page");
-        MyApplication.getHttpQueue().add(requestCanceltag);
+        AppContext.getHttpQueue().add(requestCanceltag);
     }
 }

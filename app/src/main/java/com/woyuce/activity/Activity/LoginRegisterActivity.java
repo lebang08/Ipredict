@@ -15,7 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -68,7 +68,7 @@ public class LoginRegisterActivity  extends BaseActivity implements View.OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("register");
+        AppContext.getHttpQueue().cancelAll("register");
     }
 
     @Override
@@ -141,7 +141,7 @@ public class LoginRegisterActivity  extends BaseActivity implements View.OnClick
             }
         };
         VaildRequest.setTag("register");
-        MyApplication.getHttpQueue().add(VaildRequest);
+        AppContext.getHttpQueue().add(VaildRequest);
     }
 
     /**
@@ -191,7 +191,7 @@ public class LoginRegisterActivity  extends BaseActivity implements View.OnClick
             }
         };
         MsgRequest.setTag("register");
-        MyApplication.getHttpQueue().add(MsgRequest);
+        AppContext.getHttpQueue().add(MsgRequest);
     }
 
     // 验证验证码
@@ -239,7 +239,7 @@ public class LoginRegisterActivity  extends BaseActivity implements View.OnClick
             }
         };
         CheckRequest.setTag("register");
-        MyApplication.getHttpQueue().add(CheckRequest);
+        AppContext.getHttpQueue().add(CheckRequest);
     }
 
     @Override

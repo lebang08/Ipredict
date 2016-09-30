@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.FreeLessonAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.FreeLesson;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -50,7 +50,7 @@ public class FreeLessonActivity extends BaseActivity implements AdapterView.OnIt
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("lesson");
+        AppContext.getHttpQueue().cancelAll("lesson");
     }
 
     @Override
@@ -110,7 +110,7 @@ public class FreeLessonActivity extends BaseActivity implements AdapterView.OnIt
             }
         };
         lessonRequest.setTag("lesson");
-        MyApplication.getHttpQueue().add(lessonRequest);
+        AppContext.getHttpQueue().add(lessonRequest);
     }
 
     /**

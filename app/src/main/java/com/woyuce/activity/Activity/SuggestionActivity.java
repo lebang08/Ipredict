@@ -13,7 +13,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -39,7 +39,7 @@ public class SuggestionActivity extends Activity implements View.OnClickListener
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("suggestion");
+        AppContext.getHttpQueue().cancelAll("suggestion");
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SuggestionActivity extends Activity implements View.OnClickListener
             }
         };
         aboutusrequest.setTag("suggestion");
-        MyApplication.getHttpQueue().add(aboutusrequest);
+        AppContext.getHttpQueue().add(aboutusrequest);
     }
 
     @Override

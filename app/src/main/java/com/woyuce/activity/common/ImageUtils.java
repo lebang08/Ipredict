@@ -27,7 +27,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.DisplayMetrics;
 
-import com.woyuce.activity.AppContext;
+import com.woyuce.activity.Application.AppContext;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -779,8 +779,7 @@ public class ImageUtils {
 		try {  
 			stream = new FileOutputStream(AppContext.getInstance().getCachePath()+File.separator + filename);
 		} catch (FileNotFoundException e) {  
-			// TODO Auto-generated catch block  
-			e.printStackTrace();  
+			e.printStackTrace();
 		}  
 
 		if( bmp.compress(format, quality, stream)){

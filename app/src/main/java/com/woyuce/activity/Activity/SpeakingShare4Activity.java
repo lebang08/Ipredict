@@ -15,7 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -41,7 +41,7 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("share4");
+        AppContext.getHttpQueue().cancelAll("share4");
     }
 
     @Override
@@ -135,7 +135,7 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
             }
         };
         stringRequest.setTag("share4");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 
 //    //多社交平台分享

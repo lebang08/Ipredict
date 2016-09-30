@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.common.ExtraKey;
 import com.woyuce.activity.common.ImageUtils;
 import com.woyuce.activity.common.LocalImageHelper;

@@ -17,7 +17,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -54,7 +54,7 @@ public class LoginRegisterInfoActivity extends BaseActivity implements View.OnCl
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("registerinfo");
+        AppContext.getHttpQueue().cancelAll("registerinfo");
     }
 
 
@@ -171,7 +171,7 @@ public class LoginRegisterInfoActivity extends BaseActivity implements View.OnCl
             }
         };
         stringRequest.setTag("registerinfo");
-        MyApplication.getHttpQueue().add(stringRequest);
+        AppContext.getHttpQueue().add(stringRequest);
     }
 
     /**
@@ -226,7 +226,7 @@ public class LoginRegisterInfoActivity extends BaseActivity implements View.OnCl
             }
         };
         VaildRequest.setTag("registerinfo");
-        MyApplication.getHttpQueue().add(VaildRequest);
+        AppContext.getHttpQueue().add(VaildRequest);
     }
 
     @Override

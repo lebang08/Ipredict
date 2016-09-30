@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.FreeBookAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.FreeBook;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -50,7 +50,7 @@ public class FreeBookActivity extends BaseActivity implements AdapterView.OnItem
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("book");
+        AppContext.getHttpQueue().cancelAll("book");
     }
 
     @Override
@@ -140,7 +140,7 @@ public class FreeBookActivity extends BaseActivity implements AdapterView.OnItem
             }
         };
         strinRequest.setTag("book");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override

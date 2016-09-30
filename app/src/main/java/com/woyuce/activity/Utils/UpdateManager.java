@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.StringRequest;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
 
 import org.json.JSONArray;
@@ -108,7 +108,7 @@ public class UpdateManager {
             }
         }, null);
         request.setTag("updatemanager");
-        MyApplication.getHttpQueue().add(request);
+        AppContext.getHttpQueue().add(request);
     }
 
     public boolean isUpdate() {   /*boolean比较本地版本是否需要更新*/

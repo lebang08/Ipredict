@@ -15,7 +15,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.SpeakingAreaAdapter;
 import com.woyuce.activity.Adapter.SpeakingCityAdapter;
 import com.woyuce.activity.Adapter.SpeakingRoomAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingArea;
 import com.woyuce.activity.Bean.SpeakingCity;
 import com.woyuce.activity.Bean.SpeakingRoom;
@@ -55,7 +55,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("vote");
+        AppContext.getHttpQueue().cancelAll("vote");
     }
 
     @Override
@@ -131,7 +131,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
             }
         }, errorListener());
         strinRequest.setTag("vote");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void getCityJson() {
@@ -173,7 +173,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
             }
         };
         strinRequest.setTag("vote");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void getRoomJson() {
@@ -211,7 +211,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
             }
         };
         strinRequest.setTag("vote");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void toVote() {
@@ -246,7 +246,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
             }
         };
         strinRequest.setTag("vote");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private Response.ErrorListener errorListener() { // 抽出的错误报告方法*******************

@@ -14,7 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingContent;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -48,7 +48,7 @@ public class SpeakingContentActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("subcontent");
+        AppContext.getHttpQueue().cancelAll("subcontent");
     }
 
     @Override
@@ -130,7 +130,7 @@ public class SpeakingContentActivity extends BaseActivity implements View.OnClic
             }
         };
         strinRequest.setTag("subcontent");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     private void getImageView() {

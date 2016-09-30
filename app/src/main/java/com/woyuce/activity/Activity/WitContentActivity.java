@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.WitContent;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -44,7 +44,7 @@ public class WitContentActivity extends BaseActivity implements OnClickListener 
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("witcontent");
+        AppContext.getHttpQueue().cancelAll("witcontent");
     }
 
     @Override
@@ -128,7 +128,7 @@ public class WitContentActivity extends BaseActivity implements OnClickListener 
             }
         };
         strinrequest.setTag("witcontent");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     private void showImage() {

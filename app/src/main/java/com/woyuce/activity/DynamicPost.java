@@ -86,7 +86,6 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
         initData();
     }
 
-
     /**
      * @Description： 初始化Views
      */
@@ -144,7 +143,7 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
     @Override
     public void onBackPressed() {
         if (pagerContainer.getVisibility() != View.VISIBLE) {
-            //showSaveDialog();
+            finish();
         } else {
             hideViewPager();
         }
@@ -171,7 +170,6 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
 //
 //                            @Override
 //                            public void onClick(View arg0) {
-//                                // TODO Auto-generated method stub
 //
 //                            }
 //                        })
@@ -179,7 +177,6 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
 //
 //                            @Override
 //                            public void onClick(View arg0) {
-//                                // TODO Auto-generated method stub
 //                                pictures.remove(index);
 //                                if (pictures.size() == 9) {
 //                                    add.setVisibility(View.GONE);
@@ -255,13 +252,11 @@ public class DynamicPost extends BaseActivity implements OnClickListener, Matrix
 
         @Override
         public void onPageScrolled(int arg0, float arg1, int arg2) {
-            // TODO Auto-generated method stub
 
         }
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-            // TODO Auto-generated method stub
 
         }
     };

@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Adapter.SpeakingSearchAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingSearch;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -51,7 +51,7 @@ public class SpeakingSearchActivity extends Activity implements AdapterView.OnIt
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("search");
+        AppContext.getHttpQueue().cancelAll("search");
     }
 
     @Override
@@ -132,7 +132,7 @@ public class SpeakingSearchActivity extends Activity implements AdapterView.OnIt
             }
         };
         strinRequest.setTag("search");
-        MyApplication.getHttpQueue().add(strinRequest);
+        AppContext.getHttpQueue().add(strinRequest);
     }
 
     @Override

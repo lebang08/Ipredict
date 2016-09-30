@@ -22,7 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.woyuce.activity.Adapter.NetClassLessonAdapter;
-import com.woyuce.activity.Application.MyApplication;
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.NetLessonBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.PreferenceUtil;
@@ -62,7 +62,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
     @Override
     protected void onStop() {
         super.onStop();
-        MyApplication.getHttpQueue().cancelAll("wangluobanlesson");
+        AppContext.getHttpQueue().cancelAll("wangluobanlesson");
     }
 
     @Override
@@ -161,7 +161,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
             }
         };
         strinrequest.setTag("wangluobanlesson");
-        MyApplication.getHttpQueue().add(strinrequest);
+        AppContext.getHttpQueue().add(strinrequest);
     }
 
     // 检查权限
@@ -274,7 +274,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
             }
         };
         checkrequest.setTag("wangluobanlesson");
-        MyApplication.getHttpQueue().add(checkrequest);
+        AppContext.getHttpQueue().add(checkrequest);
     }
 
     // 输入激活码
@@ -333,7 +333,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
             }
         };
         checkcoderequest.setTag("wangluobanlesson");
-        MyApplication.getHttpQueue().add(checkcoderequest);
+        AppContext.getHttpQueue().add(checkcoderequest);
     }
 
     public static boolean isApkInstalled(Context context, String packageName) {
