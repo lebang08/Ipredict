@@ -3,10 +3,15 @@ package com.woyuce.activity.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Window;
 
 import com.woyuce.activity.Utils.ActivityManager;
+import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.common.Constants;
 
 
 /**
@@ -45,6 +50,55 @@ public class WeiboBaseActivity extends Activity {
         super.onResume();
         //每次返回界面时，将点击标志设置为可点击
         clickable = true;
+    }
+
+    /**
+     * 判断是否拥有权限
+     *
+     * @param permissions
+     * @return
+     */
+    public boolean hasPermission(String... permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * 请求权限
+     */
+    protected void requestPermission(int code, String... permissions) {
+        ActivityCompat.requestPermissions(this, permissions, code);
+        ToastUtil.showMessage(this, "如果拒绝相机授权,会导致该部分功能无法正常使用", 8000);
+    }
+
+    /**
+     * 请求权限的回调
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case Constants.CODE_CAMERE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ToastUtil.showMessage(this, "现在您拥有了相机权限");
+                    // 调用相机
+                    doCamera();
+                } else {
+                    ToastUtil.showMessage(this, "您拒绝相机授权,会导致应用无法正常使用，可以在系统设置中重新开启权限", 8000);
+                }
+                break;
+        }
+    }
+
+    //子类重写后实现具体调用相机的业务逻辑
+    public void doCamera() {
     }
 
     /**

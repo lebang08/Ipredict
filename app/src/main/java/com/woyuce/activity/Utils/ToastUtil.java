@@ -17,11 +17,13 @@ public class ToastUtil {
         showMessage(context, msg, Toast.LENGTH_SHORT);
     }
 
-    public static void showMessage(Context context, final String msg, final int len) {
-        if (toast == null)
-            toast = Toast.makeText(context, msg, len);
-        else
+    public static void showMessage(Context context, String msg, int duration) {
+        if (toast == null) {
+            toast = Toast.makeText(context, msg, duration);
+        } else {
             toast.setText(msg);
+            toast.setDuration(duration);
+        }
         toast.show();
     }
 }

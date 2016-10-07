@@ -3,9 +3,12 @@ package com.woyuce.activity.Activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 
 import com.android.volley.AuthFailureError;
@@ -18,6 +21,7 @@ import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.common.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +61,56 @@ public class BaseActivity extends Activity {
         }
     }
 
+    /**
+     * 判断是否拥有权限
+     *
+     * @param permissions
+     * @return
+     */
+    public boolean hasPermission(String... permissions) {
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * 请求权限
+     */
+    protected void requestPermission(int code, String... permissions) {
+        ActivityCompat.requestPermissions(this, permissions, code);
+        ToastUtil.showMessage(this, "如果拒绝存储授权,会导致应用无法正常使用", 8000);
+    }
+
+    /**
+     * 请求权限的回调
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case Constants.CODE_WRITE_EXTERNAL_STORAGE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    ToastUtil.showMessage(this, "现在您拥有了存储权限");
+                    // 自动检测更新
+                    doUpdate();
+                } else {
+                }
+                break;
+            case Constants.CODE_READ_EXTERNAL_STORAGE:
+                break;
+        }
+    }
+
+    //子类重写后实现具体调用相机的业务逻辑
+    public void doUpdate() {
+    }
+
     public void progressdialogshow(Context context) {
         progressdialog = new ProgressDialog(context);
         progressdialog.setTitle("加载中，请稍候");
@@ -72,7 +126,7 @@ public class BaseActivity extends Activity {
 
     //先获取token，token用于此后每一次接口请求的参数
     public void getBaseToken() {
-        StringRequest tokenrequest = new StringRequest(Request.Method.POST, "http://api.iyuce.com/api/token",
+        StringRequest tokenrequest = new StringRequest(Request.Method.POST, Constants.URL_API_REQUESTTOKEN,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

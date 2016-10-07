@@ -1,16 +1,12 @@
 package com.woyuce.activity.Activity;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
@@ -20,15 +16,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Fragment.FragmentTwo;
 import com.woyuce.activity.Fragment.Fragmentfive;
 import com.woyuce.activity.Fragment.Fragmentfour;
 import com.woyuce.activity.Fragment.Fragmentone;
 import com.woyuce.activity.Fragment.Fragmentthree;
 import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.LocalImageHelper;
 import com.woyuce.activity.Utils.PreferenceUtil;
-import com.woyuce.activity.Utils.ToastUtil;
-import com.woyuce.activity.Utils.UpdateManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,46 +65,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
         initEvent();
         setSelect(0);
 
-        // 6.0系统权限动态申请
-        doPerssionRequest();
-    }
+        //微博相册图片辅助类初始化(这一步必须，开启异步，否则后面相册无法打开，会崩溃)
+        LocalImageHelper.init(AppContext.getInstance());
 
-
-    /**
-     * 请求权限
-     */
-    private void doPerssionRequest() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // 申请WRITE_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
-        } else {
-            // 自动检测更新
-            new UpdateManager(this).checkUpdate();
-        }
-    }
-
-    /**
-     * 请求权限的回调
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                ToastUtil.showMessage(MainActivity.this, "现在您拥有了权限");
-                // 自动检测更新
-                new UpdateManager(this).checkUpdate();
-            } else {
-                ToastUtil.showMessage(MainActivity.this, "拒绝存储授权会导致无法更新、缓存题库图片");
-                doPerssionRequest();
-            }
-        }
     }
 
     private void initView() {

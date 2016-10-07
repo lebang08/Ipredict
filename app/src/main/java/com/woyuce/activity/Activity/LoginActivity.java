@@ -1,5 +1,6 @@
 package com.woyuce.activity.Activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,8 @@ import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.Utils.UpdateManager;
+import com.woyuce.activity.common.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,11 +57,23 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             LogUtil.e("localtoken2 = " + localtoken);
         }
 
+        //判断是否有权限
+        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            doUpdate();
+        } else {
+            requestPermission(Constants.CODE_WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+
 //        // 友盟推送
 //        PushAgent mPushAgent = PushAgent.getInstance(LoginActivity.this);
 //        mPushAgent.enable();
 //
 //        PushAgent.getInstance(LoginActivity.this).onAppStart();
+    }
+
+    @Override
+    public void doUpdate() {
+        new UpdateManager(this).checkUpdate();
     }
 
     @Override

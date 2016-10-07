@@ -163,37 +163,6 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
                 break;
             case R.id.header_bar_photo_delete:
                 final int index = viewpager.getCurrentItem();
-//                new AlertDialog(this).builder()
-//                        .setTitle("提示")
-//                        .setMsg("要删除这张照片吗?")
-//                        .setNegativeButton("取消", new OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(View arg0) {
-//
-//                            }
-//                        })
-//                        .setPositiveButton("确定", new OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(View arg0) {
-//                                pictures.remove(index);
-//                                if (pictures.size() == 9) {
-//                                    add.setVisibility(View.GONE);
-//                                } else {
-//                                    add.setVisibility(View.VISIBLE);
-//                                }
-//                                if (pictures.size() == 0) {
-//                                    hideViewPager();
-//                                }
-//                                picContainer.removeView(picContainer.getChildAt(index));
-//                                picRemain.setText(pictures.size() + "/9");
-//                                mCountView.setText((viewpager.getCurrentItem() + 1) + "/" + pictures.size());
-//                                viewpager.getAdapter().notifyDataSetChanged();
-//                                LocalImageHelper.getInstance().setCurrentSize(pictures.size());
-//                            }
-//                        }).show();
-
                 pictures.remove(index);
                 if (pictures.size() == 9) {
                     add.setVisibility(View.GONE);

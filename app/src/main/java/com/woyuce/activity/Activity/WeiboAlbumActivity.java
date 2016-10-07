@@ -1,5 +1,6 @@
 package com.woyuce.activity.Activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -31,6 +32,7 @@ import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.ImageUtils;
 import com.woyuce.activity.Utils.LocalImageHelper;
 import com.woyuce.activity.Utils.StringUtils;
+import com.woyuce.activity.common.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -113,15 +115,25 @@ public class WeiboAlbumActivity extends WeiboBaseActivity {
                 Toast.makeText(WeiboAlbumActivity.this, "最多选择9张图片", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            //  拍照后保存图片的绝对路径
-            String cameraPath = LocalImageHelper.getInstance().setCameraImgPath();
-            File file = new File(cameraPath);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
-            startActivityForResult(intent,
-                    ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
+            //  调用相机也是需要6.0权限的
+            if (hasPermission(Manifest.permission.CAMERA)) {
+                doCamera();
+            } else {
+                requestPermission(Constants.CODE_CAMERE, Manifest.permission.CAMERA);
+            }
         }
     };
+
+    //重写调用相机的逻辑
+    @Override
+    public void doCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //  拍照后保存图片的绝对路径
+        String cameraPath = LocalImageHelper.getInstance().setCameraImgPath();
+        File file = new File(cameraPath);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

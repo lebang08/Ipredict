@@ -12,11 +12,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
-import com.woyuce.activity.Utils.LocalImageHelper;
 
 import java.io.File;
-
-//
 
 /**
  * 全局应用程序类：用于保存和调用全局应用配置及访问网络数据
@@ -24,7 +21,7 @@ import java.io.File;
  * @author linjizong
  * @created 2015-3-22
  */
-public class AppContext extends Application   {
+public class AppContext extends Application {
     private static final String TAG = AppContext.class.getSimpleName();
     private static final String APP_CACAHE_DIRNAME = "/webcache";
 
@@ -54,9 +51,10 @@ public class AppContext extends Application   {
      * 初始化
      */
     private void init() {
+        //本地图片辅助类初始化(因为6.0后动态权限的原因，将初始化延迟放在MainActivity中做，否则应用无权限时，一打开就崩溃)
+//        LocalImageHelper.init(this);
+
         initImageLoader(getApplicationContext());
-        //本地图片辅助类初始化
-        LocalImageHelper.init(this);
         if (display == null) {
             WindowManager windowManager = (WindowManager)
                     getSystemService(Context.WINDOW_SERVICE);
@@ -90,6 +88,7 @@ public class AppContext extends Application   {
             cacheDir.mkdirs();
         return cacheDir.getAbsolutePath();
     }
+
     /**
      * @return
      * @Description： 获取当前屏幕的宽度

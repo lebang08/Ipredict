@@ -237,7 +237,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
         }, errorListener()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> hashMap = new HashMap<String, String>();
+                Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("areaid", localAreaId);
                 hashMap.put("cityid", localCityId);
                 hashMap.put("roomid", localRoomId);
