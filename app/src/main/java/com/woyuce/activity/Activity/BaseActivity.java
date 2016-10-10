@@ -100,6 +100,7 @@ public class BaseActivity extends Activity {
                     // 自动检测更新
                     doUpdate();
                 } else {
+                    ToastUtil.showMessage(this, "您拒绝存储授权,会导致应用无法正常使用，可以在系统设置中重新开启权限", 8000);
                 }
                 break;
             case Constants.CODE_READ_EXTERNAL_STORAGE:

@@ -170,19 +170,19 @@
 
         <!-- Tab3-->
         <!--<activity-->
-            <!--android:name=".Activity.WeiboActivity"-->
-            <!--android:launchMode="standard"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name=".Activity.WeiboActivity"-->
+        <!--android:launchMode="standard"-->
+        <!--android:screenOrientation="portrait" />-->
 
         <!--<activity-->
-            <!--android:name=".Activity.WeiboPhotoWallActivity"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name=".Activity.WeiboPhotoWallActivity"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait" />-->
 
         <!--<activity-->
-            <!--android:name=".Activity.WeiboPulishActivity2"-->
-            <!--android:launchMode="singleTop"-->
-            <!--android:screenOrientation="portrait" />-->
+        <!--android:name=".Activity.WeiboPulishActivity2"-->
+        <!--android:launchMode="singleTop"-->
+        <!--android:screenOrientation="portrait" />-->
 
         <activity
             android:name=".Activity.WeiboPublishActivity"
@@ -222,6 +222,37 @@
             android:name=".Services.UpdateService"
             android:screenOrientation="portrait" />
 
+        <!--MOB分享-->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <!-- QQ和QQ空间分享 QQ登录的回调必须要配置的 -->
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 新浪微博客户端分享回调必须配置 -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--微信分享回调 -->
+        <activity
+            android:name="cn.sharesdk.onekeyshare.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!--友盟参数-->
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5396699556240b03bc0906ff" />

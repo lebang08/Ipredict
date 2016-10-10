@@ -154,7 +154,6 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.post_back:
-                // showSaveDialog();
                 finish();
                 break;
             case R.id.header_bar_photo_back:

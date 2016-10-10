@@ -121,7 +121,6 @@
 //        switch (position) {
 //            case 0:
 //                //ToastUtil.showMessage(this, "去拍照获取图片");
-//                //TODO 调用相机也是需要6.0权限的
 //                WeiboTestImageUtil.pickImagefromCamera(this);
 //                break;
 //            default:

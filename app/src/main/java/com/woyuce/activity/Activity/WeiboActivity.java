@@ -13,7 +13,6 @@
 // * Created by Administrator on 2016/9/23.
 // */
 //
-////TODO 封装工具栏，做自定义View
 //
 //public class WeiboActivity extends Activity {
 //

@@ -27,10 +27,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by Administrator on 2016/9/22.
@@ -197,7 +203,8 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
                     } else {
                         LogUtil.e("code!=0 Data-BACK", "读取页面失败： " + jsonObject.getString("message"));
                     }
-                    setRoomData(); // 数据加载完成后再放入 ******************************
+                    // 数据加载完成后再放入
+                    setRoomData();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -205,7 +212,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
         }, errorListener()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> hashMap = new HashMap<String, String>();
+                Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("cityid", localCityId);
                 return hashMap;
             }
@@ -224,8 +231,7 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
                     int result = jsonObject.getInt("code");
                     if (result == 0) {
                         ToastUtil.showMessage(SpeakingVoteActivity.this, "投票成功,分享给好友");
-                        //TODO 分享
-//                        showShare("我们不卖答案，我们是试卷的搬运工", "我把票投给了" + localsubName);
+                        showShare("我们不卖答案，我们是试卷的搬运工", "我把票投给了" + localsubName);
                         finish();
                     } else {
                         LogUtil.e("code!=0 Data-BACK", "读取页面失败： " + jsonObject.getString("message"));
@@ -285,37 +291,37 @@ public class SpeakingVoteActivity extends BaseActivity implements View.OnClickLi
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-//    private void showShare(String title,String message){
-//        try {
-//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            String mDatetime = sdf.format(new Date());
-//            String  encode_collage  =   java.net.URLEncoder.encode(localRoomName,"utf-8");
-////			String  encode_title  =   java.net.URLEncoder.encode("我在" + localRoomName + "把票投给了话题" + localsubName + "。你呢？","utf-8");
-//            String  encode_title  =   java.net.URLEncoder.encode("我在" + localRoomName + "把票投给了话题" +localsubName,"utf-8");
-//            String URLcode = encode_title.replace("+","%20");
-//            String url = "http://xm.iyuce.com/app/fenxiang.html?viewid=2&img="+localUrl+"&title="+ URLcode +"&collage="+ encode_collage +"&datetime=" + mDatetime;
-//
-//            ShareSDK.initSDK(VoteActivity.this);
-//            OnekeyShare oks = new OnekeyShare();
-//            oks.setTitle(message);
-//            // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-//            oks.setTitleUrl(url);
-//            // text是分享文本，所有平台都需要这个字段
-//            oks.setText(title);
-//            // url仅在微信（包括好友和朋友圈）中使用
-//            oks.setUrl(url);
-//            oks.setImageUrl("http://www.iyuce.com/uploadfiles/app/logo.png");
-//            oks.setComment("答题超赞");
-//            // site是分享此内容的网站名称，仅在QQ空间使用
-//            oks.setSite(getString(R.string.app_name));
-//            // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-//            oks.setSiteUrl(url);
-//            // 启动分享GUI
-//            oks.show(SpeakingVoteActivity.this);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void showShare(String title,String message){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String mDatetime = sdf.format(new Date());
+            String  encode_collage  =   java.net.URLEncoder.encode(localRoomName,"utf-8");
+//			String  encode_title  =   java.net.URLEncoder.encode("我在" + localRoomName + "把票投给了话题" + localsubName + "。你呢？","utf-8");
+            String  encode_title  =   java.net.URLEncoder.encode("我在" + localRoomName + "把票投给了话题" +localsubName,"utf-8");
+            String URLcode = encode_title.replace("+","%20");
+            String url = "http://xm.iyuce.com/app/fenxiang.html?viewid=2&img="+localUrl+"&title="+ URLcode +"&collage="+ encode_collage +"&datetime=" + mDatetime;
+
+            ShareSDK.initSDK(SpeakingVoteActivity.this);
+            OnekeyShare oks = new OnekeyShare();
+            oks.setTitle(message);
+            // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+            oks.setTitleUrl(url);
+            // text是分享文本，所有平台都需要这个字段
+            oks.setText(title);
+            // url仅在微信（包括好友和朋友圈）中使用
+            oks.setUrl(url);
+            oks.setImageUrl("http://www.iyuce.com/uploadfiles/app/logo.png");
+            oks.setComment("答题超赞");
+            // site是分享此内容的网站名称，仅在QQ空间使用
+            oks.setSite(getString(R.string.app_name));
+            // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+            oks.setSiteUrl(url);
+            // 启动分享GUI
+            oks.show(SpeakingVoteActivity.this);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     @Override

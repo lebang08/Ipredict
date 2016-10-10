@@ -49,7 +49,6 @@
 //        mAdapter = new WeiboPulishAdapter(this, mList);
 //        mGridViewShowPhoto.setAdapter(mAdapter);
 //
-//        //TODO 数组没有加长，难道要用一个数组在两个Activity之间持续传递？
 //        LogUtil.e("mList = " + mList);
 //    }
 //

@@ -28,4 +28,5 @@ dependencies {
     compile files('libs/volley.jar')
     compile files('libs/uil.jar')
     compile 'com.umeng.analytics:analytics:latest.integration'
+    compile files('libs/MobCommons-2016.0830.1940.jar')
 }
