@@ -20,10 +20,15 @@ import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 /**
  * Created by Administrator on 2016/9/22.
@@ -87,9 +92,9 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
                                 startActivity(it_speaking);
                                 SpeakingShare4Activity.this.finish();
                                 if (subnameList.size() == 0) {
-//                                    showShare("我们不卖答案，我们是试卷的搬运工", "我在" + localRoom + "考到了:" + localsubname);
+                                    showShare("我们不卖答案，我们是试卷的搬运工", "我在" + localRoom + "考到了:" + localsubname);
                                 } else {
-//                                    showShare("我们不卖答案，我们是试卷的搬运工", "我在" + localRoom + "考到了:" + subnameList.get(0));
+                                    showShare("我们不卖答案，我们是试卷的搬运工", "我在" + localRoom + "考到了:" + subnameList.get(0));
                                 }
                             }
                         }).show();
@@ -110,7 +115,7 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> hashMap = new HashMap<String, String>();
+                Map<String, String> hashMap = new HashMap<>();
                 hashMap.put("uname", PreferenceUtil.getSharePre(getApplicationContext()).getString("mUserName", ""));
                 hashMap.put("umessage", localMessage);
                 hashMap.put("roomid", localRoomID);
@@ -138,51 +143,51 @@ public class SpeakingShare4Activity extends Activity implements View.OnClickList
         AppContext.getHttpQueue().add(stringRequest);
     }
 
-//    //多社交平台分享
-//    private void showShare(String title,String message){
-//        try {
-//            String pingjie = null;
-//            switch (subnameList.size()) {
-//                case 0:
-//                    pingjie = "";
-//                    break;
-//                case 1:
-//                    pingjie= subnameList.get(0);
-//                    break;
-//                case 2:
-//                    pingjie= subnameList.get(0) + "," + subnameList.get(1);
-//                    break;
-//                case 3:
-//                    pingjie= subnameList.get(0) + "," + subnameList.get(1)+ "," + subnameList.get(2);
-//                    break;
-//            }
-//            String encode_collage = URLEncoder.encode(localRoom,"utf-8");
-//            String encode_title = URLEncoder.encode(subnameList.get(0),"utf-8");
-//            String URLcode = encode_title.replace("+","%20");
-//            String url = "http://xm.iyuce.com/app/fenxiang.html?viewid=1&collage=" + encode_collage
-//                    + "&title=" + URLcode + "&datetime=" + localTime + "&img=&part1=" + pingjie
-//                    + "&part2= " + localsubname + "&message=" + localMessage;
-//            ShareSDK.initSDK(ShareActivity4.this);
-//            OnekeyShare oks = new OnekeyShare();
-//            oks.setTitle(message);
-//            // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-//            oks.setTitleUrl(url);
-//            // text是分享文本，所有平台都需要这个字段
-//            oks.setText(title);
-//            // url仅在微信（包括好友和朋友圈）中使用
-//            oks.setUrl(url);
-//            oks.setImageUrl("http://www.iyuce.com/uploadfiles/app/logo.png");
-//            oks.setComment("答题超赞");
-//            // site是分享此内容的网站名称，仅在QQ空间使用
-//            oks.setSite(getString(R.string.app_name));
-//            // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-//            oks.setSiteUrl(url);
-//            // 启动分享GUI
-//            oks.show(ShareActivity4.this);
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    //多社交平台分享
+    private void showShare(String title,String message){
+        try {
+            String pingjie = null;
+            switch (subnameList.size()) {
+                case 0:
+                    pingjie = "";
+                    break;
+                case 1:
+                    pingjie= subnameList.get(0);
+                    break;
+                case 2:
+                    pingjie= subnameList.get(0) + "," + subnameList.get(1);
+                    break;
+                case 3:
+                    pingjie= subnameList.get(0) + "," + subnameList.get(1)+ "," + subnameList.get(2);
+                    break;
+            }
+            String encode_collage = URLEncoder.encode(localRoom,"utf-8");
+            String encode_title = URLEncoder.encode(subnameList.get(0),"utf-8");
+            String URLcode = encode_title.replace("+","%20");
+            String url = "http://xm.iyuce.com/app/fenxiang.html?viewid=1&collage=" + encode_collage
+                    + "&title=" + URLcode + "&datetime=" + localTime + "&img=&part1=" + pingjie
+                    + "&part2= " + localsubname + "&message=" + localMessage;
+            ShareSDK.initSDK(SpeakingShare4Activity.this);
+            OnekeyShare oks = new OnekeyShare();
+            oks.setTitle(message);
+            // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+            oks.setTitleUrl(url);
+            // text是分享文本，所有平台都需要这个字段
+            oks.setText(title);
+            // url仅在微信（包括好友和朋友圈）中使用
+            oks.setUrl(url);
+            oks.setImageUrl("http://www.iyuce.com/uploadfiles/app/logo.png");
+            oks.setComment("答题超赞");
+            // site是分享此内容的网站名称，仅在QQ空间使用
+            oks.setSite(getString(R.string.app_name));
+            // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+            oks.setSiteUrl(url);
+            // 启动分享GUI
+            oks.show(SpeakingShare4Activity.this);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onClick(View v) {

@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#33ba9c"
+        android:background="#f7941d"
         android:orientation="horizontal">
 
         <ImageButton
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="#33ba9c"
+            android:background="#f7941d"
             android:text="发现" />
 
         <Button
@@ -63,43 +63,103 @@
         android:layout_height="96dp"
         android:orientation="horizontal">
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/ll_tab3_one"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/img_duck" />
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/img_duck" />
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/img_duck" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@mipmap/img_duck" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="精选" />
+        </LinearLayout>
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/ll_tab3_two"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@mipmap/img_duck" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/img_duck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="推荐" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tab3_three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/img_duck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="动态" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tab3_four"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/img_duck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="小组" />
+        </LinearLayout>
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/txt_tab3_changetab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:text="精选动态" />
 
     <GridView
         android:id="@+id/gv_fragmenttab3_weibo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:numColumns="2"
         android:verticalSpacing="32dp" />
 

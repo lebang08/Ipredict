@@ -8,9 +8,18 @@ public class WeiboBean {
     public String user_name;
     public String pulish_time;
     public String pulish_message;
-    public String pulish_image;
+    public String pulish_image; //发的图片
     public String comment;
     public String like;
+
+    public String body;   //内容
+    public String has_photo;
+    public String img_url; //发的图片
+    public String author; //作者
+    public String date_created;//时间
+    public String avatar_url;//头像？
+
+
 
 
 //        "user_name": "用户名大伟",
