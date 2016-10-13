@@ -3,7 +3,6 @@ package com.woyuce.activity.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +56,7 @@ public class WeiboRecommandAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.gvitem_weiborecommand, null);
             viewHolder.imgPath = (ImageView) convertView.findViewById(R.id.img_item_weibo);
             viewHolder.txtBody = (TextView) convertView.findViewById(R.id.body_item_weibo);
+            viewHolder.txtReplyCount = (TextView) convertView.findViewById(R.id.reply_item_weibo);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -75,11 +75,12 @@ public class WeiboRecommandAdapter extends BaseAdapter {
         ImageLoader.getInstance().displayImage(url, viewHolder.imgPath, options);
 
         viewHolder.txtBody.setText(mList.get(position).body);
+        viewHolder.txtReplyCount.setText("评论  " + mList.get(position).reply_count);
         return convertView;
     }
 
     class ViewHolder {
         public ImageView imgPath;
-        public TextView txtBody;
+        public TextView txtBody, txtReplyCount;
     }
 }

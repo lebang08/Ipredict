@@ -168,7 +168,6 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" />
 
-        <!-- Tab3-->
         <!--<activity-->
         <!--android:name=".Activity.WeiboActivity"-->
         <!--android:launchMode="standard"-->
@@ -184,6 +183,7 @@
         <!--android:launchMode="singleTop"-->
         <!--android:screenOrientation="portrait" />-->
 
+        <!-- Tab3-->
         <activity
             android:name=".Activity.WeiboPublishActivity"
             android:launchMode="singleTop"
@@ -201,6 +201,11 @@
 
         <activity
             android:name=".Activity.WeiboInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".Activity.WeiboGroupActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 

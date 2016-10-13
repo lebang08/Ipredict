@@ -18,8 +18,11 @@ public class WeiboBean {
     public String author; //作者
     public String date_created;//时间
     public String avatar_url;//头像？
-
-
+    public String reply_count;//回复数
+    public String subject;
+    public String commented_object_id;
+    public int microblog_id;//微博ID
+    public int parent_id;
 
 
 //        "user_name": "用户名大伟",

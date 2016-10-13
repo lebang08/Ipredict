@@ -20,6 +20,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
+import com.woyuce.activity.Activity.WeiboGroupActivity;
 import com.woyuce.activity.Activity.WeiboInfoActivity;
 import com.woyuce.activity.Activity.WeiboPublishActivity;
 import com.woyuce.activity.Adapter.WeiboRecommandAdapter;
@@ -117,10 +118,16 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                             weibo.avatar_url = obj.getString("avatar_url");
                             weibo.date_created = obj.getString("date_created");
                             weibo.author = obj.getString("author");
+                            weibo.reply_count = obj.getString("reply_count");
+                            if (Integer.parseInt(weibo.reply_count) > 0) {
+                                weibo.microblog_id = obj.getInt("microblog_id");
+                            }
                             if (obj.getString("has_photo").equals("true")) {
                                 imgarr = obj.getJSONArray("imglist");
                                 imgobj = imgarr.getJSONObject(0);
                                 weibo.pulish_image = imgobj.getString("img_url");
+                            } else {
+                                weibo.pulish_image = obj.getString("source_url");
                             }
                             dataList.add(weibo);
                         }
@@ -173,6 +180,9 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
             case R.id.ll_tab3_three:
                 break;
             case R.id.ll_tab3_four:
+                Intent intent = new Intent(getActivity(), WeiboGroupActivity.class);
+                intent.putExtra("local_token",localtoken);
+                startActivity(intent);
                 break;
         }
     }
@@ -184,6 +194,9 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
         intent.putExtra("local_headurl", dataList.get(position).avatar_url);
         intent.putExtra("local_time", dataList.get(position).date_created);
         intent.putExtra("local_author", dataList.get(position).author);
+        intent.putExtra("local_reply_count", dataList.get(position).reply_count);
+        intent.putExtra("local_microblog_id", dataList.get(position).microblog_id);
+        intent.putExtra("local_token", localtoken);
         startActivity(intent);
     }
 }
