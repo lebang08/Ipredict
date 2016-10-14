@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/img_item_weibo"
@@ -20,25 +21,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/img_item_weibo"
+        android:textColor="#000"
         android:text="author" />
-
-    <TextView
-        android:id="@+id/body_item_weibo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_toRightOf="@+id/img_item_weibo"
-        android:ellipsize="end"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="微博精选的内容，这是一个非常精彩的微博" />
 
     <TextView
         android:id="@+id/time_item_weibo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="time_item_weibo" />
+        android:layout_alignLeft="@id/author_item_weibo"
+        android:layout_marginTop="24dp"
+        android:text="time_item_weibo"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/body_item_weibo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_toRightOf="@+id/img_item_weibo"
+        android:ellipsize="end"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="微博精选的内容，这是一个非常精彩的微博" />
 
     <!--<com.woyuce.activity.View.InnerListView-->
     <!--android:id="@+id/listview_item_weiboinfo"-->

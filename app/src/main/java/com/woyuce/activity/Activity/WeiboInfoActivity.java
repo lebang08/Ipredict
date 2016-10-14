@@ -8,7 +8,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,8 +23,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.woyuce.activity.Adapter.FreeBookAdapter;
 import com.woyuce.activity.Adapter.WeiboInfoAdapter;
 import com.woyuce.activity.Application.AppContext;
+import com.woyuce.activity.Bean.FreeBook;
 import com.woyuce.activity.Bean.WeiboBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -54,9 +58,15 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
     private TextView mTxtAuthor, mTxtBody, mTxtTime, mTxtReplyCount;
     private ImageView mIconHead;
 
+    //评论回复列表
     private ListView mListView;
     private WeiboInfoAdapter mAdapter;
     private List<WeiboBean> mDataList = new ArrayList<>();
+
+    //发表的内容图片列表
+    private GridView mGridView;
+    private FreeBookAdapter mImgAdapter;
+    private List<FreeBook> mImgList = new ArrayList<>();
 
     @Override
     protected void onStop() {
@@ -87,13 +97,24 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
         mTxtTime = (TextView) findViewById(R.id.txt_weiboinfo_time);
         mTxtReplyCount = (TextView) findViewById(R.id.txt_weiboinfo_replycount);
         mIconHead = (ImageView) findViewById(R.id.img_weiboinfo_headphoto);
+
         mListView = (ListView) findViewById(R.id.listview_activity_weiboinfo);
         mListView.setOnItemClickListener(this);
+        //TODO 图片列表
+        mGridView = (GridView) findViewById(R.id.gridview_activity_weiboinfo);
+        FreeBook book;
+        for (int i = 0; i < 4; i++) {
+            book = new FreeBook();
+            book.img_path = "http://iyuce.com/content/images/2016/sy_gykt.png";
+            mImgList.add(book);
+        }
+        mImgAdapter = new FreeBookAdapter(this,mImgList);
+        mGridView.setAdapter(mImgAdapter);
 
         mTxtAuthor.setText(local_author);
         mTxtBody.setText(local_body);
         mTxtTime.setText(local_time);
-        mTxtReplyCount.setText("评论数  " + local_reply_count);
+        mTxtReplyCount.setText("全部评论  ( " + local_reply_count + " )");
         DisplayImageOptions options = new DisplayImageOptions.Builder().
                 showImageOnLoading(R.mipmap.img_duck)
                 .showImageOnFail(R.mipmap.img_duck)
@@ -117,7 +138,6 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
                     obj = new JSONObject(response);
                     if (obj.getInt("code") == 0) {
                         arr = obj.getJSONArray("data");
-                        LogUtil.e("arr = ?? " + arr);
                         WeiboBean weibo;
                         for (int i = 0; i < arr.length(); i++) {
                             obj = arr.getJSONObject(i);
@@ -163,6 +183,9 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
                     obj = new JSONObject(response);
                     if (obj.getInt("code") == 0) {
                         ToastUtil.showMessage(WeiboInfoActivity.this, "评论成功啦");
+                        mDataList.clear();
+                        mAdapter.notifyDataSetChanged();
+                        requestJson();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -185,12 +208,12 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
                 LogUtil.e("param = " + body + local_author + subject);
-                map.put("author", local_author);
-                map.put("user_id", PreferenceUtil.getSharePre(WeiboInfoActivity.this).getString("userId", ""));
-                map.put("owner_id", PreferenceUtil.getSharePre(WeiboInfoActivity.this).getString("userId", ""));
-                map.put("body", body);
-                map.put("subject", subject);
-                map.put("commented_object_id", commented_object_id);
+                map.put("Author", local_author);
+                map.put("UserId", PreferenceUtil.getSharePre(WeiboInfoActivity.this).getString("userId", ""));
+                map.put("OwnerId", PreferenceUtil.getSharePre(WeiboInfoActivity.this).getString("userId", ""));
+                map.put("Body", body);
+                map.put("Subject", subject);
+                map.put("CommentedObjectId", commented_object_id);
                 return map;
             }
         };

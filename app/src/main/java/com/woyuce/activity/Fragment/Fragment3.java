@@ -1,67 +1,65 @@
 package com.woyuce.activity.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings.LayoutAlgorithm;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import com.woyuce.activity.Activity.WebActivity;
 import com.woyuce.activity.R;
 
-public class FragmentTwo extends Fragment {
+/**
+ * Created by Administrator on 2016/10/14.
+ */
+public class Fragment3 extends Fragment implements View.OnClickListener {
 
-    private WebView web;
+    private Button btn_apply;
     private ImageView imgLoading;
-    private String URL = "http://bbs.iyuce.com/bar/bbspullrefresh";
+    private WebView web;
 
+    private String URL_CAM = "http://www.iyuce.com/m/appjxy.html";
 
     @Override
     public void onStart() {
         super.onStart();
-        initEvent();
+        // initWebView();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.tab2, container, false);
+        View view = inflater.inflate(R.layout.tab3_, container, false);
 
         initView(view);
-        initEvent();
+        initWebView();
         return view;
     }
 
     private void initView(View view) {
-        web = (WebView) view.findViewById(R.id.web_tab2);
-        imgLoading = (ImageView) view.findViewById(R.id.img_tab2_loading);
+        web = (WebView) view.findViewById(R.id.web_tab3);
+        imgLoading = (ImageView) view.findViewById(R.id.img_tab3_loading);
+        btn_apply = (Button) view.findViewById(R.id.btn_tab3_apply);
+
+        btn_apply.setOnClickListener(this);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void initEvent() {
-
-        web.loadUrl(URL);
-        web.getSettings().setJavaScriptEnabled(true);
+    private void initWebView() {
+        web.loadUrl(URL_CAM);
+        // web.getSettings().setJavaScriptEnabled(true);
         web.getSettings().setSupportZoom(true);
         web.getSettings().setBuiltInZoomControls(true);
         web.getSettings().setUseWideViewPort(true);
-        web.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        web.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         web.getSettings().setLoadWithOverviewMode(true);
-
-		/* 设置缓存相关 */
-        // web.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        // web.getSettings().setDomStorageEnabled(true);
-        // web.getSettings().setDatabaseEnabled(true);
-        // String cacheDirPath = getActivity().getFilesDir().getAbsolutePath() +
-        // "/webcachetab2";
-        // LogUtil.e("tab3 cache", "cacheDirPath=" + cacheDirPath);
-        // web.getSettings().setDatabasePath(cacheDirPath);
-        // web.getSettings().setAppCachePath(cacheDirPath);
-        // web.getSettings().setAppCacheEnabled(true);
 
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new WebViewClient() {
@@ -73,10 +71,18 @@ public class FragmentTwo extends Fragment {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
                 web.setVisibility(View.VISIBLE);
                 imgLoading.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), WebActivity.class);
+        intent.putExtra("URL", "http://www.iyuce.com/m/appfbbsq");
+        intent.putExtra("TITLE", "集训营申请");
+        intent.putExtra("COLOR", "#f7941d");
+        startActivity(intent);
     }
 }

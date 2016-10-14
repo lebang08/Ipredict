@@ -122,13 +122,14 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                             if (Integer.parseInt(weibo.reply_count) > 0) {
                                 weibo.microblog_id = obj.getInt("microblog_id");
                             }
-                            if (obj.getString("has_photo").equals("true")) {
-                                imgarr = obj.getJSONArray("imglist");
-                                imgobj = imgarr.getJSONObject(0);
-                                weibo.pulish_image = imgobj.getString("img_url");
-                            } else {
-                                weibo.pulish_image = obj.getString("source_url");
-                            }
+                            weibo.pulish_image = obj.getString("avatar_url");
+//                            if (obj.getString("has_photo").equals("true")) {
+//                                imgarr = obj.getJSONArray("imglist");
+//                                imgobj = imgarr.getJSONObject(0);
+//                                weibo.pulish_image = imgobj.getString("img_url");
+//                            } else {
+//                                weibo.pulish_image = obj.getString("source_url");
+//                            }
                             dataList.add(weibo);
                         }
                     } else {
@@ -149,13 +150,6 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                 headers.put("Authorization", "Bearer " + localtoken);
                 return headers;
             }
-
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                HashMap<String, String> map = new HashMap<>();
-////                map.put("", localsubid);
-//                return map;
-//            }
         };
         weiboDataRequest.setTag("tab3");
         AppContext.getHttpQueue().add(weiboDataRequest);

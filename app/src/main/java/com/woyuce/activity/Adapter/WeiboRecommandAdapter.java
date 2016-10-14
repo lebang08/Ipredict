@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.woyuce.activity.Bean.WeiboBean;
 import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.LogUtil;
 
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class WeiboRecommandAdapter extends BaseAdapter {
 
         String url = mList.get(position).pulish_image;
         viewHolder.imgPath.setTag(url);
+        LogUtil.e("url = "  +  url);
 
         DisplayImageOptions options = new DisplayImageOptions.Builder().
                 showImageOnLoading(R.mipmap.img_error)

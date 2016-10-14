@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.woyuce.activity.Application.AppContext;
+import com.woyuce.activity.Fragment.Fragment3;
 import com.woyuce.activity.Fragment.FragmentTwo;
 import com.woyuce.activity.Fragment.Fragmentfive;
 import com.woyuce.activity.Fragment.Fragmentfour;
@@ -93,13 +94,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
         mFragments = new ArrayList<>();
         Fragment mTab01 = new Fragmentone();
         Fragment mTab02 = new FragmentTwo();
+        //两个Tab3可以相互替换
         Fragment mTab03 = new Fragmentthree();
+        Fragment mTab03_ = new Fragment3();
         Fragment mTab04 = new Fragmentfour();
         Fragment mTab05 = new Fragmentfive();
 
         mFragments.add(mTab01);
         mFragments.add(mTab02);
-        mFragments.add(mTab03);
+        mFragments.add(mTab03_);
         mFragments.add(mTab04);
         mFragments.add(mTab05);
 

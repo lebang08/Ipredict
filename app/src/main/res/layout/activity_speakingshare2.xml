@@ -106,12 +106,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="8dp"
         android:padding="5dp">
 
         <EditText
             android:id="@+id/edit_share2_message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/buttonstyle_bluestroke"
             android:gravity="top"
             android:hint=" 您的分享..." />
     </LinearLayout>

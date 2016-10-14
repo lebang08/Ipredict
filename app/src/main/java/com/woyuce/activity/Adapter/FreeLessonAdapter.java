@@ -60,7 +60,7 @@ public class FreeLessonAdapter extends BaseAdapter {
 		DisplayImageOptions options = new DisplayImageOptions.Builder()
 				.showImageOnLoading(R.mipmap.img_error)
 				.showImageOnFail(R.mipmap.img_error)
-				.displayer(new RoundedBitmapDisplayer(100))
+				.displayer(new RoundedBitmapDisplayer(10))
 				.cacheInMemory(true)
 				.cacheOnDisk(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).build();

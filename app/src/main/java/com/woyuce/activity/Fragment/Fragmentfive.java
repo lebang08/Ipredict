@@ -15,11 +15,12 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Activity.AboutUsActivity;
+import com.woyuce.activity.Activity.LoginActivity;
+import com.woyuce.activity.Activity.SuggestionActivity;
+import com.woyuce.activity.Activity.WebActivity;
 import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.Bean.SpeakingRoom;
-import com.woyuce.activity.Activity.LoginActivity;
 import com.woyuce.activity.R;
-import com.woyuce.activity.Activity.SuggestionActivity;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 public class Fragmentfive extends Fragment implements View.OnClickListener {
 
-    private TextView txtName, txtMoney, txtAboutUs, txtUpdate, txtSuggestion, txtRoom, txtSubject;
+    private TextView txtName, txtMoney, txtAboutUs, txtUpdate, txtSuggestion, txtRoom, txtSubject, txtClassTable;
     private ImageView imgIcon;
     // 暂做课表的入口
     private TextView mCourseTable;
@@ -190,6 +191,13 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.txt_tab5_localmessage:
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("URL", "http://plan.iyuce.com");
+                intent.putExtra("TITLE", "课表系统");
+                intent.putExtra("COLOR", "#f7941d");
+                startActivity(intent);
+                break;
             case R.id.img_tab5_icon:
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 break;

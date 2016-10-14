@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/my_message"
-                    android:text="     提醒 "
+                    android:text="     查看课表 "
                     android:textColor="#a2a2a2"
                     android:textSize="16sp" />
 
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:text=" (0)"
+                    android:text="戳我查看课表哦"
                     android:textColor="#f0742e"
                     android:textSize="16sp" />
             </LinearLayout>

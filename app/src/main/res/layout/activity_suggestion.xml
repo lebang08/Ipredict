@@ -15,15 +15,25 @@
         android:textColor="#ffffff"
         android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/edt_suggestion"
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_height="0dp"
-        android:layout_margin="4dp"
-        android:layout_weight="1"
-        android:gravity="top"
-        android:hint="请输入您的宝贵意见"
-        android:padding="16dp" />
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/edt_suggestion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttonstyle_orangestroke"
+            android:gravity="top"
+            android:hint="请输入您的宝贵意见"
+            android:padding="16dp" />
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_suggestion_sure"
