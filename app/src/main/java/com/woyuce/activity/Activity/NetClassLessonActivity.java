@@ -27,6 +27,7 @@ import com.woyuce.activity.Bean.NetLessonBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
+import com.woyuce.activity.common.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -218,7 +219,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     Intent intent = new Intent(NetClassLessonActivity.this, WebActivity.class);
-                                                    intent.putExtra("URL", "https://iyuce.ke.qq.com/");
+                                                    intent.putExtra("URL", Constants.URL_WEB_ZHIBO);
                                                     intent.putExtra("TITLE", "网络班直播报名");
                                                     intent.putExtra("COLOR", "#1e87e2");
                                                     startActivity(intent);
@@ -228,7 +229,7 @@ public class NetClassLessonActivity extends BaseActivity implements AdapterView.
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     Intent intent = new Intent(NetClassLessonActivity.this, WebActivity.class);
-                                                    intent.putExtra("URL", "http://store.iyuce.com/goods-1");
+                                                    intent.putExtra("URL", Constants.URL_WEB_LUBO);
                                                     intent.putExtra("TITLE", "网络班录播报名");
                                                     intent.putExtra("COLOR", "#e7604a");
                                                     startActivity(intent);

@@ -22,6 +22,7 @@ import com.woyuce.activity.Bean.NetBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
+import com.woyuce.activity.common.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -227,7 +228,7 @@ public class NetClassActivity extends BaseActivity
                     } else {
                         // Log.e("Code Error", "code spnTimewrong" + response);
                     }
-					/* gridview设置adapter */
+                    /* gridview设置adapter */
                     webcourseAdapter = new NetClassCourseAdapter(NetClassActivity.this, wcgList);
                     gridview.setAdapter(webcourseAdapter);
                 } catch (JSONException e) {
@@ -260,13 +261,13 @@ public class NetClassActivity extends BaseActivity
                 finish();
                 break;
             case R.id.btn_wangluoban_zhibo:
-                intent.putExtra("URL", "https://iyuce.ke.qq.com/");
+                intent.putExtra("URL", Constants.URL_WEB_ZHIBO);
                 intent.putExtra("TITLE", "网络班直播报名");
                 intent.putExtra("COLOR", "#1e87e2");
                 startActivity(intent);
                 break;
             case R.id.btn_wangluoban_lubo:
-                intent.putExtra("URL", "http://store.iyuce.com/goods-1");
+                intent.putExtra("URL", Constants.URL_WEB_LUBO);
                 intent.putExtra("TITLE", "网络班录播报名");
                 intent.putExtra("COLOR", "#e7604a");
                 startActivity(intent);
