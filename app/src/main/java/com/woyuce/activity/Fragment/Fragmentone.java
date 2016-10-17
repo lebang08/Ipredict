@@ -1,6 +1,8 @@
 package com.woyuce.activity.Fragment;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,15 +20,17 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Activity.FreeRangeActivity;
 import com.woyuce.activity.Activity.GongyiActivity;
+import com.woyuce.activity.Activity.LoginActivity;
 import com.woyuce.activity.Activity.NetClassActivity;
-import com.woyuce.activity.Application.AppContext;
-import com.woyuce.activity.R;
 import com.woyuce.activity.Activity.SpeakingActivity;
-import com.woyuce.activity.Utils.LogUtil;
-import com.woyuce.activity.Utils.PreferenceUtil;
-import com.woyuce.activity.Utils.ToastUtil;
 import com.woyuce.activity.Activity.WebActivity;
 import com.woyuce.activity.Activity.WitActivity;
+import com.woyuce.activity.Application.AppContext;
+import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.LogUtil;
+import com.woyuce.activity.Utils.PreferenceUtil;
+import com.woyuce.activity.Utils.StringUtils;
+import com.woyuce.activity.Utils.ToastUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -189,6 +193,20 @@ public class Fragmentone extends Fragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), GongyiActivity.class));
                 break;
             case R.id.img_wangluo:
+                String userId = PreferenceUtil.getSharePre(getActivity()).getString("userId", "");
+                if (StringUtils.isEmpty(userId)) {
+                    new AlertDialog.Builder(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                            .setIcon(android.R.drawable.ic_dialog_info)
+                            .setTitle("访问网络班专属需要先登录哦，亲")
+                            .setMessage("现在去登陆吗？")
+                            .setPositiveButton("登陆", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                                }
+                            }).setNegativeButton("取消", null).create().show();
+                    break;
+                }
                 startActivity(new Intent(getActivity(), NetClassActivity.class));
                 break;
             case R.id.img_writting:

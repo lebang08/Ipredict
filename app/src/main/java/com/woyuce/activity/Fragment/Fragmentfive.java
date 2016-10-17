@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -40,7 +41,7 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
     private TextView txtName, txtMoney, txtAboutUs, txtUpdate, txtSuggestion, txtRoom, txtSubject, txtClassTable;
     private ImageView imgIcon;
     // 暂做课表的入口
-    private TextView mCourseTable;
+    private LinearLayout mCourseTable;
 
     private String localroomname;
     private String URL_ROOM = "http://iphone.ipredicting.com/kymyroom.aspx";
@@ -75,7 +76,7 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
         txtRoom = (TextView) view.findViewById(R.id.txt_tab5_localroom);
         txtSubject = (TextView) view.findViewById(R.id.txt_tab5_localsubject);
 
-        mCourseTable = (TextView) view.findViewById(R.id.txt_tab5_localmessage);
+        mCourseTable = (LinearLayout) view.findViewById(R.id.txt_tab5_localmessage);
         mCourseTable.setOnClickListener(this);
 
         imgIcon.setOnClickListener(this);

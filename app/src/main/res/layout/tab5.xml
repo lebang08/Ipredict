@@ -45,6 +45,7 @@
             android:paddingRight="16dp">
 
             <LinearLayout
+                android:id="@+id/txt_tab5_localmessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -62,12 +63,10 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txt_tab5_localmessage"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:text="戳我查看课表哦"
                     android:textColor="#f0742e"
                     android:textSize="16sp" />
             </LinearLayout>
