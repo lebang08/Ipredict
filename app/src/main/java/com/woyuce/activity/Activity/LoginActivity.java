@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.woyuce.activity.Application.AppContext;
 import com.woyuce.activity.R;
+import com.woyuce.activity.Services.UpdateService;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.ToastUtil;
@@ -74,6 +75,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     @Override
     public void doUpdate() {
         new UpdateManager(this).checkUpdate();
+//        Intent intent = new Intent(this, UpdateService.class);
+//        startService(intent);
     }
 
     @Override

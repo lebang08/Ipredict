@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -41,6 +43,13 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             }
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ViewGroup view = (ViewGroup) getWindow().getDecorView();
+        view.removeAllViews();
     }
 
     @Override
@@ -83,8 +92,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         web.loadUrl(local_URL);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setBuiltInZoomControls(true);
+        webSettings.setSupportZoom(false);
+        webSettings.setBuiltInZoomControls(false);
         webSettings.setUseWideViewPort(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSettings.setLoadWithOverviewMode(true);
@@ -133,10 +142,10 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 super.onPageStarted(view, url, favicon);
                 //网站登录同步App登录，Cookie设置
                 String cookieString = PreferenceUtil.getSharePre(WebActivity.this).getString("userId", "");
-//                CookieSyncManager.createInstance(WebActivity.this);
+                CookieSyncManager.createInstance(WebActivity.this);
                 CookieManager cookieManager = CookieManager.getInstance();
                 cookieManager.setCookie(url, "iup.token=" + cookieString + ";Max-Age=3600" + ";Domain=.iyuce.com" + ";Path=/");
-//                CookieSyncManager.getInstance().sync();
+                CookieSyncManager.getInstance().sync();
             }
         });
     }

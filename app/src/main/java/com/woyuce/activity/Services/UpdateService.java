@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 import com.woyuce.activity.Utils.LogUtil;
+import com.woyuce.activity.Utils.ToastUtil;
 import com.woyuce.activity.Utils.UpdateManager;
 
 /**
@@ -14,7 +15,6 @@ public class UpdateService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        LogUtil.e("onBind");
         return null;
     }
 
@@ -28,9 +28,15 @@ public class UpdateService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         LogUtil.e("onStartCommand");
 
-        //TODO 自动检测升级
+        // 自动检测升级
         new UpdateManager(UpdateService.this).checkUpdate();
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        LogUtil.e("onDestroy");
+        super.onDestroy();
     }
 }
