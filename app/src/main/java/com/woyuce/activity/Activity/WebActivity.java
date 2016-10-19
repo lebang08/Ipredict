@@ -1,10 +1,13 @@
 package com.woyuce.activity.Activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +22,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.woyuce.activity.R;
+import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * Created by Administrator on 2016/9/22.
@@ -28,8 +47,11 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView mTitle;
     private WebView web;
-    private ImageView imgClose, imgBack;
+    private ImageView imgClose, imgBack, ImgLoading;
     private LinearLayout mLinearlayout;
+
+    //初始化cookieManager
+    private CookieManager cookieManager;
 
     private String local_URL, local_title, local_color;
 
@@ -50,6 +72,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         super.onDestroy();
         ViewGroup view = (ViewGroup) getWindow().getDecorView();
         view.removeAllViews();
+        ImgLoading.setVisibility(View.VISIBLE);
+//        cookieManager.removeAllCookie();
     }
 
     @Override
@@ -70,6 +94,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         web = (WebView) findViewById(R.id.web);
         imgClose = (ImageView) findViewById(R.id.img_close);
         imgBack = (ImageView) findViewById(R.id.img_back);
+        ImgLoading = (ImageView) findViewById(R.id.img_loading);
         mLinearlayout = (LinearLayout) findViewById(R.id.linearlayout_webview_title);
 
         imgClose.setOnClickListener(this);
@@ -89,7 +114,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private void initEvent() {
         progressdialogshow(this);
-        web.loadUrl(local_URL);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(false);
@@ -135,19 +159,87 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 progressdialogcancel();
+                ImgLoading.setVisibility(View.GONE);
+                LogUtil.e("onPageFinished");
             }
 
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                LogUtil.e("onPageStarted");
+
                 //网站登录同步App登录，Cookie设置
-                String cookieString = PreferenceUtil.getSharePre(WebActivity.this).getString("userId", "");
+                String cookie_string = PreferenceUtil.getSharePre(WebActivity.this).getString("userId", "");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                cookie_string = cookie_string + "_" + sdf.format(new Date());
+                //加密
+                String decode_cookie_string = encode(cookie_string);
                 CookieSyncManager.createInstance(WebActivity.this);
-                CookieManager cookieManager = CookieManager.getInstance();
-                cookieManager.setCookie(url, "iup.token=" + cookieString + ";Max-Age=3600" + ";Domain=.iyuce.com" + ";Path=/");
+                cookieManager = CookieManager.getInstance();
+                cookieManager.removeAllCookie();
+
+//                String get_cookie = cookieManager.getCookie(url);
+//                if(get_cookie.contains("'iup.token=' + decode_cookie_string")){
+//                    get_cookie.replaceAll("'iup.token=' + decode_cookie_string","empty");
+//                    LogUtil.e("empty ? = " + get_cookie);
+//                }
+
+                LogUtil.e("cookieManager.getCookie(url) ---0 = " + cookieManager.getCookie(url));
+                cookieManager.setCookie(url, "iup.token=" + decode_cookie_string + ";Max-Age=3600" + ";Domain=.iyuce.com" + ";Path=/");
+                LogUtil.e("cookieManager.getCookie(url) ---1 = " + cookieManager.getCookie(url));
                 CookieSyncManager.getInstance().sync();
             }
         });
+        web.loadUrl(local_URL);
+    }
+
+    /**
+     * AES加密
+     *
+     * @param content 需要加密的内容
+     * @param password  加密密码
+     * @return
+     */
+    private static String Key = "859c44adb1c34796bdb49034f85e1721";
+
+    public static String encode(String stringToEncode) throws NullPointerException {
+
+        try {
+            SecretKeySpec skeySpec = getKey(Key);
+            byte[] clearText = stringToEncode.getBytes("UTF8");
+            final byte[] iv = new byte[16];
+            Arrays.fill(iv, (byte) 0x00);
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivParameterSpec);
+            String encrypedValue = Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
+            return encrypedValue;
+
+        } catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException
+                | BadPaddingException | NoSuchPaddingException | IllegalBlockSizeException
+                | InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 获取密钥
+     *
+     * @param password
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    private static SecretKeySpec getKey(String password) throws UnsupportedEncodingException {
+        int keyLength = 256;
+        byte[] keyBytes = new byte[keyLength / 8];
+        Arrays.fill(keyBytes, (byte) 0x0);
+        byte[] passwordBytes = password.getBytes("UTF-8");
+        int length = passwordBytes.length < keyBytes.length ? passwordBytes.length : keyBytes.length;
+        System.arraycopy(passwordBytes, 0, keyBytes, 0, length);
+        SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
+        return key;
     }
 
     @Override
