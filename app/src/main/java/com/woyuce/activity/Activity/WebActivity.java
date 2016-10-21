@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
@@ -24,9 +23,10 @@ import android.widget.TextView;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
+import com.woyuce.activity.Utils.StringUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -37,7 +37,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
@@ -47,11 +46,8 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView mTitle;
     private WebView web;
-    private ImageView imgClose, imgBack, ImgLoading;
+    private ImageView imgClose, imgBack;
     private LinearLayout mLinearlayout;
-
-    //初始化cookieManager
-    private CookieManager cookieManager;
 
     private String local_URL, local_title, local_color;
 
@@ -70,10 +66,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ViewGroup view = (ViewGroup) getWindow().getDecorView();
-        view.removeAllViews();
-        ImgLoading.setVisibility(View.VISIBLE);
-//        cookieManager.removeAllCookie();
+//        CookieManager.getInstance().removeAllCookie();
     }
 
     @Override
@@ -94,7 +87,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         web = (WebView) findViewById(R.id.web);
         imgClose = (ImageView) findViewById(R.id.img_close);
         imgBack = (ImageView) findViewById(R.id.img_back);
-        ImgLoading = (ImageView) findViewById(R.id.img_loading);
         mLinearlayout = (LinearLayout) findViewById(R.id.linearlayout_webview_title);
 
         imgClose.setOnClickListener(this);
@@ -112,31 +104,52 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
         mLinearlayout.setBackgroundColor(Color.parseColor(color));
     }
 
+//    /**
+//     * 将cookie同步到WebView
+//     *
+//     * @param url    WebView要加载的url
+//     * @param cookie 要同步的cookie
+//     * @return true 同步cookie成功，false同步cookie失败
+//     * @Author JPH
+//     */
+//    public static boolean syncCookie(String url, String cookie) {
+//         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//         CookieSyncManager.createInstance(context);
+//         }
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        String oldcookie = cookieManager.getCookie(url);
+//        LogUtil.e("oldcookie = " + oldcookie);
+//        cookieManager.setCookie(url, cookie.substring(0, cookie.indexOf("1")));
+//        //如果没有特殊需求，这里只需要将session, id以 "key=value" 形式作为cookie即可
+//        String newCookie = cookieManager.getCookie(url);
+//        LogUtil.e("newCookie = " + newCookie);
+//        return TextUtils.isEmpty(newCookie) ? false : true;
+//    }
+
     private void initEvent() {
         progressdialogshow(this);
-        WebSettings webSettings = web.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(false);
-        webSettings.setBuiltInZoomControls(false);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setLoadWithOverviewMode(true);
-
         //设置浏览器标识
         String localVersion = PreferenceUtil.getSharePre(WebActivity.this).getString("localVersion", "1.0");
-        webSettings.setUserAgentString(web.getSettings().getUserAgentString() + "; woyuce/" + localVersion);
+        web.getSettings().setUserAgentString(web.getSettings().getUserAgentString() + "; woyuce/" + localVersion);
+
+        web.getSettings().setJavaScriptEnabled(true);
+        web.getSettings().setSupportZoom(true);
+        web.getSettings().setBuiltInZoomControls(true);
+        web.getSettings().setUseWideViewPort(true);
+        web.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        web.getSettings().setLoadWithOverviewMode(true);
 
         // H5处理localstrage
-        webSettings.setDomStorageEnabled(true);
+        web.getSettings().setDomStorageEnabled(true);
         // H5的缓存打开
-        webSettings.setAppCacheEnabled(true);
-        // 根据setAppCachePath(String appCachePath)提供的路径，在H5使用缓存过程中生成的缓存文件。
+        web.getSettings().setAppCacheEnabled(true);
+        // 根据setAppCachePath(String appCachePath)提供的路径,在H5使用缓存过程中生成的缓存文件。
         String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
-        webSettings.setAppCachePath(appCachePath);
+        web.getSettings().setAppCachePath(appCachePath);
         // 设置缓冲大小8M
-        webSettings.setAppCacheMaxSize(1024 * 1024 * 8);
+        web.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
 
-        webSettings.setAllowFileAccess(true);
+        web.getSettings().setAllowFileAccess(true);
         web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new WebViewClient() {
             @Override
@@ -159,7 +172,6 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 progressdialogcancel();
-                ImgLoading.setVisibility(View.GONE);
                 LogUtil.e("onPageFinished");
             }
 
@@ -168,27 +180,26 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 LogUtil.e("onPageStarted");
-
-                //网站登录同步App登录，Cookie设置
-                String cookie_string = PreferenceUtil.getSharePre(WebActivity.this).getString("userId", "");
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                cookie_string = cookie_string + "_" + sdf.format(new Date());
-                //加密
-                String decode_cookie_string = encode(cookie_string);
-                CookieSyncManager.createInstance(WebActivity.this);
-                cookieManager = CookieManager.getInstance();
-                cookieManager.removeAllCookie();
-
-//                String get_cookie = cookieManager.getCookie(url);
-//                if(get_cookie.contains("'iup.token=' + decode_cookie_string")){
-//                    get_cookie.replaceAll("'iup.token=' + decode_cookie_string","empty");
-//                    LogUtil.e("empty ? = " + get_cookie);
-//                }
-
-                LogUtil.e("cookieManager.getCookie(url) ---0 = " + cookieManager.getCookie(url));
-                cookieManager.setCookie(url, "iup.token=" + decode_cookie_string + ";Max-Age=3600" + ";Domain=.iyuce.com" + ";Path=/");
-                LogUtil.e("cookieManager.getCookie(url) ---1 = " + cookieManager.getCookie(url));
-                CookieSyncManager.getInstance().sync();
+                try {
+                    //网站登录同步App登录，Cookie设置
+                    String cookie_string = PreferenceUtil.getSharePre(WebActivity.this).getString("userId", "");
+                    if (!StringUtils.isEmpty(cookie_string)) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        cookie_string = cookie_string + "_" + sdf.format(new Date());
+                        LogUtil.i("cookie_string = " + cookie_string);
+                        //加密
+                        String aesencode_cookie_string = encode(cookie_string);
+                        LogUtil.i("aesencode_cookie_string = " + aesencode_cookie_string);
+                        String urldecode_cookie_string = URLEncoder.encode(aesencode_cookie_string, "utf-8");
+                        LogUtil.i("urldecode_cookie_string = " + urldecode_cookie_string);
+                        CookieSyncManager.createInstance(WebActivity.this);
+                        CookieManager cookieManager = CookieManager.getInstance();
+                        cookieManager.setCookie(local_URL, "iup.token=" + urldecode_cookie_string.trim() + ";Max-Age=3600" + ";Domain=.iyuce.com" + ";Path=/");
+                        CookieSyncManager.getInstance().sync();
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
         web.loadUrl(local_URL);
@@ -204,21 +215,16 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
     private static String Key = "859c44adb1c34796bdb49034f85e1721";
 
     public static String encode(String stringToEncode) throws NullPointerException {
-
         try {
             SecretKeySpec skeySpec = getKey(Key);
-            byte[] clearText = stringToEncode.getBytes("UTF8");
-            final byte[] iv = new byte[16];
-            Arrays.fill(iv, (byte) 0x00);
-            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivParameterSpec);
+            byte[] clearText = stringToEncode.getBytes("utf-8");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
             String encrypedValue = Base64.encodeToString(cipher.doFinal(clearText), Base64.DEFAULT);
             return encrypedValue;
 
         } catch (InvalidKeyException | UnsupportedEncodingException | NoSuchAlgorithmException
-                | BadPaddingException | NoSuchPaddingException | IllegalBlockSizeException
-                | InvalidAlgorithmParameterException e) {
+                | BadPaddingException | NoSuchPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
         }
         return "";

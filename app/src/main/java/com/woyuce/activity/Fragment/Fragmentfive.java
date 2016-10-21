@@ -1,14 +1,17 @@
 package com.woyuce.activity.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -41,7 +44,7 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
     private TextView txtName, txtMoney, txtAboutUs, txtUpdate, txtSuggestion, txtRoom, txtSubject, txtClassTable;
     private ImageView imgIcon;
     // 暂做课表的入口
-    private LinearLayout mCourseTable;
+    private TextView mCourseTable;
 
     private String localroomname;
     private String URL_ROOM = "http://iphone.ipredicting.com/kymyroom.aspx";
@@ -75,10 +78,9 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
         txtSuggestion = (TextView) view.findViewById(R.id.txt_to_suggestion);
         txtRoom = (TextView) view.findViewById(R.id.txt_tab5_localroom);
         txtSubject = (TextView) view.findViewById(R.id.txt_tab5_localsubject);
+        mCourseTable = (TextView) view.findViewById(R.id.txt_tab5_localmessage);
 
-        mCourseTable = (LinearLayout) view.findViewById(R.id.txt_tab5_localmessage);
         mCourseTable.setOnClickListener(this);
-
         imgIcon.setOnClickListener(this);
         txtAboutUs.setOnClickListener(this);
         txtUpdate.setOnClickListener(this);
@@ -90,8 +92,8 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
     // fragment 生命周期，打开时
     private void initEvent() {
         if (share().getString("username", "").length() == 0) {
-            txtRoom.setText("登陆后可见");
-            txtSubject.setText("登陆后可见");
+            txtRoom.setText("登录后可见");
+            txtSubject.setText("登录后可见");
             myexamList.clear();
         } else {
             roomList.clear();
@@ -99,6 +101,7 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
             myexamList.clear();
             getRoomJson();
             getSubjectJson();
+            mCourseTable.setText("查看");
         }
         txtName.setText(share().getString("mUserName", "点击头像切换账号"));
         txtMoney.setText(share().getString("money", "登录后可见"));
@@ -193,6 +196,9 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.txt_tab5_localmessage:
+                if (TextUtils.isEmpty(PreferenceUtil.getSharePre(getActivity()).getString("userId", ""))) {
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("URL", "http://plan.iyuce.com");
                 intent.putExtra("TITLE", "课表系统");
@@ -200,7 +206,17 @@ public class Fragmentfive extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.img_tab5_icon:
-                startActivity(new Intent(getActivity(), LoginActivity.class));
+                new AlertDialog.Builder(getActivity(), AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                        .setTitle("确定要前往登录界面吗？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CookieManager.getInstance().removeAllCookie();
+                                LogUtil.e("CookieManager = " + CookieManager.getInstance().getCookie("iyuce.com") + "");
+                                startActivity(new Intent(getActivity(), LoginActivity.class));
+                            }
+                        }).setNegativeButton("取消", null)
+                        .show();
                 break;
 //			case R.id.txt_tab5_localsubject:
 //				Intent intent = new Intent(getActivity(),MyExamContent.class);

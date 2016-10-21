@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.CookieManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,8 +41,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
     private ImageView mImgtab1, mImgtab2, mImgtab4, mImgtab5;
     private TextView mTxt1, mTxt2, mTxt4, mTxt5;
 
-    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 1;
-
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).setTitle("确认退出吗？")
@@ -50,6 +49,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PreferenceUtil.removelocaltoken(MainActivity.this);
+                        CookieManager.getInstance().removeAllCookie();
                         MainActivity.this.finish();
                     }
                 }).setNegativeButton("返回", null).show();
@@ -68,7 +68,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
 
         //微博相册图片辅助类初始化(这一步必须，开启异步，否则后面相册无法打开，会崩溃)
         LocalImageHelper.init(AppContext.getInstance());
-
     }
 
     private void initView() {
@@ -102,7 +101,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
 
         mFragments.add(mTab01);
         mFragments.add(mTab02);
-        mFragments.add(mTab03);
+        mFragments.add(mTab03_);
         mFragments.add(mTab04);
         mFragments.add(mTab05);
 
