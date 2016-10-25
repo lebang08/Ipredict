@@ -175,7 +175,7 @@ public class WebActivity extends BaseActivity implements View.OnClickListener {
                 LogUtil.e("onPageFinished");
             }
 
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);

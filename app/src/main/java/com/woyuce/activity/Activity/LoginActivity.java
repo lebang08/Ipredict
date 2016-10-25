@@ -175,10 +175,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 }
                 //请求网络
                 doRequest();
+//                CookieManager.getInstance().removeAllCookie();
                 break;
             case R.id.btn_loginAtOnce:
                 startActivity(new Intent(this, MainActivity.class));
                 PreferenceUtil.removeall(this); // 只留下了版本号
+//                CookieManager.getInstance().removeAllCookie();
                 // PreferenceUtil.clear(this);
                 finish();
                 break;
