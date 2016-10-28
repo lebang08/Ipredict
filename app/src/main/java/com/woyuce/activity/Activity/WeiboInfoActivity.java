@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -16,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -23,10 +23,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.woyuce.activity.Adapter.FreeBookAdapter;
 import com.woyuce.activity.Adapter.WeiboInfoAdapter;
+import com.woyuce.activity.Adapter.WeiboInfoImgAdapter;
 import com.woyuce.activity.Application.AppContext;
-import com.woyuce.activity.Bean.FreeBook;
 import com.woyuce.activity.Bean.WeiboBean;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.LogUtil;
@@ -47,26 +46,26 @@ import java.util.Map;
  */
 public class WeiboInfoActivity extends Activity implements AdapterView.OnItemClickListener {
 
+    //接收上一级传递过来的信息
     private String local_headurl, local_body, local_time, local_author, local_reply_count, local_token;
     private int local_microblog_id;
+    private List<String> mImgList = new ArrayList<>();
+
+    //发表的内容图片列表
+    private GridView mGridView;
+    private WeiboInfoImgAdapter mImgAdapter;
 
     //把URL抽出去
     private String URL = "http://api.iyuce.com/v1/bbs/getrootcomments?MicroblogId=";
     private String URL_SUBCOMMIT = "http://api.iyuce.com/v1/bbs/subcomment";
-
-
-    private TextView mTxtAuthor, mTxtBody, mTxtTime, mTxtReplyCount;
-    private ImageView mIconHead;
 
     //评论回复列表
     private ListView mListView;
     private WeiboInfoAdapter mAdapter;
     private List<WeiboBean> mDataList = new ArrayList<>();
 
-    //发表的内容图片列表
-    private GridView mGridView;
-    private FreeBookAdapter mImgAdapter;
-    private List<FreeBook> mImgList = new ArrayList<>();
+    private TextView mTxtAuthor, mTxtBody, mTxtTime, mTxtReplyCount;
+    private ImageView mIconHead;
 
     @Override
     protected void onStop() {
@@ -90,7 +89,8 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
         local_headurl = intent.getStringExtra("local_headurl");
         local_reply_count = intent.getStringExtra("local_reply_count");
         local_token = intent.getStringExtra("local_token");
-        local_microblog_id = intent.getIntExtra("local_microblog_id", 0);
+        local_microblog_id = intent.getIntExtra("local_microblog_id", -1);
+        mImgList = intent.getStringArrayListExtra("mImgList");
 
         mTxtAuthor = (TextView) findViewById(R.id.txt_weiboinfo_username);
         mTxtBody = (TextView) findViewById(R.id.txt_weiboinfo_body);
@@ -98,21 +98,19 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
         mTxtReplyCount = (TextView) findViewById(R.id.txt_weiboinfo_replycount);
         mIconHead = (ImageView) findViewById(R.id.img_weiboinfo_headphoto);
 
+        //评论列表
         mListView = (ListView) findViewById(R.id.listview_activity_weiboinfo);
         mListView.setOnItemClickListener(this);
-        //TODO 图片列表
+        //图片列表
         mGridView = (GridView) findViewById(R.id.gridview_activity_weiboinfo);
-        FreeBook book;
-        for (int i = 0; i < 4; i++) {
-            book = new FreeBook();
-            book.img_path = "http://iyuce.com/content/images/2016/sy_gykt.png";
-            mImgList.add(book);
-        }
-        mImgAdapter = new FreeBookAdapter(this,mImgList);
+        mImgAdapter = new WeiboInfoImgAdapter(this, mImgList);
         mGridView.setAdapter(mImgAdapter);
 
         mTxtAuthor.setText(local_author);
         mTxtBody.setText(local_body);
+
+
+
         mTxtTime.setText(local_time);
         mTxtReplyCount.setText("全部评论  ( " + local_reply_count + " )");
         DisplayImageOptions options = new DisplayImageOptions.Builder().
@@ -124,11 +122,14 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         ImageLoader.getInstance().displayImage(local_headurl, mIconHead, options);
 
-        //ListView填充数据
         requestJson();
     }
 
+    /**
+     * 评论列表ListView填充数据
+     */
     private void requestJson() {
+        LogUtil.i("local_microblog_id = " + local_microblog_id);
         StringRequest weiboDataRequest = new StringRequest(Request.Method.GET, URL + local_microblog_id, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -169,10 +170,13 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
             }
         };
         weiboDataRequest.setTag("weiboinfo");
+        weiboDataRequest.setRetryPolicy(new DefaultRetryPolicy(180 * 1000, 1, 1.0f));
         AppContext.getHttpQueue().add(weiboDataRequest);
     }
 
-    //评论微博
+    /**
+     * 评论微博
+     */
     private void requestSubcommit(final int parent_id, final String subject, final String commented_object_id, final String body) {
         StringRequest weiboSubcommitRequest = new StringRequest(Request.Method.POST, URL_SUBCOMMIT, new Response.Listener<String>() {
             @Override
@@ -183,6 +187,7 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
                     obj = new JSONObject(response);
                     if (obj.getInt("code") == 0) {
                         ToastUtil.showMessage(WeiboInfoActivity.this, "评论成功啦");
+                        //刷新评论列表
                         mDataList.clear();
                         mAdapter.notifyDataSetChanged();
                         requestJson();
@@ -207,10 +212,9 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
-                LogUtil.e("param = " + body + local_author + subject);
+                LogUtil.e("param = " + ";body =" + body + ";local_author =" + local_author + ";subject =" + subject);
                 map.put("Author", local_author);
                 map.put("UserId", PreferenceUtil.getSharePre(WeiboInfoActivity.this).getString("userId", ""));
-                map.put("OwnerId", PreferenceUtil.getSharePre(WeiboInfoActivity.this).getString("userId", ""));
                 map.put("Body", body);
                 map.put("Subject", subject);
                 map.put("CommentedObjectId", commented_object_id);
@@ -218,6 +222,7 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
             }
         };
         weiboSubcommitRequest.setTag("weiboinfo");
+        weiboSubcommitRequest.setRetryPolicy(new DefaultRetryPolicy(180 * 1000, 1, 1.0f));
         AppContext.getHttpQueue().add(weiboSubcommitRequest);
     }
 
@@ -231,6 +236,7 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
         final String subject = mDataList.get(position).subject;
         final String commented_object_id = mDataList.get(position).commented_object_id;
 
+        //评论原微博下的评论
         final EditText mEdit = new EditText(this);
         new AlertDialog.Builder(this)
                 .setTitle("请输入评论内容")
@@ -240,6 +246,24 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
                     public void onClick(DialogInterface dialog, int which) {
                         String body = mEdit.getText().toString();
                         requestSubcommit(parent_id, subject, commented_object_id, body);
+                        mEdit.setText("");
+                    }
+                }).show();
+    }
+
+    //评论原微博
+    public void toReply(View view) {
+        final EditText mEdit = new EditText(this);
+        new AlertDialog.Builder(this)
+                .setTitle("请输入评论内容")
+                .setView(mEdit)
+                .setPositiveButton("确定评论", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String body = mEdit.getText().toString();
+                        ToastUtil.showMessage(WeiboInfoActivity.this, "评论原微博，内容为=" + body);
+                        requestSubcommit(0, "伪subject，去截取", local_microblog_id + "", body);
+                        mEdit.setText("");
                     }
                 }).show();
     }

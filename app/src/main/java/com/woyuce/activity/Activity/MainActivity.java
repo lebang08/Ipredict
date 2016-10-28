@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
 
         mFragments.add(mTab01);
         mFragments.add(mTab02);
-        mFragments.add(mTab03_);
+        mFragments.add(mTab03);
         mFragments.add(mTab04);
         mFragments.add(mTab05);
 
@@ -117,6 +117,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener, O
             }
         };
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOffscreenPageLimit(4); // 设置保留4个界面的缓存
     }
 
     private void initEvent() {

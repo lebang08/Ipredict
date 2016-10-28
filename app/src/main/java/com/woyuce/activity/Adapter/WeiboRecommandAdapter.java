@@ -63,9 +63,9 @@ public class WeiboRecommandAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        String url = mList.get(position).pulish_image;
+        String url = mList.get(position).mImgList.get(0);
         viewHolder.imgPath.setTag(url);
-        LogUtil.e("url = "  +  url);
+//        LogUtil.e("url = "  +  url);
 
         DisplayImageOptions options = new DisplayImageOptions.Builder().
                 showImageOnLoading(R.mipmap.img_error)

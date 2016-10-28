@@ -1,9 +1,14 @@
 package com.woyuce.activity.Activity;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,13 +34,27 @@ import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 import com.woyuce.activity.R;
 import com.woyuce.activity.Utils.ImageUtils;
 import com.woyuce.activity.Utils.LocalImageHelper;
+import com.woyuce.activity.Utils.LogUtil;
+import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.StringUtils;
 import com.woyuce.activity.View.AlbumViewPager;
 import com.woyuce.activity.View.FilterImageView;
 import com.woyuce.activity.View.MatrixImageView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * @author LeBang
@@ -68,6 +87,14 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
     int padding;//小图间距
     DisplayImageOptions options;
 
+    private OkHttpClient mOkhttp;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pictures.clear();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +111,11 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
                 .displayer(new SimpleBitmapDisplayer()).build();
         initViews();
         initData();
+
+        mOkhttp = new OkHttpClient.Builder()
+                .connectTimeout(200, TimeUnit.SECONDS)
+                .readTimeout(200, TimeUnit.SECONDS)
+                .writeTimeout(200, TimeUnit.SECONDS).build();
     }
 
     /**
@@ -120,12 +152,10 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-
             }
 
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-
             }
 
             @Override
@@ -148,63 +178,6 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
             hideViewPager();
         }
     }
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.post_back:
-                finish();
-                break;
-            case R.id.header_bar_photo_back:
-            case R.id.header_bar_photo_count:
-                hideViewPager();
-                break;
-            case R.id.header_bar_photo_delete:
-                final int index = viewpager.getCurrentItem();
-                pictures.remove(index);
-                if (pictures.size() == 9) {
-                    add.setVisibility(View.GONE);
-                } else {
-                    add.setVisibility(View.VISIBLE);
-                }
-                if (pictures.size() == 0) {
-                    hideViewPager();
-                }
-                picContainer.removeView(picContainer.getChildAt(index));
-                picRemain.setText(pictures.size() + "/9");
-                mCountView.setText((viewpager.getCurrentItem() + 1) + "/" + pictures.size());
-                viewpager.getAdapter().notifyDataSetChanged();
-                LocalImageHelper.getInstance().setCurrentSize(pictures.size());
-                break;
-            case R.id.post_send:
-                //隐藏软键盘
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                String content = mContent.getText().toString();
-                if (StringUtils.isEmpty(content) && pictures.isEmpty()) {
-                    Toast.makeText(this, "请添写动态内容或至少添加一张图片", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    //设置为不可点击，防止重复提交
-                    view.setEnabled(false);
-                }
-                break;
-            case R.id.post_add_pic:
-                Intent intent = new Intent(WeiboPublishActivity.this, WeiboAlbumActivity.class);
-                startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCROP);
-                break;
-            default:
-                if (view instanceof FilterImageView) {
-                    for (int i = 0; i < picContainer.getChildCount(); i++) {
-                        if (view == picContainer.getChildAt(i)) {
-                            showViewPager(i);
-                        }
-                    }
-                }
-                break;
-        }
-    }
-
 
     private OnPageChangeListener pageChangeListener = new OnPageChangeListener() {
 
@@ -265,6 +238,7 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
         hideViewPager();
     }
 
+    private List<String> mImgPath = new ArrayList<>();
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -274,6 +248,12 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
                     LocalImageHelper.getInstance().setResultOk(false);
                     //获取选中的图片
                     List<LocalImageHelper.LocalFile> files = LocalImageHelper.getInstance().getCheckedItems();
+                    //将图片Uri转换为真正的String路径,并存到mImgPath数组里，请求网络时用
+                    for (int i = 0; i < files.size(); i++) {
+                        mImgPath.add(getRealFilePath(this, Uri.parse(files.get(i).getOriginalUri())));
+                    }
+                    LogUtil.i("mImgPath = " + mImgPath);
+
                     for (int i = 0; i < files.size(); i++) {
                         LayoutParams params = new LayoutParams(size, size);
                         params.rightMargin = padding;
@@ -308,6 +288,183 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
                 LocalImageHelper.getInstance().getCheckedItems().clear();
                 break;
             default:
+                break;
+        }
+    }
+
+    /**
+     * 发表微博
+     */
+    private void publishWeibo() {
+//        String isImgExist = String.valueOf(uploadImg());
+//        FormBody requestBody = new FormBody.Builder()
+//                .add("user_id", PreferenceUtil.getSharePre(WeiboPublishActivity.this).getString("userId", ""))
+//                .add("microblog_body", mContent.getText().toString())
+//                .add("microblog_photoexists", isImgExist)
+//                .add("associate__id", "0")
+//                .add("resize", "false")
+//                .add("tenant_type_id", "")
+//                .add("post_way  ", "Android")
+////                .add("file",null)
+//                .build();
+//        LogUtil.i("isImgExist = " + isImgExist);
+//        Request request = new Request.Builder()
+//                .url("http://api.iyuce.com/v1/bbs/createmicroblog")
+//                .post(requestBody)
+//                .build();
+//        mOkhttp.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                LogUtil.i("onFailure content = " + e.toString());
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                LogUtil.i("onResponse content = " + response.body().string());
+//            }
+//        });
+
+        //判断是否有图片
+        String isImgExist;
+        isImgExist = mImgPath.size() == 0 ? "false" : "true";
+        LogUtil.i("isImgExist = " + isImgExist);
+
+        MultipartBody.Builder mBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        for (int i = 0; i < mImgPath.size(); i++) {
+            mBuilder.addFormDataPart("file", mImgPath.get(i).replace("/","."),
+                    RequestBody.create(MediaType.parse("application/octet-stream"), new File(mImgPath.get(i))));
+        }
+        mBuilder.addFormDataPart("user_id", PreferenceUtil.getSharePre(WeiboPublishActivity.this).getString("userId", ""))
+                .addFormDataPart("microblog_body", mContent.getText().toString())
+                .addFormDataPart("microblog_photoexists", isImgExist)
+                .addFormDataPart("associate_id", "0")
+                .addFormDataPart("resize", "false")
+                .addFormDataPart("tenant_type_id", "")
+                .addFormDataPart("post_way  ", "Android");
+        MultipartBody requestBody = mBuilder.build();
+
+        LogUtil.i("mImgPath.get(i) = " + mImgPath);
+        Request request = new Request.Builder()
+                .url("http://api.iyuce.com/v1/bbs/createmicroblog")
+                .post(requestBody)
+                .build();
+        mOkhttp.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                LogUtil.i("onFailure = " + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                LogUtil.i("onResponse = " + response.body().string());
+            }
+        });
+    }
+
+    /**
+     * 获取真正的Uri,（从图库的Uri转为SD卡Uri）
+     *
+     * @param files
+     * @return
+     */
+    private Uri getRealUrifromUri(List<LocalImageHelper.LocalFile> files) {
+        //获取真正的SD卡地址
+        String myImageUrl = files.get(0).getOriginalUri();
+        Uri uri = Uri.parse(myImageUrl);
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor actualimagecursor = this.managedQuery(uri, proj, null, null, null);
+        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        actualimagecursor.moveToFirst();
+        String img_path = actualimagecursor.getString(actual_image_column_index);
+        File file = new File(img_path);
+        return Uri.fromFile(file);
+    }
+
+    /**
+     * Try to return the absolute file path from the given Uri
+     *
+     * @param context
+     * @param uri
+     * @return the file path or null
+     */
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if (scheme == null)
+            data = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            data = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.post_back:
+                finish();
+                break;
+            case R.id.header_bar_photo_back:
+            case R.id.header_bar_photo_count:
+                hideViewPager();
+                break;
+            case R.id.header_bar_photo_delete:
+                final int index = viewpager.getCurrentItem();
+                pictures.remove(index);
+                if (pictures.size() == 9) {
+                    add.setVisibility(View.GONE);
+                } else {
+                    add.setVisibility(View.VISIBLE);
+                }
+                if (pictures.size() == 0) {
+                    hideViewPager();
+                }
+                picContainer.removeView(picContainer.getChildAt(index));
+                picRemain.setText(pictures.size() + "/9");
+                mCountView.setText((viewpager.getCurrentItem() + 1) + "/" + pictures.size());
+                viewpager.getAdapter().notifyDataSetChanged();
+                LocalImageHelper.getInstance().setCurrentSize(pictures.size());
+                break;
+            case R.id.post_send:
+                //隐藏软键盘
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                String content = mContent.getText().toString();
+                if (StringUtils.isEmpty(content) && pictures.isEmpty()) {
+                    Toast.makeText(this, "请添写动态内容或至少添加一张图片", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    //设置为不可点击，防止重复提交
+                    view.setEnabled(false);
+                }
+                //TODO 上传图片,发送微博
+                publishWeibo();
+                //TODO 应该在回调里做的，如果发送成功，跳转WeiboInfo页面，发送失败，提示(这里假设成功)
+//                startActivity();
+                break;
+            case R.id.post_add_pic:
+                Intent intent = new Intent(WeiboPublishActivity.this, WeiboAlbumActivity.class);
+                startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCROP);
+                break;
+            default:
+                if (view instanceof FilterImageView) {
+                    for (int i = 0; i < picContainer.getChildCount(); i++) {
+                        if (view == picContainer.getChildAt(i)) {
+                            showViewPager(i);
+                        }
+                    }
+                }
                 break;
         }
     }

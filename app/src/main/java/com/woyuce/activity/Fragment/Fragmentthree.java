@@ -107,10 +107,10 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                     obj = new JSONObject(response);
                     if (obj.getInt("code") == 0) {
                         arr = obj.getJSONArray("data");
-                        LogUtil.e("arr = ?? " + arr);
                         WeiboBean weibo;
                         JSONArray imgarr;
                         JSONObject imgobj;
+                        ArrayList<String> imgList = new ArrayList<>();
                         for (int i = 0; i < arr.length(); i++) {
                             obj = arr.getJSONObject(i);
                             weibo = new WeiboBean();
@@ -119,18 +119,19 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                             weibo.date_created = obj.getString("date_created");
                             weibo.author = obj.getString("author");
                             weibo.reply_count = obj.getString("reply_count");
-                            if (Integer.parseInt(weibo.reply_count) > 0) {
-                                weibo.microblog_id = obj.getInt("microblog_id");
-                            }
-                            weibo.pulish_image = obj.getString("avatar_url");
+                            weibo.microblog_id = obj.getInt("microblog_id");
 //                            if (obj.getString("has_photo").equals("true")) {
-//                                imgarr = obj.getJSONArray("imglist");
-//                                imgobj = imgarr.getJSONObject(0);
-//                                weibo.pulish_image = imgobj.getString("img_url");
+                            imgarr = obj.getJSONArray("imglist");
+                            for (int j = 0; j < imgarr.length(); j++) {
+                                imgobj = imgarr.getJSONObject(j);
+                                weibo.mImgList.add(imgobj.getString("img_url"));
+                                imgList.add(weibo.pulish_image);
+                            }
 //                            } else {
 //                                weibo.pulish_image = obj.getString("source_url");
 //                            }
                             dataList.add(weibo);
+                            LogUtil.i("dataList = " + weibo.toString());
                         }
                     } else {
                         LogUtil.e("code!=0 Data-BACK", "读取页面失败： " + obj.getString("message"));
@@ -163,7 +164,9 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                 Snackbar.make(v, "别逗了,这能返回去哪里", Snackbar.LENGTH_SHORT).show();
                 break;
             case R.id.btn_fragmenttab3_topulish:
-                startActivity(new Intent(getActivity(), WeiboPublishActivity.class));
+                Intent intent2publish = new Intent(getActivity(), WeiboPublishActivity.class);
+                intent2publish.putExtra("localtoken", localtoken);
+                startActivity(intent2publish);
                 break;
             case R.id.ll_tab3_one:
                 mTxtChangeTab.setText("精选动态");
@@ -175,7 +178,7 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
                 break;
             case R.id.ll_tab3_four:
                 Intent intent = new Intent(getActivity(), WeiboGroupActivity.class);
-                intent.putExtra("local_token",localtoken);
+                intent.putExtra("local_token", localtoken);
                 startActivity(intent);
                 break;
         }
@@ -191,6 +194,7 @@ public class Fragmentthree extends Fragment implements View.OnClickListener, Ada
         intent.putExtra("local_reply_count", dataList.get(position).reply_count);
         intent.putExtra("local_microblog_id", dataList.get(position).microblog_id);
         intent.putExtra("local_token", localtoken);
+        intent.putStringArrayListExtra("mImgList", dataList.get(position).mImgList);
         startActivity(intent);
     }
 }
