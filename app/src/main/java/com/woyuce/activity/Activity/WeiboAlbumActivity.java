@@ -59,6 +59,9 @@ public class WeiboAlbumActivity extends WeiboBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weiboalbum);
+//        //TODO 清除已有照片，会有冲突
+//        LocalImageHelper.getInstance().clear();
+
         listView = (ListView) findViewById(R.id.local_album_list);
         camera = findViewById(R.id.loacal_album_camera);
         camera.setOnClickListener(onClickListener);

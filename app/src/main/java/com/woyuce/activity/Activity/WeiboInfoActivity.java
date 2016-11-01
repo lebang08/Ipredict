@@ -108,9 +108,6 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
 
         mTxtAuthor.setText(local_author);
         mTxtBody.setText(local_body);
-
-
-
         mTxtTime.setText(local_time);
         mTxtReplyCount.setText("全部评论  ( " + local_reply_count + " )");
         DisplayImageOptions options = new DisplayImageOptions.Builder().
@@ -181,7 +178,7 @@ public class WeiboInfoActivity extends Activity implements AdapterView.OnItemCli
         StringRequest weiboSubcommitRequest = new StringRequest(Request.Method.POST, URL_SUBCOMMIT, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                LogUtil.e("评论?? = " + response);
+                LogUtil.e("评论提交成功 = " + response);
                 JSONObject obj;
                 try {
                     obj = new JSONObject(response);

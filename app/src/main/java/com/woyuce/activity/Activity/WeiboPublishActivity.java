@@ -37,6 +37,7 @@ import com.woyuce.activity.Utils.LocalImageHelper;
 import com.woyuce.activity.Utils.LogUtil;
 import com.woyuce.activity.Utils.PreferenceUtil;
 import com.woyuce.activity.Utils.StringUtils;
+import com.woyuce.activity.Utils.ToastUtil;
 import com.woyuce.activity.View.AlbumViewPager;
 import com.woyuce.activity.View.FilterImageView;
 import com.woyuce.activity.View.MatrixImageView;
@@ -331,7 +332,7 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
 
         MultipartBody.Builder mBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         for (int i = 0; i < mImgPath.size(); i++) {
-            mBuilder.addFormDataPart("file", mImgPath.get(i).replace("/","."),
+            mBuilder.addFormDataPart("file", mImgPath.get(i).replace("/", "."),
                     RequestBody.create(MediaType.parse("application/octet-stream"), new File(mImgPath.get(i))));
         }
         mBuilder.addFormDataPart("user_id", PreferenceUtil.getSharePre(WeiboPublishActivity.this).getString("userId", ""))
@@ -451,6 +452,8 @@ public class WeiboPublishActivity extends WeiboBaseActivity implements OnClickLi
                 //TODO 上传图片,发送微博
                 publishWeibo();
                 //TODO 应该在回调里做的，如果发送成功，跳转WeiboInfo页面，发送失败，提示(这里假设成功)
+                ToastUtil.showMessage(this, "微博发送成功啦!");
+                finish();
 //                startActivity();
                 break;
             case R.id.post_add_pic:

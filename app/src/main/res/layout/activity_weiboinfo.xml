@@ -97,8 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="32dp"
                 android:background="#00000000"
-                android:text="评论"
                 android:onClick="toReply"
+                android:text="评论"
                 android:textSize="12sp" />
 
             <Button

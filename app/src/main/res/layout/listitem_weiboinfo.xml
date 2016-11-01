@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/img_item_weibo"
-        android:textColor="#000"
-        android:text="author" />
+        android:text="author"
+        android:textColor="#000" />
 
     <TextView
         android:id="@+id/time_item_weibo"
@@ -41,6 +41,7 @@
         android:layout_marginTop="56dp"
         android:layout_toRightOf="@+id/img_item_weibo"
         android:ellipsize="end"
+        android:maxLines="3"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:text="微博精选的内容，这是一个非常精彩的微博" />

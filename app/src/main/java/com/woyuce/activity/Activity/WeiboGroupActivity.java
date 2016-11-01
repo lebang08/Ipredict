@@ -3,6 +3,7 @@ package com.woyuce.activity.Activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -26,7 +27,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2016/10/12.
  */
-public class WeiboGroupActivity extends Activity {
+public class WeiboGroupActivity extends Activity implements AdapterView.OnItemClickListener {
 
     private String local_token;
     private String URL = "http://api.iyuce.com/v1/bbs/getcategories?categoryid=";
@@ -53,10 +54,14 @@ public class WeiboGroupActivity extends Activity {
         local_token = getIntent().getStringExtra("local_token");
 
         mListView = (ListView) findViewById(R.id.listview_activity_weibogroup);
+        mListView.setOnItemClickListener(this);
         requestJson();
     }
 
 
+    /**
+     * 请求数据
+     */
     private void requestJson() {
         StringRequest weiboDataRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
@@ -78,7 +83,7 @@ public class WeiboGroupActivity extends Activity {
                         LogUtil.e("code!=0 Data-BACK", "读取页面失败： " + obj.getString("message"));
                     }
                     // 将数据放到适配器中
-                    mAdapter = new ArrayAdapter(WeiboGroupActivity.this, android.R.layout.simple_list_item_1,mDataList);
+                    mAdapter = new ArrayAdapter(WeiboGroupActivity.this, android.R.layout.simple_list_item_1, mDataList);
                     mListView.setAdapter(mAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -107,4 +112,8 @@ public class WeiboGroupActivity extends Activity {
         finish();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
 }
